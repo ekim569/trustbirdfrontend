@@ -7,6 +7,15 @@
   font-weight: bold;
   text-align: center;
 }
+.sectionheader {
+  font-size: 32px;
+  padding: auto;
+  color: #3b72f2;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 
 .containerborder {
   border: 1px solid #3b72f2;
@@ -81,6 +90,7 @@
   max-width: 1000px; /* 넓이를 지정 */
   height: 500px; /* 높이를 지정 */
 }
+
 .cardlayout {
   align-items: center;
   border: 1px solid #3b72f2;
@@ -145,10 +155,29 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
+  min-height: 97vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
+}
+.maintenanceimage {
+  background: linear-gradient(
+      to left,
+      rgba(56, 56, 56, 0),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://media.istockphoto.com/photos/large-stack-of-files-documents-paperwork-on-desk-picture-id904268154?b=1&k=6&m=904268154&s=170667a&w=0&h=94Yl8T59bcCuXnDlt1Y4E7IHmU1oDTzmg_SY0ukFCLo=);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 150px;
+  max-width: 1140px; /* 넓이를 지정 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-top: 150px;
 }

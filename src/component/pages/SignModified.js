@@ -6,10 +6,10 @@ import "./Page.css"
 //Sign Modified
 const SignModified = () => {
   return (
-    <Container  >
+    <Container style={{ maxWidth: "720px" }} >
       <div className="pageheader">회원정보 수정</div>
 
-      <Form style={{ maxWidth: "100%" }} className="sign-form">
+      <Form  className="sign-form">
         <Form.Group controlId="formBasicUsername">
           <Form.Label> 사용자 이름 </Form.Label>
           <Form.Control type="text" placeholder="" required />

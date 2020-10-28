@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container,  Button, Form } from "react-bootstrap";
+import { Container,  Button, Form, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "./Page.css";
 
@@ -61,6 +61,15 @@ const Contract = () => {
 
   function onSubmit(e) {
     e.preventDefault();
+
+    const formData = new FormData();
+
+    for(const [key, value] of Object.entries(contract)){
+      formData.append(key, value)
+      if(key === 'attachments'){
+      formData.append(key, value, )
+      }
+    }
 
     fetch("http://192.168.0.22:3001/api/user/contract", {
       method: "POST",
@@ -146,22 +155,6 @@ const Contract = () => {
 
         </table>
       </div>
-        <Row >
-          <Col className="collayout" sm={2}>소재지</Col>
-          <Col className="collayout2" sm={10}></Col>
-        </Row>
-        <Row >
-          <Col className="collayout" sm={2}>소재지</Col>
-          <Col className="collayout2" sm={10}></Col>
-        </Row>
-        <Row >
-          <Col className="collayout" sm={2}>소재지</Col>
-          <Col className="collayout2" sm={10}></Col>
-        </Row>
-        <Row >
-          <Col className="collayout" sm={2}>소재지</Col>
-          <Col className="collayout2" sm={10}></Col>
-        </Row>
 
       <Form.Label>특약사항</Form.Label>
       <table className="tablelayout">

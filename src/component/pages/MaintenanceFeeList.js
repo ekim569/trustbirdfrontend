@@ -8,54 +8,118 @@ import "./Page.css";
 //Maintenance Fee List
 
 
-  const handleEvent = (e) => {
+  const MaintenanceFeeList = () => {
+    const history = useHistory();
+  const [maintenanceFeeList, setMaintenanceFeeList] = useState({
+    no:0,
+    claimingAgency: "",
+    electronicPaymentNum: "",
+    deadline: "",
+    amountDue: "",
+    amountDeadline: "",
+    payment: "",
+    payer:"",
+  });
+
+  function handleInputChange(e) {
     e.preventDefault();
-  };
+
+    const { value, name } = e.target;
+
+    console.log(value, name);
+
+    setMaintenanceFeeList({
+      ...maintenanceFeeList,
+      [name]: value,
+    });
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    for(const [key, value] of Object.entries(contract)){
+      formData.append(key, value)
+      if(key === 'attachments'){
+      formData.append(key, value, )
+      }
+    }
+
+    fetch("http://192.168.0.22:3001/api/user/contract", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contract),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          history.push("/signin");
+        } else {
+          const error = new Error(res.error);
+
+          throw error;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error loggin in please try again");
+      });
+  }
+
+  useEffect(() => {
+    fetch("/api/maintenancefeelist/list")
+      .then((res) => res.json())
+      .then((maintenanceFeeList) => {
+        let maintenanceFees = new Array();
+
+        for (let i = 1; i < maintenanceFeeList.length; i++) {
+          maintenanceFees.push({
+            No: i,
+            claimingAgency: maintenanceFeeList.claimingAgency,
+            electronicPaymentNum: maintenanceFeeList.electronicPaymentNum,
+            dueDate: maintenanceFeeList.dueDate,
+            amountDeadline: maintenanceFeeList.amountDeadline,
+          });
+        }
+
+        setMaintenanceFeeList(maintenanceFees);
+      });
+    });
 
 
-
-  return (
+    return(
     <Container>
-      <div className="pageheader">관리비 내역 목록</div>
-      <Table bordered={true} style={{ marginBottom: "100px" }}>
-        <thead>
-          <tr style={{textAlign:"center"}}>
-            <th>NO.</th>
-            <th>관리비 청구 기관</th>
-            <th>관리비</th>
-            <th>납부 여부</th>
-            <th>영수증 보기</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* {() => {
-            for (let i = currentPageNo; i < currentPageNo + pageLow; i++) {
-              return (
-                <tr>
-                  <td>{[i] + 1}</td>
-                  <td>{maintenanceFeeList[i].claimingAgency}</td>
-                  <td>{maintenanceFeeList[i].electronicPaymentNum}</td>
-                  <td>{maintenanceFeeList[i].dueDate}</td>
-                  <td>{maintenanceFeeList[i].amountDue}</td>
-                  <td>
-                    <Link to="/maintenancefee" onClick={handleEvent}>
-                      <Button>관리비 내역</Button>
-                    </Link>
-                  </td>
-                </tr>
-              );
-            } */}
-            {/* // currentPageNo =
-            //   currentPageNo + pageLow > maintenanceFeeList.length
-            //     ? maintenanceFeeList.length
-            //     : currentPageNo + pageLow; */}
-          {/* }} */}
-        </tbody>
-      </Table>
+    <div className="maintenanceimage" >
+    <div className="pageheader" style={{marginTop:"50px"}} >관리비 내역 목록</div>
+    </div>
+    <Table bordered={true} style={{ marginBottom: "100px" ,textAlign:"center" }}>
+      <thead>
+        <tr >
+          <th style={{width:"5%"}}>NO.</th>
+          <th>관리비 청구 기관</th>
+          <th>납부 날짜</th>
+          <th>관리비</th>
+          <th>납부 여부</th>
+          <th>영수증 보기</th>
+        </tr>
+        <tr><td>{maintenanceFeeList[i].no}</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </Table>
 
-     
-    </Container>
+   
+  </Container>
   );
+  
 };
 
 export default MaintenanceFeeList;

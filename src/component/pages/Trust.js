@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Container,  Button, Form, table } from "react-bootstrap";
+import { Container,  Button, Form, Row, Col, table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "./Page.css"
 
@@ -66,11 +66,8 @@ const Trust = () => {
   }
 
   return (
-    <div>
-      <div className="pageheader">신탁신청서</div>
-      
-
     <Container style={{ maxWidth: "720px", padding:0 , }} >
+      <div className="pageheader">신탁신청서</div>
       <Form>
     <table className="tablelayout">
         <tr className="tableborder">
@@ -134,7 +131,6 @@ const Trust = () => {
       >
         회원가입
       </Button>
-      </div>
       </Form>
     </Container>
   );

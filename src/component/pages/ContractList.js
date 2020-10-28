@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Container , useEffect, useState } from "react";
 import "../Navbar/Navbar.css";
 import { useHistory } from "react-router-dom";
 import "./Page.css";

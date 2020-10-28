@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container,  Button, Form } from "react-bootstrap";
+import { Container,  Button, Form, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "./Page.css";
 import PostFixInput from "./PostFixInput";
@@ -205,60 +205,34 @@ const ContractEnroll = () => {
           <Form.Control type="text" />
         </Form.Group>
 
-        <Form.Group controlId="formBasicLessorAddress">
-          <Form.Label> 임대인의 주소 </Form.Label>
-          <Form.Control type="text" required />
-        </Form.Group>
+        <div>임대인</div>
+      <table style={{width:"100%"}}> 
+          <tr><Form.Control type="text" placeholder="이름" required /></tr>
+          <tr><Form.Control type="text" placeholder="전화번호" required /></tr>
+          <tr><Form.Control type="text" placeholder="주소" required /></tr>
+          <tr><Form.Control type="text" placeholder="주민번호" required /></tr>
+      </table>
 
-        <Form.Group controlId="formBasicLessorRRN">
-          <Form.Label> 임대인 주민번호 </Form.Label>
-          <Form.Control type="text" required />
-        </Form.Group>
+      <Form.Group>
+        <div>임차인</div>
+      <table style={{width:"100%"}}> 
+          <tr><Form.Control type="text" placeholder="이름" required /></tr>
+          <tr><Form.Control type="text" placeholder="전화번호" required /></tr>
+          <tr><Form.Control type="text" placeholder="주소" required /></tr>
+          <tr><Form.Control type="text" placeholder="주민번호" required /></tr>
+      </table>
+      </Form.Group>
 
-        <Form.Group controlId="formBasicLessorName">
-          <Form.Label> 임대인 이름 </Form.Label>
-          <Form.Control type="text" required />
-        </Form.Group>
+    
+      <div>중개인</div>
+      <table style={{width:"100%"}}> 
+          <tr><Form.Control type="text" placeholder="이름" required /></tr>
+          <tr><Form.Control type="text" placeholder="전화번호" required /></tr>
+          <tr><Form.Control type="text" placeholder="주소" required /></tr>
+          <tr><Form.Control type="text" placeholder="주민번호" required /></tr>
+      </table>
 
-        <Form.Group controlId="formBasicLessorTelephoneNum">
-          <Form.Label> 임대인 휴대번호 </Form.Label>
-          <Form.Control type="text" required />
-        </Form.Group>
 
-        <Form.Group controlId="formBasicLesseeAddress">
-          <Form.Label> 임차인 주소 </Form.Label>
-          <Form.Control type="text" required />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicLesseeRRN">
-          <Form.Label> 임차인 주민번호 </Form.Label>
-          <Form.Control type="text" required />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicLesseeName">
-          <Form.Label> 임차인 이름 </Form.Label>
-          <Form.Control type="text" required />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicLesseeTelephoneNum">
-          <Form.Label> 임차인 휴대번호 </Form.Label>
-          <Form.Control type="text" required />
-        </Form.Group>
-
-        <Form.Group style={{display:"table-caption"}}>
-          <Form.Label controlId="formBasicRealtorAddress"> 
-          <input type="text" required /></Form.Label>
-          <Form.Label controlId="formBasicRealtorOfficeName">  
-          <input type="text" required /></Form.Label>
-          <Form.Label controlId="formBasicRealtorName">
-          <input type="text" required /></Form.Label>
-          <Form.Label controlId="formBasicRegistrationNum"> 
-          <input type="text" required /></Form.Label>
-          <Form.Label controlId="formBasicRealtorTelephoneNum">
-          <input type="text" required /></Form.Label>
-          
-        </Form.Group>
-        
         <Button
           variant="primary"
           type="submit"

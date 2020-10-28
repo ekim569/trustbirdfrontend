@@ -5,13 +5,7 @@ import "./Page.css";
 
 //Sign Up
 const SignUp = () => {
-  //   const [setUserName, useUserName] =  useState(setUserName, useUserName)
-  //   const [setEmail, useEmail] =  useState(setUserEmail, useUserEmail)
-  //   const [setPassword, usePassword] =  useState(setUserPassword, useUserPassword)
-  //   const [setDateOfBirth,useDateOfBirth] = useState(setDateDfBirth,useDateOfBirth)
-  //   const [setGender,useGender] = useState(setGender,useGender)
-  //   const [setTelephoneNum,useTelephoneNum] = useState(setTelephoneNum,useTelephoneNum)
-
+  
   return (
     <Container style={{maxWidth:"800px"}}>
       <div className="pageheader">회원가입</div>
