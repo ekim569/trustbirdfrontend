@@ -4,9 +4,6 @@ import { useHistory } from "react-router-dom";
 import "./Page.css";
 import PostFixInput from "./PostFixInput";
 
-
-
-
 //Contract Enrollment
 const ContractEnroll = () => {
   const history = useHistory();
@@ -58,15 +55,14 @@ const ContractEnroll = () => {
       });
   }
 
-
-
-
-
-
   return (
     <Container>
       <div className="pageheader">계약서 등록</div>
-      <Form style={{ maxWidth: "800px", margin: "auto" }} className="sign-form">
+      <Form
+        style={{ maxWidth: "800px", margin: "auto" }}
+        className="sign-form"
+        onSubmit={onSubmit}
+      >
         <Form.Group controlId="formBasicLocation">
           <Form.Label> 계약 소재지 </Form.Label>
           <PostFixInput
@@ -124,28 +120,29 @@ const ContractEnroll = () => {
 
         <Form.Group controlId="formBasicPartOfLeaseArea">
           <Form.Label> 임대할 부분의 면적 </Form.Label>
-            <PostFixInput
-              labelText="부동산 종류"
-              postfix="㎡"
-              type="text"
-              placeholder="면적"
-            />
+          <PostFixInput
+            labelText="부동산 종류"
+            postfix="㎡"
+            type="text"
+            placeholder="면적"
+          />
         </Form.Group>
         <div>
           <Form.Group>
-           <Form.Label>전 · 월세</Form.Label><br/>
-          <Form
-            controlId="formBasicMonthly"
-            style={{ display: "inline-block", marginRight: "32px" }}
-          >
-            <Form.Check type="checkbox" label="전세" required />
-          </Form>
-          <Form
-            controlId="formBasicResevations"
-            style={{ display: "inline-block" }}
-          >
-            <Form.Check type="checkbox" label="월세" required />
-          </Form>
+            <Form.Label>전 · 월세</Form.Label>
+            <br />
+            <Form
+              controlId="formBasicMonthly"
+              style={{ display: "inline-block", marginRight: "32px" }}
+            >
+              <Form.Check type="checkbox" label="전세" required />
+            </Form>
+            <Form
+              controlId="formBasicResevations"
+              style={{ display: "inline-block" }}
+            >
+              <Form.Check type="checkbox" label="월세" required />
+            </Form>
           </Form.Group>
         </div>
 
@@ -183,7 +180,6 @@ const ContractEnroll = () => {
             placeholder="금액"
           />
         </Form.Group>
-        
 
         <Form.Group controlId="formBasicBalance">
           <Form.Label> 잔금</Form.Label>

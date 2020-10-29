@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table, Pagination, Button } from "react-bootstrap";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import "./Page.css";
 //userEffect
 
 //Maintenance Fee List
+const MaintenanceFeeList = () => {
+  const [maintenanceFeeList, setMaintenanceFeeList] = useState({
+    no: 0,
+    claimingAgency: "",
+    electronicPaymentNum: "",
+    dueDate: "",
+    amountDeadline: "",
+  });
+  const history = useHistory();
 
+  const pageLow = 7;
+  const paginationLow = 5;
+
+  let currentPageNo = 0;
+  let currentPaginationNo = 0;
 
   const MaintenanceFeeList = () => {
     const history = useHistory();
