@@ -42,7 +42,7 @@ const TrustSub = () => {
     for (const [key, value] of Object.entries(trustsub)) {
       formData.append(key, value);
       if (key === "attchments") {
-        formData.append(key, __filename);
+        formData.append(key, value);
       }
     }
     console.log(trustsub);
