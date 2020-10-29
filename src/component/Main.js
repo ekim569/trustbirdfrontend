@@ -84,6 +84,9 @@ const Main = () => {
             <Route path="/signup">
               <SignUp />
             </Route>
+            <Route path="/footer">
+              <Footer />
+            </Route>
             {/* <Route path="/signout">
                     <SignOut />
                 </Route> */}

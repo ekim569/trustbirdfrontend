@@ -22,13 +22,65 @@ const MaintenanceFeeList = () => {
   let currentPageNo = 0;
   let currentPaginationNo = 0;
 
-  const handleEvent = (e) => {
+  const MaintenanceFeeList = () => {
+    const history = useHistory();
+  const [maintenanceFeeList, setMaintenanceFeeList] = useState({
+    no:0,
+    claimingAgency: "",
+    electronicPaymentNum: "",
+    deadline: "",
+    amountDue: "",
+    amountDeadline: "",
+    payment: "",
+    payer:"",
+  });
+
+  function handleInputChange(e) {
     e.preventDefault();
-    history.push({
-      pathname: "/maintenancefee",
-      state: { maintenanceFeeList: maintenanceFeeList },
+
+    const { value, name } = e.target;
+
+    console.log(value, name);
+
+    setMaintenanceFeeList({
+      ...maintenanceFeeList,
+      [name]: value,
     });
-  };
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    for(const [key, value] of Object.entries(contract)){
+      formData.append(key, value)
+      if(key === 'attachments'){
+      formData.append(key, value, )
+      }
+    }
+
+    fetch("http://192.168.0.22:3001/api/user/contract", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contract),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          history.push("/signin");
+        } else {
+          const error = new Error(res.error);
+
+          throw error;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error loggin in please try again");
+      });
+  }
 
   useEffect(() => {
     fetch("/api/maintenancefeelist/list")
@@ -47,86 +99,41 @@ const MaintenanceFeeList = () => {
         }
 
         setMaintenanceFeeList(maintenanceFees);
-        // pageNo = Math.ceil(maintenanceFeeList.length / 7);
       });
-  });
+    });
 
-  return (
+
+    return(
     <Container>
-      <div className="pageheader">관리비 내역 목록</div>
-      <Table bordered={true} style={{ marginBottom: "100px" }}>
-        <thead>
-          <tr>
-            <th>NO.</th>
-            <th>청구 기관</th>
-            <th>전자 번호</th>
-            <th>납부 내 기한</th>
-            <th>납부 내 금액</th>
-            <th>보기</th>
-          </tr>
-        </thead>
-        <tbody>
-          {() => {
-            for (let i = currentPageNo; i < currentPageNo + pageLow; i++) {
-              return (
-                <tr>
-                  <td>{maintenanceFeeList[i].No}</td>
-                  <td>{maintenanceFeeList[i].claimingAgency}</td>
-                  <td>{maintenanceFeeList[i].electronicPaymentNum}</td>
-                  <td>{maintenanceFeeList[i].dueDate}</td>
-                  <td>{maintenanceFeeList[i].amountDue}</td>
-                  <td>
-                    <Link to="/maintenancefee" onClick={handleEvent}>
-                      <Button>관리비 내역</Button>
-                    </Link>
-                  </td>
-                </tr>
-              );
-            }
-            currentPageNo =
-              currentPageNo + pageLow > maintenanceFeeList.length
-                ? maintenanceFeeList.length
-                : currentPageNo + pageLow;
-          }}
-        </tbody>
-      </Table>
+    <div className="maintenanceimage" >
+    <div className="pageheader" style={{marginTop:"50px"}} >관리비 내역 목록</div>
+    </div>
+    <Table bordered={true} style={{ marginBottom: "100px" ,textAlign:"center" }}>
+      <thead>
+        <tr >
+          <th style={{width:"5%"}}>NO.</th>
+          <th>관리비 청구 기관</th>
+          <th>납부 날짜</th>
+          <th>관리비</th>
+          <th>납부 여부</th>
+          <th>영수증 보기</th>
+        </tr>
+        <tr><td>{maintenanceFeeList[i].no}</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </Table>
 
-      {/* <Pagination
-        style={{ marginBottom: "50px", margin: "auto", width: "fit-content" }}
-      >
-        <Pagination.Prev
-          onClick={(e) => {
-            currentPaginationNo -= paginationLow;
-            currentPageNo = currentPageNo;
-          }}
-        >
-          이전
-        </Pagination.Prev>
-        {() => {
-          for (
-            let paginationNo = currentPaginationNo + 1;
-            paginationNo <= currentPaginationNo + paginationLow;
-            paginationNo++
-          ) {
-            return <Pagination onClick={() => {}}>{paginationNo}</Pagination>;
-          }
-
-          currentPaginationNo =
-            currentPaginationNo + paginationLow >
-            Math.ceil(maintenanceFeeList.length / pageLow)
-              ? Math.ceil(maintenanceFeeList.length / pageLow)
-              : currentPaginationNo + paginationLow;
-        }}
-        <Pagination.Next
-          onClick={(e) => {
-            currentPaginationNo += paginationLow;
-          }}
-        >
-          다음
-        </Pagination.Next>
-      </Pagination> */}
-    </Container>
+   
+  </Container>
   );
+  
 };
 
 export default MaintenanceFeeList;

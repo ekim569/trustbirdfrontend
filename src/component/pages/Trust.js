@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Button, Form, table } from "react-bootstrap";
+import { Container,  Button, Form, Row, Col, table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "./Page.css";
 
@@ -68,10 +68,14 @@ const Trust = () => {
   }
 
   return (
-    <Container style={{ maxWidth: "720px", padding: 0 }}>
+    <Container style={{ maxWidth: "720px", padding:0 , }} >
       <div className="pageheader">신탁신청서</div>
-      <Form onSubmit={onSubmit}>
-        <table className="tablelayout">
+      <Form>
+    <table className="tablelayout">
+        <tr className="tableborder">
+            <td className="tableborder" style={{ width:"250px"}}>중개인 이름</td>
+            <td className="tableborder" colspan="4" >     {trust.realtorName}       </td>
+            </tr>
           <tr className="tableborder">
             <td className="tableborder" style={{ width: "250px" }}>
               중개인 이름
@@ -100,56 +104,46 @@ const Trust = () => {
             </td>
           </tr>
           <tr className="tableborder">
-            <td className="tableborder" style={{ width: "250px" }}>
-              신탁부동산 종류
-            </td>
-            <td className="tableborder" colspan="4">
-              {" "}
-              {trust.type}
-            </td>
-          </tr>
-          <tr className="tableborder">
-            <td className="tableborder" style={{ width: "250px" }}>
-              신탁부동산 가격
-            </td>
-            <td className="tableborder" colspan="4">
-              {" "}
-              {trust.securityDeposit} / {trust.rent}
-            </td>
-          </tr>
-          <tr className="tableborder">
-            <td className="tableborder" style={{ width: "250px" }}>
-              신탁기간
-            </td>
-            <td className="tableborder" colspan="4">
-              {trust.periodStart} ~ {trust.periodEnd}{" "}
-            </td>
-          </tr>
-        </table>
-        <Form.Label>기타사항</Form.Label>
-        <table className="tablelayout">
-          <tr className="tableborder">
-            {" "}
-            <td> {trust.etc} </td>{" "}
-          </tr>
-        </table>
-        <Form.Label>첨부파일</Form.Label>
-        <table className="tablelayout">
-          <tr className="tableborder">
-            <td>{trust.attachments} </td>
-          </tr>
-        </table>
-        <div style={{ float: "right" }}>
-          <Button variant="primary" type="submit" className="button1">
-            회원가입
-          </Button>
-        </div>
-        <Button variant="primary" type="submit" className="button1">
-          회원가입
-        </Button>{" "}
-        <Button variant="primary" type="submit" className="button1">
-          회원가입
-        </Button>
+            <td className="tableborder" style={{ width:"250px"}}>신탁기간</td>
+            <td className="tableborder" colspan="4" >{trust.periodStart} ~ {trust.periodEnd} </td>
+            </tr>
+            </table>
+    
+
+      <Form.Label>기타사항</Form.Label>
+      <table className="tablelayout">
+        <tr className="tableborder"> <td> {trust.etc}  </td>   </tr>
+            </ table>
+            
+      <Form.Label>첨부파일</Form.Label>
+      <table className="tablelayout">
+        <tr className="tableborder"><td>{trust.attachments} </td></tr>
+            </ table>
+
+
+      
+      <div style={{float:"right"}}> 
+      <Button
+        variant="primary"
+        type="submit"
+        className="button1"
+      >
+        회원가입
+      </Button>
+      </div>
+      <Button
+        variant="primary"
+        type="submit"
+        className="button1"
+      >
+        회원가입
+      </Button> <Button
+        variant="primary"
+        type="submit"
+        className="button1"
+      >
+        회원가입
+      </Button>
       </Form>
     </Container>
   );
