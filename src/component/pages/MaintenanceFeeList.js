@@ -1,39 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table, Pagination, Button } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import MaintenanceFee from "./MaintenanceFee";
 
 import "./Page.css";
 //userEffect
 
 //Maintenance Fee List
 const MaintenanceFeeList = () => {
-  const [maintenanceFeeList, setMaintenanceFeeList] = useState({
-    no: 0,
-    claimingAgency: "",
-    electronicPaymentNum: "",
-    dueDate: "",
-    amountDeadline: "",
-  });
+  const [maintenanceFeeList, setMaintenanceFeeList] = useState([]);
   const history = useHistory();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-  const pageLow = 7;
-  const paginationLow = 5;
-
-  let currentPageNo = 0;
-  let currentPaginationNo = 0;
-
-  const MaintenanceFeeList = () => {
-    const history = useHistory();
-  const [maintenanceFeeList, setMaintenanceFeeList] = useState({
-    no:0,
-    claimingAgency: "",
-    electronicPaymentNum: "",
-    deadline: "",
-    amountDue: "",
-    amountDeadline: "",
-    payment: "",
-    payer:"",
-  });
+  const handleEvent = (e) => {
+    e.preventDefault();
+    history.push({
+      pathname: "/maintenancefee",
+      state: { maintenanceFeeList: maintenanceFeeList },
+    });
+  };
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -48,92 +36,114 @@ const MaintenanceFeeList = () => {
     });
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
+  useEffect(() => {
+    const body = {
+      email: "page1111@naver.com",
+    };
 
-    const formData = new FormData();
-
-    for(const [key, value] of Object.entries(contract)){
-      formData.append(key, value)
-      if(key === 'attachments'){
-      formData.append(key, value, )
-      }
-    }
-
-    fetch("http://192.168.0.22:3001/api/user/contract", {
+    fetch("http://192.168.0.22:3001/api/user/maintenancefeelist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(contract),
+      body: JSON.stringify(body),
     })
-      .then((res) => {
-        if (res.status === 200) {
-          history.push("/signin");
-        } else {
-          const error = new Error(res.error);
-
-          throw error;
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Error loggin in please try again");
-      });
-  }
-
-  useEffect(() => {
-    fetch("/api/maintenancefeelist/list")
       .then((res) => res.json())
-      .then((maintenanceFeeList) => {
-        let maintenanceFees = new Array();
+      .then((res) => {
+        console.log(res);
+        const data = maintenanceFeeList.concat(res);
+        setMaintenanceFeeList(data);
 
-        for (let i = 1; i < maintenanceFeeList.length; i++) {
-          maintenanceFees.push({
-            No: i,
-            claimingAgency: maintenanceFeeList.claimingAgency,
-            electronicPaymentNum: maintenanceFeeList.electronicPaymentNum,
-            dueDate: maintenanceFeeList.dueDate,
-            amountDeadline: maintenanceFeeList.amountDeadline,
-          });
-        }
-
-        setMaintenanceFeeList(maintenanceFees);
+        // for(let i = 0; i < res.length; i++){
+        //   setMaintenanceFeeList([...maintenanceFeeList,
+        //     {
+        //       amountDue : res[0].amountDue,
+        //       claimingAgency : res[0].claimingAgency,
+        //       dueDate : res[0].dueDate,
+        //       electronicPaymentNum : res[0].electronicPaymentNum
+        //     }]);
+        // }
       });
-    });
+  }, []);
+  console.log(maintenanceFeeList);
 
-
-    return(
+  return (
     <Container>
-    <div className="maintenanceimage" >
-    <div className="pageheader" style={{marginTop:"50px"}} >관리비 내역 목록</div>
-    </div>
-    <Table bordered={true} style={{ marginBottom: "100px" ,textAlign:"center" }}>
-      <thead>
-        <tr >
-          <th style={{width:"5%"}}>NO.</th>
-          <th>관리비 청구 기관</th>
-          <th>납부 날짜</th>
-          <th>관리비</th>
-          <th>납부 여부</th>
-          <th>영수증 보기</th>
-        </tr>
-        <tr><td>{maintenanceFeeList[i].no}</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
-        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
-        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
-        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
-        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
-        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
-        <tr><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td><td>df</td></tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </Table>
+      <div className="maintenanceimage">
+        <div className="pageheader" style={{ marginTop: "50px" }}>
+          관리비 내역 목록
+        </div>
+      </div>
+      <Table
+        bordered={true}
+        style={{ marginBottom: "100px", textAlign: "center" }}
+      >
+        <thead>
+          <tr>
+            <th style={{ width: "5%" }}>NO.</th>
+            <th>관리비 청구 기관</th>
+            <th>납부 날짜</th>
+            <th>관리비</th>
+            <th>납부 여부</th>
+            <th style={{ width: "140px" }}>영수증 보기</th>
+          </tr>
+        </thead>
+        <tbody>
+          {maintenanceFeeList.map((data) => (
+            <tr>
+              <td></td>
+              <td>{data.amountDue}</td>
+              <td>{data.claimingAgency}</td>
+              <td>{data.dueDate}</td>
+              <td>{data.electronicPaymentNum}</td>
+              <td>
+                <Button variant="primary" onClick={handleShow}>
+                  Launch demo modal
+                </Button>
 
-   
-  </Container>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    Woohoo, you're reading this text in a modal!
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                      Save Changes
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </td>
+            </tr>
+          ))}
+
+          {/* <tr>
+            <td>1</td>
+            <td>{maintenanceFeeList[0]}</td>
+            <td>{maintenanceFeeList[0]}</td>
+            <td>{maintenanceFeeList[0]}</td>
+            <td>{maintenanceFeeList[0]}</td>
+            <td>
+              <Link to="/maintenancefee" className="scopeimage" onClick={handleEvent}>
+                <Button>관리비 내역</Button>
+              </Link>
+            </td>
+        </tr> */}
+          {/* {() => {
+              for (let i = 0; i < maintenanceFeeList.length; i++) {
+                return (
+                  
+                );
+              }
+            }} */}
+        </tbody>
+      </Table>
+    </Container>
   );
-  
 };
 
 export default MaintenanceFeeList;

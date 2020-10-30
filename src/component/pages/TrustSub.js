@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Button, Form, table } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PostFixInput from "./PostFixInput";
 import "./Page.css";
@@ -8,17 +8,24 @@ import "./Page.css";
 const TrustSub = () => {
   const history = useHistory();
   const [trustsub, setTrustsub] = useState({
-    name: "",
+    email: "park12969@naver.com",
+    token: "",
+    preToken: "",
+    username: "",
+    telephoneNum: "",
     realtorName: "",
     realtorTelephoneNum: "",
-    realtorAddress: "",
+    realtorCellphoneNum: "",
     type: "",
     securityDeposit: "",
     rent: "",
+    purpose: "",
     periodStart: "",
     periodEnd: "",
     etc: "",
-    attachments: "",
+    status: "신탁 요청",
+    contract: "",
+    attachments: {},
   });
 
   function handleInputChange(e) {
@@ -41,22 +48,16 @@ const TrustSub = () => {
 
     for (const [key, value] of Object.entries(trustsub)) {
       formData.append(key, value);
-      if (key === "attchments") {
-        formData.append(key, value);
-      }
     }
-    console.log(trustsub);
+    console.log(formData);
 
     fetch("http://192.168.0.22:3001/api/trust/subscription", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(trustsub),
+      body: formData,
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/trustsub");
+          history.push("/trust");
         } else {
           const error = new Error(res.error);
 
@@ -80,10 +81,23 @@ const TrustSub = () => {
             postfix=""
             type="text"
             placeholder="성함"
-            name="name"
-            value={trustsub.name}
+            name="username"
+            value={trustsub.username}
             onChange={handleInputChange}
           />
+
+          <Form.Group controlId="formBasicNegligenceProfit">
+            <Form.Label> 신탁자 전화번호 </Form.Label>
+            <PostFixInput
+              labelText="중개인번호"
+              postfix=""
+              type="text"
+              placeholder="전화번호"
+              name="realtorCellphoneNum"
+              value={trustsub.realtorCellphoneNum}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
         </Form.Group>
         <Form.Group controlId="formBasicTrustProfit">
           <Form.Label> 중개인 이름 </Form.Label>
@@ -212,7 +226,13 @@ const TrustSub = () => {
 
         <Form.Group controlId="formBasicAttachments">
           <Form.Label> 첨부파일 </Form.Label>
-          <Form.File onChange={handleInputChange} />
+          <Form.File
+            // onChange={handleInputChange}
+            onChange={(e) => {
+              setTrustsub({ ...trustsub, attachments: e.target.files[0] });
+            }}
+            name="attachments"
+          />
         </Form.Group>
         <Button variant="primary" type="submit" className="button3">
           신청하기

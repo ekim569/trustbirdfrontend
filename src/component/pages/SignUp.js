@@ -6,7 +6,61 @@ import "./Page.css";
 
 //Sign Up
 const SignUp = () => {
-  
+  const history = useHistory();
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    dateOfBirth: "",
+    gender: "",
+    telephoneNum: "",
+    permission: "user",
+  });
+
+  function selectChange(e) {
+    e.preventDefault();
+    console.log(e.target.value);
+    this.setState({ value: e.target.value });
+  }
+
+  function handleInputChange(e) {
+    e.preventDefault();
+
+    const { value, name } = e.target;
+
+    console.log(value, name);
+
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+
+    fetch("http://192.168.0.22:3001/api/user/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          history.push("/signin");
+        } else {
+          const error = new Error(res.error);
+
+          throw error;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error loggin in please try again");
+      });
+  }
   return (
     <Container style={{ maxWidth: "750px" }}>
       <div className="pageheader">회원가입</div>
@@ -65,8 +119,14 @@ const SignUp = () => {
           <Form.Control
             as="select"
             name="gender"
-            value={user.gender}
-            onChange={handleInputChange}
+            // value={this.value}
+            onChange={
+              (selectChange = (value) => {
+                value = user.gender;
+                return value;
+              })
+            }
+            option
             custom
           >
             <option value="남성">남성</option>

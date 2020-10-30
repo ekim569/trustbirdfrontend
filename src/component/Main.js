@@ -66,7 +66,7 @@ const Main = () => {
             <Route path="/contract">
               <Contract />
             </Route>
-            <Route path="/maintenancefeelist/:pageNo">
+            <Route path="/maintenancefeelist">
               <MaintenanceFeeList />
             </Route>
             <Route path="/maintenancefee">

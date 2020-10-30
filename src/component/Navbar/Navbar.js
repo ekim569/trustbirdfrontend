@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar as BootStrapNavbar,
   Nav,
@@ -13,8 +13,8 @@ import "./Navbar.css";
 import PageLink from "./pageLink";
 
 export default function Navbar(props) {
-  const [isLogined, setIsLogined] = React.useState(false);
-  React.useEffect(() => {
+  const [isLogined, setIsLogined] = useState(false);
+  useEffect(() => {
     setIsLogined(true);
     // setIsLogined(Auth.isLogined());
   }, []);
@@ -84,7 +84,7 @@ export default function Navbar(props) {
                 <NavDropdown.Item href="/contract">
                   신탁 내역 확인
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/maintenancefeelist/1">
+                <NavDropdown.Item href="/maintenancefeelist">
                   관리비 납부내역
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/signModified">
