@@ -54,7 +54,7 @@ const SignUp = () => {
         alert("Error loggin in please try again");
       });
   }
-  
+
   return (
     <Container style={{ maxWidth: "750px" }}>
       <div className="pageheader">회원가입</div>
@@ -118,12 +118,11 @@ const SignUp = () => {
               e.preventDefault();
               setUser({ ...user, gender: e.target.value });
             }}
-            // onChange={(e) => {
-            //   setTrustsub({ ...trustsub, attachments: e.target.files[0] });
-            // }}
             option
             custom
+            required
           >
+            <option>선택</option>
             <option value="남성">남성</option>
             <option value="여성">여성</option>
           </Form.Control>

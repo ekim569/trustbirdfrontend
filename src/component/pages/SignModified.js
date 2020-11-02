@@ -62,6 +62,15 @@ const SignModified = () => {
   function onSubmit(e) {
     e.preventDefault();
 
+    fetch("http://192.168.0.22:3001/test", {
+        mode: "cors",
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization" : `Bearer ${data.token}`
+        }
+      })
     fetch("http://192.168.0.22:3001/api/user/modified", {
       method: "POST",
       headers: {

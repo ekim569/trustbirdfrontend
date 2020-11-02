@@ -20,18 +20,18 @@ const MaintenanceFee = () => {
 
   useEffect(() => {
     const body = {
-      email : "page1111@naver.com"
-    }
+      email: "page1111@naver.com",
+    };
 
     fetch("http://192.168.0.22:3001/api/user/maintenancefee/find", { method:"GET"}, ).then((maintenanceFee) => {
      
       setMaintenanceFee(maintenanceFee);
     });
-  });
+  }, []);
 
   // props, useEffect, useState
   // useHistroy 라우터로 main
-  return(
+  return (
     <Container>
     <Table bordered={true}>
       <thead>
@@ -49,7 +49,7 @@ const MaintenanceFee = () => {
    
   </Container>
   );
- 
+
   // );
 };
 
