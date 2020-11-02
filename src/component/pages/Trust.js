@@ -9,7 +9,7 @@ const Trust = () => {
   const [trust, setTrust] = useState({
     token: "",
     preToken: "",
-    name: "",
+    username: "",
     telephoneNum: "",
     realtorName: "",
     realtorTelephoneNum: "",
@@ -122,27 +122,29 @@ const Trust = () => {
 
 
       
-      <div style={{float:"right"}}> 
+      <div style={{float:"right", marginTop:"60px"}}> 
       <Button
         variant="primary"
         type="submit"
-        className="button1"
+        className="button2"
       >
-        회원가입
+        취소하기
+      </Button>
+      <Button
+        variant="primary"
+        type="submit"
+        className="button2"
+        style={{marginLeft:"16px"}}
+      >
+        신청하기
       </Button>
       </div>
-      <Button
+       <Button
         variant="primary"
         type="submit"
-        className="button1"
+        className="button4"
       >
-        회원가입
-      </Button> <Button
-        variant="primary"
-        type="submit"
-        className="button1"
-      >
-        회원가입
+        가져오기
       </Button>
       </Form>
     </Container>

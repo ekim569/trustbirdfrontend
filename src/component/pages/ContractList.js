@@ -1,4 +1,6 @@
-import React, { Container , useEffect, useState } from "react";
+import React, { Container , useEffect, useState,Link, } from "react";
+import {Table, Pagination, Col,  Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import "../Navbar/Navbar.css";
 import "./Page.css";
 

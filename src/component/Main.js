@@ -30,7 +30,7 @@ const Main = () => {
     <div>
       <Router>
         <Navbar />
-        <div style={{ marginTop: 100 }}>
+        <div style={{ marginTop: 80 }}>
           {/* <Route component={Navbar} /> */}
           <Switch>
             <Route exact path="/main">
@@ -66,7 +66,7 @@ const Main = () => {
             <Route path="/contract">
               <Contract />
             </Route>
-            <Route path="/maintenancefeelist/:pageNo">
+            <Route path="/maintenancefeelist">
               <MaintenanceFeeList />
             </Route>
             <Route path="/maintenancefee">

@@ -8,9 +8,14 @@ import "./Page.css";
 const TrustSub = () => {
   const history = useHistory();
   const [trustsub, setTrustsub] = useState({
-    name: "",
+    email:"page1111@naver.com",
+    token: "",
+    preToken: "",
+    username: "",
+    telephoneNum:"",
     realtorName: "",
     realtorTelephoneNum: "",
+    realtorCellphoneNum:"",
     realtorAddress: "",
     type: "",
     securityDeposit: "",
@@ -18,7 +23,8 @@ const TrustSub = () => {
     periodStart: "",
     periodEnd: "",
     etc: "",
-    attachments: "",
+    status: "신탁 요청",
+    attachments: {},
   });
 
   function handleInputChange(e) {
@@ -80,11 +86,24 @@ const TrustSub = () => {
             postfix=""
             type="text"
             placeholder="성함"
-            name="name"
-            value={trustsub.name}
+            name="username"
+            value={trustsub.username}
             onChange={handleInputChange}
           />
         </Form.Group>
+        <Form.Group controlId="formBasicNegligenceProfit">
+          <Form.Label> 신탁자 전화번호 </Form.Label>
+          <PostFixInput
+            labelText="신탁자번호"
+            postfix=""
+            type="text"
+            placeholder="전화번호"
+            name="telephoneNum"
+            value={trustsub.telephoneNum}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
         <Form.Group controlId="formBasicTrustProfit">
           <Form.Label> 중개인 이름 </Form.Label>
           <PostFixInput
@@ -105,11 +124,12 @@ const TrustSub = () => {
             postfix=""
             type="text"
             placeholder="전화번호"
-            name="realtorTelephoneNum"
-            value={trustsub.realtorTelephoneNum}
+            name="realtorCellphoneNum"
+            value={trustsub.realtorCellphoneNum}
             onChange={handleInputChange}
           />
         </Form.Group>
+
 
         <Form.Group controlId="formBasicNegligenceProfit">
           <Form.Label> 중개인 주소</Form.Label>

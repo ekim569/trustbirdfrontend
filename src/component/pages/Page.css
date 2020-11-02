@@ -155,7 +155,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 97vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -179,5 +179,53 @@
   align-items: center;
   justify-content: center;
   color: white;
-  margin-top: 150px;
+  margin-top: 0;
+}
+
+.scopeimage {
+  background: linear-gradient(
+      to left,
+      rgba(56, 56, 56, 0),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://w7.pngwing.com/pngs/436/236/png-transparent-computer-icons-magnifier-magnifying-glass-loupe-text-technic-zooming-user-interface-thumbnail.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 24px;
+  max-width: 24px; /* 넓이를 지정 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: auto;
+}
+
+@media (min-width: 576px) {
+  .custom-dialog {
+    max-width: 1100px;
+  }
+}
+
+.custom-dialog {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .custom-dialog {
+    max-width: 698px;
+  }
+}
+
+@media (min-width: 992px) {
+  .custom-dialog {
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .custom-dialog {
+    max-width: 1100px;
+  }
 }

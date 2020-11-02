@@ -27,6 +27,36 @@ const SignModified = () => {
       ...user,
       [name]: value,
     });
+
+  // useEffect(() => {
+  //   const body= {
+  //     email : "page1111@naver.com"
+  //   }
+  //   fetch("http://192.168.0.22:3001/api/user/signmodified", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(body)
+  //   })
+  //   .then((res) => res.json())
+  //   .then((res) => {
+  //     console.log(res)
+  //     const data = maintenanceFeeList.concat(res)
+  //     setMaintenanceFeeList(data)
+      
+      // for(let i = 0; i < res.length; i++){
+      //   setMaintenanceFeeList([...maintenanceFeeList,
+      //     {
+      //       amountDue : res[0].amountDue,
+      //       claimingAgency : res[0].claimingAgency,
+      //       dueDate : res[0].dueDate,
+      //       electronicPaymentNum : res[0].electronicPaymentNum
+      //     }]);
+//       // }
+// //   });
+// // },[])
+// console.log(maintenanceFeeList)}
   }
 
   function onSubmit(e) {
@@ -34,7 +64,7 @@ const SignModified = () => {
 
     fetch("http://192.168.0.22:3001/api/user/signmodified", {
       method: "POST",
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
