@@ -7,12 +7,12 @@ import "./Page.css";
 const MaintenanceFee = () => {
   const history = useHistory();
   const [maintenanceFee, setMaintenanceFee] = useState({
-    claimingAgency: "",
-    electronicPaymentNum: "",
-    dueDate: "",
-    deadline: "",
-    amountDeadline: "",
-    amountDueDate:"",
+    claimingAgency: "공작아파트",
+    electronicPaymentNum: "1546283",
+    startDate: "20/10/10",
+    dueDate: "20/11/10",
+    amountDeadline: "35000원",
+    amountDueDate:"42000원",
     payment: "",
     payer: "",
     giro: "",
@@ -23,8 +23,8 @@ const MaintenanceFee = () => {
       email : "page1111@naver.com"
     }
 
-    fetch("http://192.168.0.22:3001/api/user/maintenancefee/find").then((maintenanceFee) => {
-      method:"GET"
+    fetch("http://192.168.0.22:3001/api/user/maintenancefee/find", { method:"GET"}, ).then((maintenanceFee) => {
+     
       setMaintenanceFee(maintenanceFee);
     });
   });
@@ -35,15 +35,12 @@ const MaintenanceFee = () => {
     <Container>
     <Table bordered={true}>
       <thead>
-        <tr >
-          <th>관리비 청구 기관</th>
-          <th>관리비 전자납부번호</th>
-          <th>관리비 납기 내 기한</th>
-          <th>관리비 납기 후 기한</th>
-          <th>관리비 납기 내 금액</th>
-          <th>관리비 납기 후 금액</th>
-        </tr>
-        <tr><td>{maintenanceFee.claimingAgency}</td><td>{maintenanceFee.electronicPaymentNum}</td><td>{maintenanceFee.dueDate}</td><td>{maintenanceFee.deadline}</td><td>{maintenanceFee.amountDueDate}</td><td>{maintenanceFee.amountDeadline}</td></tr>
+        <tr><th>관리비 청구 기관</th><td>{maintenanceFee.claimingAgency}</td></tr>
+        <tr><th>관리비 전자납부번호</th><td>{maintenanceFee.electronicPaymentNum}</td></tr>
+        <tr><th>관리비 납기일</th><td>{maintenanceFee.dueDate}</td></tr>
+        <tr><th>관리비 납기 내 금액</th><td>{maintenanceFee.payment}</td></tr>
+        <tr><th>관리비 납기 후 금액</th><td>{maintenanceFee.amountDueDate}</td></tr>
+        <tr></tr>
       </thead>
       <tbody>
       </tbody>

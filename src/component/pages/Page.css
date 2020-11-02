@@ -17,6 +17,16 @@
   margin-bottom: 30px;
 }
 
+.modalheader {
+  font-size: 32px;
+  padding: auto;
+  color: #3b72f2;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+  max-width: 100%;
+}
+
 .containerborder {
   border: 1px solid #3b72f2;
   max-width: 1400px;

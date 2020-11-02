@@ -62,7 +62,7 @@ const SignModified = () => {
   function onSubmit(e) {
     e.preventDefault();
 
-    fetch("http://192.168.0.22:3001/api/user/signmodified", {
+    fetch("http://192.168.0.22:3001/api/user/modified", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -149,7 +149,7 @@ const SignModified = () => {
 
         <Form.Group controlId="formBasicGender">
           <Form.Label> 성별 </Form.Label>
-          <select value={this.state.value} onChange></select>
+          <select  onChange></select>
         </Form.Group>
 
         <Form.Group controlId="formBasicTelephoneNum">
@@ -165,7 +165,7 @@ const SignModified = () => {
         <Button
           variant="primary"
           type="submit"
-          style={{ float: "right", marginTop: "16px", marginBottom: "30px" }}
+          className="button3"
         >
           수정하기
         </Button>

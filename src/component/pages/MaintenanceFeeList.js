@@ -97,37 +97,17 @@ console.log(maintenanceFeeList)
       
       </Button>
 
-      <Modal show={show} onHide={handleClose} dialogClassName="custom-dialog"> 
-        <Modal.Header closeButton>
-          <Modal.Title className="sectionheader">관리비 내역</Modal.Title>
+      <Modal show={show} onHide={handleClose} dialogClassName="custom-dialog" > 
+        <Modal.Header closeButton style={{maxWidth:"100%"}}>
+          <Modal.Title className="modalheader">관리비 내역</Modal.Title>
         </Modal.Header>
         <Modal.Body> <MaintenanceFee/> </Modal.Body>
-      </Modal></td>
-
-        </tr>
-        
-            ))
-          }
-          
-          {/* <tr>
-            <td>1</td>
-            <td>{maintenanceFeeList[0]}</td>
-            <td>{maintenanceFeeList[0]}</td>
-            <td>{maintenanceFeeList[0]}</td>
-            <td>{maintenanceFeeList[0]}</td>
-            <td>
-              <Link to="/maintenancefee" className="scopeimage" onClick={handleEvent}>
-                <Button>관리비 내역</Button>
-              </Link>
-            </td>
-        </tr> */}
-            {/* {() => {
-              for (let i = 0; i < maintenanceFeeList.length; i++) {
-                return (
-                  
-                );
-              }
-            }} */}
+      </Modal>
+      </td>
+      </tr>
+    
+      ))
+      }         
           </tbody>
       </Table>
   </Container>

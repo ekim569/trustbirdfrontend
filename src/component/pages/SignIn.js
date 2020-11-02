@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Logo from "../icons/LogoIcon";
-import { CookieStorage } from "cookie-storage";
+import AuthToken from "../../storages/Auth"
 import "./Page.css";
 
 //Sign In
@@ -29,9 +29,6 @@ const SignIn = () => {
   function onSubmit(e) {
     e.preventDefault();
 
-    const cookieStorage = new CookieStorage();
-    const sid = cookieStorage.getItem("connect.sid");
-
     fetch("http://192.168.0.22:3001/api/user/signin", {
       mode: "cors",
       method: "POST",
@@ -42,23 +39,19 @@ const SignIn = () => {
       body: JSON.stringify(user),
     })
       .then((res) => {
-        fetch("http://192.168.0.22:3001/test", {
-          mode: "cors",
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
-        }).then((res) => {
-          console.log(res.body);
-          if (res.status === 200) {
-            history.push("/");
-          } else {
-            const error = new Error(res.error);
+        if(res.status === 201){
+          return res.json(res)
+        } else {
+          alert("Try again login")
+        }
+      })
+      .then((res) => {
+        AuthToken.set(res.token)
+        
+        console.log(AuthToken.get())
 
-            throw error;
-          }
-        });
+        history.push('/');
+        window.location.reload();
       })
       .catch((err) => {
         console.error(err);
