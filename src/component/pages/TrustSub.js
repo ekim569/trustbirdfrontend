@@ -184,13 +184,37 @@ const TrustSub = () => {
             controlId="formBasicMonthly"
             style={{ display: "inline-block", marginRight: "32px" }}
           >
-            <Form.Check type="checkbox" label="전세" required />
+            <Form.Check
+              type="checkbox"
+              name="purpose"
+              // value={trustsub.purpose}
+              onChange={(e) => {
+                console.log(e.target.value);
+                e.preventDefault();
+                setTrustsub({ ...trustsub, purpose: e.target.value });
+              }}
+              value="전세"
+              label="전세"
+              required
+            />
           </Form>
           <Form
             controlId="formBasicResevations"
             style={{ display: "inline-block" }}
           >
-            <Form.Check type="checkbox" label="월세" required />
+            <Form.Check
+              type="checkbox"
+              name="purpose"
+              // value={trustsub.purpose}
+              onChange={(e) => {
+                console.log(e.target.value);
+                e.preventDefault();
+                setTrustsub({ ...trustsub, purpose: e.target.value });
+              }}
+              value="월세"
+              label="월세"
+              required
+            />
           </Form>
         </div>
 

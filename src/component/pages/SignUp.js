@@ -12,16 +12,16 @@ const SignUp = () => {
     email: "",
     password: "",
     dateOfBirth: "",
-    gender: "",
+    gender: "남성",
     telephoneNum: "",
     permission: "user",
   });
 
-  function selectChange(e) {
-    e.preventDefault();
-    console.log(e.target.value);
-    this.setState({ value: e.target.value });
-  }
+  // function selectChange(e) {
+  //   e.preventDefault();
+  //   console.log(e.target.value);
+  //   this.setState({ value: e.target.value });
+  // }
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -119,13 +119,14 @@ const SignUp = () => {
           <Form.Control
             as="select"
             name="gender"
-            // value={this.value}
-            onChange={
-              (selectChange = (value) => {
-                value = user.gender;
-                return value;
-              })
-            }
+            value={user.gender}
+            onChange={(e) => {
+              e.preventDefault();
+              setUser({ ...user, gender: e.target.value });
+            }}
+            // onChange={(e) => {
+            //   setTrustsub({ ...trustsub, attachments: e.target.files[0] });
+            // }}
             option
             custom
           >
