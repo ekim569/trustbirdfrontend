@@ -114,7 +114,14 @@ const SignUp = () => {
             as="select"
             name="gender"
             value={user.gender}
-            onChange={handleInputChange}
+            onChange={(e) => {
+              e.preventDefault();
+              setUser({ ...user, gender: e.target.value });
+            }}
+            // onChange={(e) => {
+            //   setTrustsub({ ...trustsub, attachments: e.target.files[0] });
+            // }}
+            option
             custom
           >
             <option value="남성">남성</option>

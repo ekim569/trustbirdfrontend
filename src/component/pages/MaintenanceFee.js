@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Container, Table, Pagination, Col } from "react-bootstrap";
-import { useHistory, useParams } from "react-router-dom";
+import { Container, Table, Col } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import "./Page.css";
 
 //Maintenance Fee
@@ -14,8 +14,8 @@ const MaintenanceFee = () => {
     amountDeadline: "",
     amountDueDate:"",
     payment: "",
-    payer:"",
-    giro:"",
+    payer: "",
+    giro: "",
   });
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Button, Form, table } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PostFixInput from "./PostFixInput";
 import "./Page.css";
@@ -20,6 +20,7 @@ const TrustSub = () => {
     type: "",
     securityDeposit: "",
     rent: "",
+    purpose: "",
     periodStart: "",
     periodEnd: "",
     etc: "",
@@ -47,22 +48,16 @@ const TrustSub = () => {
 
     for (const [key, value] of Object.entries(trustsub)) {
       formData.append(key, value);
-      if (key === "attchments") {
-        formData.append(key, __filename);
-      }
     }
-    console.log(trustsub);
+    console.log(formData);
 
     fetch("http://192.168.0.22:3001/api/trust/subscription", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(trustsub),
+      body: formData,
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/trustsub");
+          history.push("/trust");
         } else {
           const error = new Error(res.error);
 
@@ -90,6 +85,19 @@ const TrustSub = () => {
             value={trustsub.username}
             onChange={handleInputChange}
           />
+
+          <Form.Group controlId="formBasicNegligenceProfit">
+            <Form.Label> 신탁자 전화번호 </Form.Label>
+            <PostFixInput
+              labelText="중개인번호"
+              postfix=""
+              type="text"
+              placeholder="전화번호"
+              name="realtorCellphoneNum"
+              value={trustsub.realtorCellphoneNum}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
         </Form.Group>
         <Form.Group controlId="formBasicNegligenceProfit">
           <Form.Label> 신탁자 전화번호 </Form.Label>
@@ -190,13 +198,37 @@ const TrustSub = () => {
             controlId="formBasicMonthly"
             style={{ display: "inline-block", marginRight: "32px" }}
           >
-            <Form.Check type="checkbox" label="전세" required />
+            <Form.Check
+              type="checkbox"
+              name="purpose"
+              // value={trustsub.purpose}
+              onChange={(e) => {
+                console.log(e.target.value);
+                e.preventDefault();
+                setTrustsub({ ...trustsub, purpose: e.target.value });
+              }}
+              value="전세"
+              label="전세"
+              required
+            />
           </Form>
           <Form
             controlId="formBasicResevations"
             style={{ display: "inline-block" }}
           >
-            <Form.Check type="checkbox" label="월세" required />
+            <Form.Check
+              type="checkbox"
+              name="purpose"
+              // value={trustsub.purpose}
+              onChange={(e) => {
+                console.log(e.target.value);
+                e.preventDefault();
+                setTrustsub({ ...trustsub, purpose: e.target.value });
+              }}
+              value="월세"
+              label="월세"
+              required
+            />
           </Form>
         </div>
 
@@ -232,7 +264,13 @@ const TrustSub = () => {
 
         <Form.Group controlId="formBasicAttachments">
           <Form.Label> 첨부파일 </Form.Label>
-          <Form.File onChange={handleInputChange} />
+          <Form.File
+            // onChange={handleInputChange}
+            onChange={(e) => {
+              setTrustsub({ ...trustsub, attachments: e.target.files[0] });
+            }}
+            name="attachments"
+          />
         </Form.Group>
         <Button variant="primary" type="submit" className="button3">
           신청하기

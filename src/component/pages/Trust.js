@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container,  Button, Form, Row, Col, table } from "react-bootstrap";
+import { Container, Button, Form, Row, Col, table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "./Page.css";
 
@@ -68,14 +68,19 @@ const Trust = () => {
   }
 
   return (
-    <Container style={{ maxWidth: "720px", padding:0 , }} >
+    <Container style={{ maxWidth: "720px", padding: 0 }}>
       <div className="pageheader">신탁신청서</div>
-      <Form>
-    <table className="tablelayout">
-        <tr className="tableborder">
-            <td className="tableborder" style={{ width:"250px"}}>중개인 이름</td>
-            <td className="tableborder" colspan="4" >     {trust.realtorName}       </td>
-            </tr>
+      <Form onSubmit={onSubmit}>
+        <table className="tablelayout">
+          <tr className="tableborder">
+            <td className="tableborder" style={{ width: "250px" }}>
+              중개인 이름
+            </td>
+            <td className="tableborder" colspan="4">
+              {" "}
+              {trust.realtorName}{" "}
+            </td>
+          </tr>
           <tr className="tableborder">
             <td className="tableborder" style={{ width: "250px" }}>
               중개인 이름
