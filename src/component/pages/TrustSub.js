@@ -8,14 +8,14 @@ import "./Page.css";
 const TrustSub = () => {
   const history = useHistory();
   const [trustsub, setTrustsub] = useState({
-    email:"page1111@naver.com",
+    email: "page1111@naver.com",
     token: "",
     preToken: "",
     username: "",
-    telephoneNum:"",
+    telephoneNum: "",
     realtorName: "",
     realtorTelephoneNum: "",
-    realtorCellphoneNum:"",
+    realtorCellphoneNum: "",
     realtorAddress: "",
     type: "",
     securityDeposit: "",
@@ -137,7 +137,6 @@ const TrustSub = () => {
             onChange={handleInputChange}
           />
         </Form.Group>
-
 
         <Form.Group controlId="formBasicNegligenceProfit">
           <Form.Label> 중개인 주소</Form.Label>

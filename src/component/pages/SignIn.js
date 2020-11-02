@@ -42,23 +42,14 @@ const SignIn = () => {
       body: JSON.stringify(user),
     })
       .then((res) => {
-        fetch("http://192.168.0.22:3001/test", {
-          mode: "cors",
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
-        }).then((res) => {
-          console.log(res.body);
-          if (res.status === 200) {
-            history.push("/");
-          } else {
-            const error = new Error(res.error);
+        console.log(res.body);
+        if (res.status === 201) {
+          history.push("/");
+        } else {
+          const error = new Error(res.error);
 
-            throw error;
-          }
-        });
+          throw error;
+        }
       })
       .catch((err) => {
         console.error(err);

@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import { Button, Container, Row, Col } from "react-bootstrap";
-import ReactFullpage from "@fullpage/react-fullpage";
 
 import Footer from "./pages/Footer";
 import Home from "./pages/Home";
@@ -25,7 +23,21 @@ import Navbar from "../component/Navbar/Navbar";
 //   require('./statics/fullpage.scrollHorizontally.min');
 // };
 
-const Main = () => {
+const Main = (props) => {
+  const [token, setToken] = useState({});
+
+  useEffect(() => {
+    fetch("http://192.168.0.22:3001/test", {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  });
+
   return (
     <div>
       <Router>
@@ -79,7 +91,7 @@ const Main = () => {
               <Withdrawal />
             </Route>
             <Route path="/signin">
-              <SignIn />
+              <SignIn {...token} />
             </Route>
             <Route path="/signup">
               <SignUp />
