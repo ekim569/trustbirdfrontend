@@ -10,7 +10,7 @@ const Pagination = ({ active, last, paginationLimite, onClick }) => {
             <BSPagination.Prev
               onClick={() =>
                 onClick(
-                  Math.floor(active / paginationLimite) * paginationLimite
+                  (Math.floor(active / paginationLimite) - 1) * paginationLimite
                 )
               }
             />
@@ -19,12 +19,22 @@ const Pagination = ({ active, last, paginationLimite, onClick }) => {
       })()}
 
       {(() => {
-        let length =
-          Math.ceil(active / paginationLimite) * paginationLimite > last
-            ? Math.ceil(active / paginationLimite) * paginationLimite
-            : last;
-
+        let length = 1;
         let start = 1;
+
+        if (
+          Math.ceil(active / paginationLimite) <
+          Math.ceil(last / paginationLimite)
+        ) {
+          length = Math.ceil(active / paginationLimite) * paginationLimite;
+          start = length - paginationLimite + 1;
+        } else {
+          length = last;
+          start =
+            last % paginationLimite === 0
+              ? last - paginationLimite + 1
+              : last - (last % paginationLimite) + 1;
+        }
 
         let array = new Array();
 
@@ -48,12 +58,15 @@ const Pagination = ({ active, last, paginationLimite, onClick }) => {
       })()}
 
       {(() => {
-        if (last > paginationLimite && active !== last) {
+        if (
+          Math.ceil(last / paginationLimite) >
+          Math.ceil(active / paginationLimite)
+        ) {
           return (
             <BSPagination.Next
               onClick={() =>
                 onClick(
-                  Math.ceil(active / paginationLimite) * paginationLimite + 1
+                  Math.floor(active / paginationLimite) * paginationLimite + 1
                 )
               }
             />

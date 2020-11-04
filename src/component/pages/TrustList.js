@@ -9,8 +9,8 @@ const TrustList = () => {
   const [trustList, setTrustList] = React.useState([]);
   const [loc, setLoc] = React.useState(1);
 
-  const pageLimit = 1;
-  const paginationLimite = 1;
+  const pageLimit = 5;
+  const paginationLimite = 5;
 
   React.useEffect(() => {
     fetch("http://192.168.0.143:3001/api/user/trustlist", {
