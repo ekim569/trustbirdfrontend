@@ -11,7 +11,7 @@ import Logo from "../icons/LogoIcon";
 import "./Navbar.css";
 
 import PageLink from "./pageLink";
-import AuthToken from '../../storages/Auth'
+import AuthToken from "../../storages/Auth";
 
 export default function Navbar(props) {
   const [token, setToken] = useState();
@@ -20,36 +20,36 @@ export default function Navbar(props) {
   useEffect(() => {
     const _token = AuthToken.get();
 
-    if(_token !== ""){
-      setToken(_token)
-    
-      fetch("http://192.168.0.22:3001/api/user/infomation", {
+    if (_token !== "") {
+      setToken(_token);
+
+      fetch("http://192.168.0.143:3001/api/user/infomation", {
         mode: "cors",
         method: "GET",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          "Authorization" : `Bearer ${_token}`
-        }
+          Authorization: `Bearer ${_token}`,
+        },
       })
-      .then((res) => {
-        if(res.status === 200) {
-          return res.json()
-        }
-      })
-      .then((res) => {
-        setUsername(res.user.username)
-      }).catch((e)=>{
-        console.error(e)
-      })
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          }
+        })
+        .then((res) => {
+          setUsername(res.user.username);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
-  },[token])
+  }, [token]);
 
-  const onClickSignOut = (() => {
-    setToken("")
-    AuthToken.set("")
-  });
-
+  const onClickSignOut = () => {
+    setToken("");
+    AuthToken.set("");
+  };
 
   return (
     <BootStrapNavbar
@@ -105,33 +105,37 @@ export default function Navbar(props) {
               <PageLink to="/serviceintro">정보소개</PageLink>
             </Nav.Link>
             {token ? (
-              <div  >
-              <img className="usericon" src='https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg' />{username}
-              <NavDropdown
-                title=""
-                id="basic-nav-dropdown"
-                style={{display:"inline-block"}}
-                className="navlink"
-              >
-                <NavDropdown.Item href="#action/3.1">
-                  멤버십 신청
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/contract">
-                  신탁 내역 확인
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/maintenancefeelist">
-                  관리비 납부내역
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/signModified">
-                  회원 정보 수정
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/withdrawal">
-                  회원 탈퇴
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/" onClick={onClickSignOut}>
-                  로그아웃
-                </NavDropdown.Item>
-              </NavDropdown>
+              <div>
+                <img
+                  className="usericon"
+                  src="https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg"
+                />
+                {username}
+                <NavDropdown
+                  title=""
+                  id="basic-nav-dropdown"
+                  style={{ display: "inline-block" }}
+                  className="navlink"
+                >
+                  <NavDropdown.Item href="#action/3.1">
+                    멤버십 신청
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/contract">
+                    신탁 내역 확인
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/maintenancefeelist">
+                    관리비 납부내역
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/signModified">
+                    회원 정보 수정
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/withdrawal">
+                    회원 탈퇴
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/" onClick={onClickSignOut}>
+                    로그아웃
+                  </NavDropdown.Item>
+                </NavDropdown>
               </div>
             ) : (
               <Nav.Link href="/signin" className="navlink">

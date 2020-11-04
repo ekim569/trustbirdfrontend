@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import "./Page.css";
 
 //Sign Up
-const SignUp = () => {
+const SignUp = (props) => {
   const history = useHistory();
   const [user, setUser] = useState({
     username: "",
@@ -33,7 +33,7 @@ const SignUp = () => {
   function onSubmit(e) {
     e.preventDefault();
 
-    fetch("http://192.168.0.22:3001/api/user/signup", {
+    fetch("http://192.168.0.143:3001/api/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

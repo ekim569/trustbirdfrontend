@@ -28,50 +28,50 @@ const SignModified = () => {
       [name]: value,
     });
 
-  // useEffect(() => {
-  //   const body= {
-  //     email : "page1111@naver.com"
-  //   }
-  //   fetch("http://192.168.0.22:3001/api/user/signmodified", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(body)
-  //   })
-  //   .then((res) => res.json())
-  //   .then((res) => {
-  //     console.log(res)
-  //     const data = maintenanceFeeList.concat(res)
-  //     setMaintenanceFeeList(data)
-      
-      // for(let i = 0; i < res.length; i++){
-      //   setMaintenanceFeeList([...maintenanceFeeList,
-      //     {
-      //       amountDue : res[0].amountDue,
-      //       claimingAgency : res[0].claimingAgency,
-      //       dueDate : res[0].dueDate,
-      //       electronicPaymentNum : res[0].electronicPaymentNum
-      //     }]);
-//       // }
-// //   });
-// // },[])
-// console.log(maintenanceFeeList)}
+    // useEffect(() => {
+    //   const body= {
+    //     email : "page1111@naver.com"
+    //   }
+    //   fetch("http://192.168.0.143:3001/api/user/signmodified", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(body)
+    //   })
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     console.log(res)
+    //     const data = maintenanceFeeList.concat(res)
+    //     setMaintenanceFeeList(data)
+
+    // for(let i = 0; i < res.length; i++){
+    //   setMaintenanceFeeList([...maintenanceFeeList,
+    //     {
+    //       amountDue : res[0].amountDue,
+    //       claimingAgency : res[0].claimingAgency,
+    //       dueDate : res[0].dueDate,
+    //       electronicPaymentNum : res[0].electronicPaymentNum
+    //     }]);
+    //       // }
+    // //   });
+    // // },[])
+    // console.log(maintenanceFeeList)}
   }
 
   function onSubmit(e) {
     e.preventDefault();
 
-    fetch("http://192.168.0.22:3001/test", {
-        mode: "cors",
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization" : `Bearer ${data.token}`
-        }
-      })
-    fetch("http://192.168.0.22:3001/api/user/modified", {
+    // fetch("http://192.168.0.143:3001/test", {
+    //   mode: "cors",
+    //   method: "GET",
+    //   credentials: "include",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
+    fetch("http://192.168.0.143:3001/api/user/modified", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -93,10 +93,10 @@ const SignModified = () => {
   }
 
   return (
-    <Container style={{ maxWidth: "720px" }} >
+    <Container style={{ maxWidth: "720px" }}>
       <div className="pageheader">회원정보 수정</div>
 
-      <Form  className="sign-form">
+      <Form className="sign-form">
         <Form.Group controlId="formBasicUsername">
           <Form.Label> 사용자 이름 </Form.Label>
           <Form.Control
@@ -158,7 +158,7 @@ const SignModified = () => {
 
         <Form.Group controlId="formBasicGender">
           <Form.Label> 성별 </Form.Label>
-          <select  onChange></select>
+          <select onChange></select>
         </Form.Group>
 
         <Form.Group controlId="formBasicTelephoneNum">
@@ -171,11 +171,7 @@ const SignModified = () => {
             required
           />
         </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          className="button3"
-        >
+        <Button variant="primary" type="submit" className="button3">
           수정하기
         </Button>
       </Form>

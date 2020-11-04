@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PostFixInput from "./PostFixInput";
+import AuthToken from "../../storages/Auth";
 import "./Page.css";
 
 //Trust Subscription
 const TrustSub = () => {
+  const token = AuthToken.get();
+
   const history = useHistory();
   const [trustsub, setTrustsub] = useState({
-    email: "page1111@naver.com",
     token: "",
     preToken: "",
     username: "",
@@ -25,7 +27,9 @@ const TrustSub = () => {
     periodEnd: "",
     etc: "",
     status: "신탁 요청",
+    contract: "",
     attachments: {},
+    etc: "",
   });
 
   function handleInputChange(e) {
@@ -47,12 +51,29 @@ const TrustSub = () => {
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(trustsub)) {
+      if (key === "attachments") {
+        continue;
+      }
       formData.append(key, value);
     }
-    console.log(formData);
+    formData.append("attachments", trustsub.attachments);
+    // formData.append("files", {
+    //   uri: pickerResponse.uri,
+    //   type: pickerResponse.type,
+    //   name: pickerResponse.fileName,
+    // });
+    // formData.append('attachement', trustsub.attachments)
 
-    fetch("http://192.168.0.22:3001/api/trust/subscription", {
+    console.log(formData);
+    console.log(trustsub);
+
+    fetch("http://192.168.0.143:3001/api/trust/subscription", {
+      mode: "cors",
       method: "POST",
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     })
       .then((res) => {

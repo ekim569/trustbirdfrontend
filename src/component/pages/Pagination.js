@@ -1,86 +1,72 @@
-import React, { useState } from "react";
-import { Pagination as ReactPagination } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import { Pagination as BSPagination } from "react-bootstrap";
 
-const Pagination = (props) => {
-  const [pagination, setPagination] = useState({
-    totalLength: "totalLength" in props ? this.props.totalLength : 0,
-    row: "row" in props ? this.props.row : 5,
-    currentPaginationNo:
-      "currentPaginationNo" in props ? this.props.currentPaginationNo : 1,
-    path: "path" in props ? this.props.path : "",
-    currentSection: pagination.totalLength > 5 ? 5 : pagination.totalLength,
-  });
-  const history = useHistory();
-
+const Pagination = ({ active, last, paginationLimite, onClick }) => {
   return (
-    <ReactPagination
-      style={{ marginBottom: "50px", margin: "auto", width: "fit-content" }}
-    >
-      {() => {
-        if (pagination.currentSection > pagination.row) {
+    <BSPagination>
+      {(() => {
+        if (active > paginationLimite) {
           return (
-            <ReactPagination.Prev
-              onClick={(e) => {
-                setPagination({
-                  currentSection: (pagination.currentSection -= pagination.row),
-                });
-              }}
-            >
-              이전
-            </ReactPagination.Prev>
+            <BSPagination.Prev
+              onClick={() =>
+                onClick(
+                  Math.floor(active / paginationLimite) * paginationLimite
+                )
+              }
+            />
           );
         }
-      }}
+      })()}
 
-      {() => {
-        for (
-          let paginationNo = pagination.currentSection + 1;
-          paginationNo <= pagination.currentSection + pagination.row;
-          paginationNo++
-        ) {
-          return (
-            <ReactPagination.Item
-              key={paginationNo}
-              active={paginationNo === pagination.currentPaginationNo}
-              onClick={(e) => {
-                history.push({
-                  pathname: pagination.path,
-                  state: { currentLocation: e.target.key },
-                });
-              }}
-            >
-              {paginationNo}
-            </ReactPagination.Item>
-          );
+      {(() => {
+        let length =
+          Math.ceil(active / paginationLimite) * paginationLimite > last
+            ? Math.ceil(active / paginationLimite) * paginationLimite
+            : last;
+
+        let start = 1;
+
+        let array = new Array();
+
+        for (let index = start; index <= length; index++) {
+          if (index === active) {
+            array.push(
+              <BSPagination.Item onClick={() => onClick(index)} active>
+                {index}
+              </BSPagination.Item>
+            );
+          } else {
+            array.push(
+              <BSPagination.Item onClick={() => onClick(index)}>
+                {index}
+              </BSPagination.Item>
+            );
+          }
         }
 
-        setPagination({
-          currentSection: (pagination.currentSection =
-            pagination.currentSection + pagination.row >
-            Math.ceil(pagination.totalLength / pagination.row)
-              ? Math.ceil(pagination.totalLength / pagination.row)
-              : pagination.currentSection + pagination.row),
-        });
-      }}
+        return array;
+      })()}
 
-      {() => {
-        if (pagination.currentSection < pagination.totalLength) {
+      {(() => {
+        if (last > paginationLimite && active !== last) {
           return (
-            <ReactPagination.Next
-              onClick={(e) => {
-                setPagination({
-                  currentSection: (pagination.currentSection += pagination.row),
-                });
-              }}
-            >
-              이전
-            </ReactPagination.Next>
+            <BSPagination.Next
+              onClick={() =>
+                onClick(
+                  Math.ceil(active / paginationLimite) * paginationLimite + 1
+                )
+              }
+            />
           );
         }
-      }}
-    </ReactPagination>
+      })()}
+    </BSPagination>
   );
 };
 
-module.exports = Pagination;
+Pagination.defaultProps = {
+  active: 1,
+  paginationLimite: 5,
+};
+
+export default Pagination;

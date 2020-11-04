@@ -19,25 +19,13 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Navbar from "../component/Navbar/Navbar";
 
+import TrustList from "./pages/TrustList";
+
 // const pluginWrapper = () => {
 //   require('./statics/fullpage.scrollHorizontally.min');
 // };
 
 const Main = (props) => {
-  const [token, setToken] = useState({});
-
-  useEffect(() => {
-    fetch("http://192.168.0.22:3001/test", {
-      mode: "cors",
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  });
-
   return (
     <div>
       <Router>
@@ -91,14 +79,15 @@ const Main = (props) => {
               <Withdrawal />
             </Route>
             <Route path="/signin">
-              <SignIn {...token} />
+              <SignIn />
             </Route>
             <Route path="/signup">
-              <SignUp/>
+              <SignUp />
             </Route>
             <Route path="/footer">
               <Footer />
             </Route>
+            <Route path="/trustlist" component={TrustList} />
             {/* <Route path="/signout">
                     <SignOut />
                 </Route> */}

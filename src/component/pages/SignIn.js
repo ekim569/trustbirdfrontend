@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Logo from "../icons/LogoIcon";
-import AuthToken from "../../storages/Auth"
+import AuthToken from "../../storages/Auth";
 import "./Page.css";
 
 //Sign In
@@ -29,7 +29,7 @@ const SignIn = () => {
   function onSubmit(e) {
     e.preventDefault();
 
-    fetch("http://192.168.0.22:3001/api/user/signin", {
+    fetch("http://192.168.0.143:3001/api/user/signin", {
       mode: "cors",
       method: "POST",
       credentials: "include",
@@ -39,18 +39,18 @@ const SignIn = () => {
       body: JSON.stringify(user),
     })
       .then((res) => {
-        if(res.status === 201){
-          return res.json(res)
+        if (res.status === 201) {
+          return res.json(res);
         } else {
-          alert("Try again login")
+          alert("Try again login");
         }
       })
       .then((res) => {
-        AuthToken.set(res.token)
-        
-        console.log(AuthToken.get())
+        AuthToken.set(res.token);
 
-        history.push('/');
+        console.log(AuthToken.get());
+
+        history.push("/");
         window.location.reload();
       })
       .catch((err) => {

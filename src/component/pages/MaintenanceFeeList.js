@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Container, Table, Pagination, Button } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Container, Table, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import MaintenanceFee from "./MaintenanceFee";
 
@@ -10,10 +10,10 @@ import "./Page.css";
 //Maintenance Fee List
 const MaintenanceFeeList = () => {
   const [maintenanceFeeList, setMaintenanceFeeList] = useState([]);
-  const history = useHistory();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const history = useHistory();
 
   const handleEvent = (e) => {
     e.preventDefault();
@@ -41,7 +41,7 @@ const MaintenanceFeeList = () => {
       email: "page1111@naver.com",
     };
 
-    fetch("http://192.168.0.22:3001/api/user/maintenancefeelist", {
+    fetch("http://192.168.0.143:3001/api/user/maintenancefeelist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ const MaintenanceFeeList = () => {
         const data = maintenanceFeeList.concat(res);
         setMaintenanceFeeList(data);
       });
-  }, []);
+  });
   console.log(maintenanceFeeList);
 
   return (
@@ -93,18 +93,24 @@ const MaintenanceFeeList = () => {
                   className="scopeimage"
                 ></Button>
 
-      <Modal show={show} onHide={handleClose} dialogClassName="custom-dialog" > 
-        <Modal.Header closeButton style={{maxWidth:"100%"}}>
-          <Modal.Title className="modalheader">관리비 내역</Modal.Title>
-        </Modal.Header>
-        <Modal.Body> <MaintenanceFee/> </Modal.Body>
-      </Modal>
-      </td>
-      </tr>
-    
-      ))
-      }         
-          </tbody>
+                <Modal
+                  show={show}
+                  onHide={handleClose}
+                  dialogClassName="custom-dialog"
+                >
+                  <Modal.Header closeButton style={{ maxWidth: "100%" }}>
+                    <Modal.Title className="modalheader">
+                      관리비 내역
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <MaintenanceFee />
+                  </Modal.Body>
+                </Modal>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </Table>
     </Container>
   );
