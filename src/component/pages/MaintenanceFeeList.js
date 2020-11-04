@@ -41,7 +41,7 @@ const MaintenanceFeeList = () => {
       email: "page1111@naver.com",
     };
 
-    fetch("http://192.168.0.22:3001/api/user/maintenancefeelist", {
+    fetch("http://192.168.0.143:3001/api/user/maintenancefeelist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

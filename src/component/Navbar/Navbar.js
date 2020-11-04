@@ -5,7 +5,6 @@ import {
   NavDropdown,
   Container,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 
 import Logo from "../icons/LogoIcon";
 import "./Navbar.css";
@@ -23,7 +22,7 @@ export default function Navbar(props) {
     if(_token !== ""){
       setToken(_token)
     
-      fetch("http://192.168.0.22:3001/api/user/infomation", {
+      fetch("http://192.168.0.143:3001/api/user/infomation", {
         mode: "cors",
         method: "GET",
         credentials: "include",
@@ -82,13 +81,6 @@ export default function Navbar(props) {
               TrustBird
             </h3>
           </div>
-          {/* <img
-            alt=""
-            src={require("../images/bird.svg")}
-            width="30"
-            height="30"
-            className="d-inline-block align-top"
-          />{" "} */}
         </BootStrapNavbar.Brand>
         <BootStrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootStrapNavbar.Collapse id="basic-navbar-nav">
@@ -105,15 +97,16 @@ export default function Navbar(props) {
               <PageLink to="/serviceintro">정보소개</PageLink>
             </Nav.Link>
             {token ? (
-              <div  >
-              <img className="usericon" src='https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg' />{username}
+              <div >
+              <img className="usericon" src='https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg' /> 
               <NavDropdown
-                title=""
+                title={username}
                 id="basic-nav-dropdown"
-                style={{display:"inline-block"}}
-                className="navlink"
+                style={{display:"inline-block", fontWeight:"bold", }}
+                className="navlink nav"
+                
               >
-                <NavDropdown.Item href="#action/3.1">
+                <NavDropdown.Item href="/membership">
                   멤버십 신청
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/contract">
@@ -134,9 +127,14 @@ export default function Navbar(props) {
               </NavDropdown>
               </div>
             ) : (
+              <div style={{display:"inline-block"}}>
               <Nav.Link href="/signin" className="navlink">
                 로그인
               </Nav.Link>
+              <Nav.Link href="/signup" className="navlink">
+                회원가입
+                </Nav.Link>
+              </div>
             )}
           </Nav>
         </BootStrapNavbar.Collapse>

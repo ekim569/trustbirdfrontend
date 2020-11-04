@@ -29,7 +29,7 @@ const SignIn = () => {
   function onSubmit(e) {
     e.preventDefault();
 
-    fetch("http://192.168.0.22:3001/api/user/signin", {
+    fetch("http://192.168.0.143:3001/api/user/signin", {
       mode: "cors",
       method: "POST",
       credentials: "include",

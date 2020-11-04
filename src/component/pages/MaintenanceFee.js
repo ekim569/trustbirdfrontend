@@ -23,7 +23,7 @@ const MaintenanceFee = () => {
       email: "page1111@naver.com",
     };
 
-    fetch("http://192.168.0.22:3001/api/user/maintenancefee/find", { method:"GET"}, ).then((maintenanceFee) => {
+    fetch("http://192.168.0.143:3001/api/user/maintenancefee/find", { method:"GET"}, ).then((maintenanceFee) => {
      
       setMaintenanceFee(maintenanceFee);
     });

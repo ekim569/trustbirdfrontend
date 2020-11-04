@@ -9,7 +9,6 @@
 }
 .sectionheader {
   font-size: 32px;
-  padding: auto;
   color: #3b72f2;
   font-weight: bold;
   text-align: center;
@@ -104,8 +103,14 @@
 .cardlayout {
   align-items: center;
   border: 1px solid #3b72f2;
-  margin-bottom: 600px;
+  margin-bottom: 300px;
   padding: 30px;
+}
+.cardlayout2 {
+  align-items: center;
+  border: 1px solid #3b72f2;
+  padding: 30px;
+  margin-bottom: 50px;
 }
 
 .collayout {

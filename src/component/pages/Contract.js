@@ -69,7 +69,7 @@ const Contract = () => {
       }
     }
 
-    fetch("http://192.168.0.22:3001/api/user/contract", {
+    fetch("http://192.168.0.143:3001/api/user/contract", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

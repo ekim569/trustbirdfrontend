@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Form, Button } from "react-bootstrap";
-import PostFixInput from "./PostFixInput";
 import "./Page.css"
 
 //Withdrawal
 const Withdrawal = () => {
+  useEffect({
+
+  })
   return (
     <Container style={{marginTop:"200px"}} >
       <div className="pageheader" style={{fontSize:"30px"}}>회원탈퇴</div>

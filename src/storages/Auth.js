@@ -8,4 +8,3 @@ export default {
         return localStorage.getItem(AUTH_TOKEN_KEY)
     }
 }
-

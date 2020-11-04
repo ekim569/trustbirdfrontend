@@ -45,7 +45,7 @@ const Trust = () => {
 
     console.log(trust);
 
-    fetch("http://192.168.0.22:3001/api/trust/subscription", {
+    fetch("http://192.168.0.143:3001/api/trust/subscription", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

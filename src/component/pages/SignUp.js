@@ -33,7 +33,7 @@ const SignUp = () => {
   function onSubmit(e) {
     e.preventDefault();
 
-    fetch("http://192.168.0.22:3001/api/user/signup", {
+    fetch("http://192.168.0.143:3001/api/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -123,8 +123,8 @@ const SignUp = () => {
             required
           >
             <option>선택</option>
-            <option value="남성">남성</option>
-            <option value="여성">여성</option>
+            <option value="male">남성</option>
+            <option value="felmale">여성</option>
           </Form.Control>
         </Form.Group>
 
