@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container,  Button, Form, Table } from "react-bootstrap";
+import { Container, Button, Form, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "./Page.css";
 import PostFixInput from "./PostFixInput";
@@ -202,38 +202,56 @@ const ContractEnroll = () => {
         </Form.Group>
 
         <div>임대인</div>
-      <table style={{width:"100%"}}> 
-          <tr><Form.Control type="text" placeholder="이름" required /></tr>
-          <tr><Form.Control type="text" placeholder="전화번호" required /></tr>
-          <tr><Form.Control type="text" placeholder="주소" required /></tr>
-          <tr><Form.Control type="text" placeholder="주민번호" required /></tr>
-      </table>
+        <table style={{ width: "100%" }}>
+          <tr>
+            <Form.Control type="text" placeholder="이름" required />
+          </tr>
+          <tr>
+            <Form.Control type="text" placeholder="전화번호" required />
+          </tr>
+          <tr>
+            <Form.Control type="text" placeholder="주소" required />
+          </tr>
+          <tr>
+            <Form.Control type="text" placeholder="주민번호" required />
+          </tr>
+        </table>
 
-      <Form.Group>
-        <div>임차인</div>
-      <table style={{width:"100%"}}> 
-          <tr><Form.Control type="text" placeholder="이름" required /></tr>
-          <tr><Form.Control type="text" placeholder="전화번호" required /></tr>
-          <tr><Form.Control type="text" placeholder="주소" required /></tr>
-          <tr><Form.Control type="text" placeholder="주민번호" required /></tr>
-      </table>
-      </Form.Group>
+        <Form.Group>
+          <div>임차인</div>
+          <table style={{ width: "100%" }}>
+            <tr>
+              <Form.Control type="text" placeholder="이름" required />
+            </tr>
+            <tr>
+              <Form.Control type="text" placeholder="전화번호" required />
+            </tr>
+            <tr>
+              <Form.Control type="text" placeholder="주소" required />
+            </tr>
+            <tr>
+              <Form.Control type="text" placeholder="주민번호" required />
+            </tr>
+          </table>
+        </Form.Group>
 
-    
-      <div>중개인</div>
-      <table style={{width:"100%"}}> 
-          <tr><Form.Control type="text" placeholder="이름" required /></tr>
-          <tr><Form.Control type="text" placeholder="전화번호" required /></tr>
-          <tr><Form.Control type="text" placeholder="주소" required /></tr>
-          <tr><Form.Control type="text" placeholder="주민번호" required /></tr>
-      </table>
+        <div>중개인</div>
+        <table style={{ width: "100%" }}>
+          <tr>
+            <Form.Control type="text" placeholder="이름" required />
+          </tr>
+          <tr>
+            <Form.Control type="text" placeholder="전화번호" required />
+          </tr>
+          <tr>
+            <Form.Control type="text" placeholder="주소" required />
+          </tr>
+          <tr>
+            <Form.Control type="text" placeholder="주민번호" required />
+          </tr>
+        </table>
 
-
-        <Button
-          variant="primary"
-          type="submit"
-          className="button3"
-        >
+        <Button variant="primary" type="submit" className="button3">
           저장하기
         </Button>
       </Form>

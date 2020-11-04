@@ -21,6 +21,8 @@ import Navbar from "../component/Navbar/Navbar";
 import Membership from "./pages/Membership";
 
 
+import TrustList from "./pages/TrustList";
+
 // const pluginWrapper = () => {
 //   require('./statics/fullpage.scrollHorizontally.min');
 // };
@@ -82,13 +84,14 @@ const Main = (props) => {
               <SignIn />
             </Route>
             <Route path="/signup">
-              <SignUp/>
+              <SignUp />
             </Route>
             <Route path="/footer">
               <Footer />
             </Route> <Route path="/membership">
               <Membership />
             </Route>
+            <Route path="/trustlist" component={TrustList} />
           </Switch>
         </div>
       </Router>

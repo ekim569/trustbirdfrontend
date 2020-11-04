@@ -109,48 +109,46 @@ const Trust = () => {
             </td>
           </tr>
           <tr className="tableborder">
-            <td className="tableborder" style={{ width:"250px"}}>신탁기간</td>
-            <td className="tableborder" colspan="4" >{trust.periodStart} ~ {trust.periodEnd} </td>
-            </tr>
-            </table>
-    
+            <td className="tableborder" style={{ width: "250px" }}>
+              신탁기간
+            </td>
+            <td className="tableborder" colspan="4">
+              {trust.periodStart} ~ {trust.periodEnd}{" "}
+            </td>
+          </tr>
+        </table>
 
-      <Form.Label>기타사항</Form.Label>
-      <table className="tablelayout">
-        <tr className="tableborder"> <td> {trust.etc}  </td>   </tr>
-            </ table>
-            
-      <Form.Label>첨부파일</Form.Label>
-      <table className="tablelayout">
-        <tr className="tableborder"><td>{trust.attachments} </td></tr>
-            </ table>
+        <Form.Label>기타사항</Form.Label>
+        <table className="tablelayout">
+          <tr className="tableborder">
+            {" "}
+            <td> {trust.etc} </td>{" "}
+          </tr>
+        </table>
 
+        <Form.Label>첨부파일</Form.Label>
+        <table className="tablelayout">
+          <tr className="tableborder">
+            <td>{trust.attachments} </td>
+          </tr>
+        </table>
 
-      
-      <div style={{float:"right", marginTop:"60px"}}> 
-      <Button
-        variant="primary"
-        type="submit"
-        className="button2"
-      >
-        취소하기
-      </Button>
-      <Button
-        variant="primary"
-        type="submit"
-        className="button2"
-        style={{marginLeft:"16px"}}
-      >
-        신청하기
-      </Button>
-      </div>
-       <Button
-        variant="primary"
-        type="submit"
-        className="button4"
-      >
-        가져오기
-      </Button>
+        <div style={{ float: "right", marginTop: "60px" }}>
+          <Button variant="primary" type="submit" className="button2">
+            취소하기
+          </Button>
+          <Button
+            variant="primary"
+            type="submit"
+            className="button2"
+            style={{ marginLeft: "16px" }}
+          >
+            신청하기
+          </Button>
+        </div>
+        <Button variant="primary" type="submit" className="button4">
+          가져오기
+        </Button>
       </Form>
     </Container>
   );

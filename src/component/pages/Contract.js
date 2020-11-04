@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container,  Button, Form, Row, Col } from "react-bootstrap";
+import { Container, Button, Form, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "./Page.css";
 
@@ -62,10 +62,10 @@ const Contract = () => {
 
     const formData = new FormData();
 
-    for(const [key, value] of Object.entries(contract)){
-      formData.append(key, value)
-      if(key === 'attachments'){
-      formData.append(key, value, )
+    for (const [key, value] of Object.entries(contract)) {
+      formData.append(key, value);
+      if (key === "attachments") {
+        formData.append(key, value);
       }
     }
 
@@ -95,63 +95,91 @@ const Contract = () => {
     <div>
       <div className="pageheader">계약서</div>
 
-    <Container style={{ maxWidth: "720px", padding:0 , }} >
-      <Form>
-    <div>
-        <table className="tablelayout" >
-          <tr className="tableborder">
-            <td className="tableborder" style={{ width:"180px"}} >소재지</td>
-            <td className="tableborder"  colspan="4" >
-            </td>
-          </tr>
-          <tr className="tableborder">
-            <td className="tableborder" style={{ width:"175px"}}>토지</td>
-            <td placeholder=""  className="tableborder" style={{ width:"135px"}}>지목</td>
-            <td className="tableborder"> {contract.landCategory} </td>
-            <td className="tableborder" style={{ width:"135px"}}>면적</td>
-            <td className="tableborder" style={{ width:"135px"}}>{contract.landArea}</td>
-          </tr>
-          <tr className="tableborder">
-            <td className="tableborder" >건물</td>
-            <td placeholder="용도">용도 </td>
-            <td className="tableborder"> {contract.buildingPurpose} </td>
-            <td className="tableborder" >면적</td>
-            <td className="tableborder" >{contract.buildingArea} </td>
-          </tr>
-          <tr  className="tableborder" >
-            <td className="tableborder" >임대할 부분</td>
-            <td className="tableborder" colspan="2" > {contract.partOfLease}
-            </td>
-            <td className="tableborder" >면적 </td>
-            <td className="tableborder" >{contract.partOfLeaseArea} </td>
-            </tr>
-          <tr className="tableborder" className="tableborder">
-            <td className="tableborder" >임대형태</td>
-            <td className="tableborder" colspan="4" > {contract.rentType}
-            </td></tr>
-          <tr className="tableborder">
-            <td className="tableborder" >보증금</td>
-            <td  className="tableborder"colspan="4" > {contract.securityDeposit}
-            </td></tr>
-          <tr className="tableborder">
-            <td className="tableborder" >계약금</td>
-            <td className="tableborder" colspan="4" >{contract.contractPrice}
-            </td></tr>
-          <tr className="tableborder">
-            <td className="tableborder" >중도금</td>
-            <td  className="tableborder"colspan="4" >{contract.interimPrice}
-            </td></tr>
-          <tr className="tableborder">
-            <td className="tableborder" >잔금</td>
-            <td className="tableborder" colspan="4" >{contract.balane}
-            </td></tr>
-          <tr className="tableborder">
-            <td className="tableborder" >차임</td>
-            <td className="tableborder" colspan="4" >{contract.rent}
-            </td></tr>
-
-        </table>
-      </div>
+      <Container style={{ maxWidth: "720px", padding: 0 }}>
+        <Form>
+          <div>
+            <table className="tablelayout">
+              <tr className="tableborder">
+                <td className="tableborder" style={{ width: "180px" }}>
+                  소재지
+                </td>
+                <td className="tableborder" colspan="4"></td>
+              </tr>
+              <tr className="tableborder">
+                <td className="tableborder" style={{ width: "175px" }}>
+                  토지
+                </td>
+                <td
+                  placeholder=""
+                  className="tableborder"
+                  style={{ width: "135px" }}
+                >
+                  지목
+                </td>
+                <td className="tableborder"> {contract.landCategory} </td>
+                <td className="tableborder" style={{ width: "135px" }}>
+                  면적
+                </td>
+                <td className="tableborder" style={{ width: "135px" }}>
+                  {contract.landArea}
+                </td>
+              </tr>
+              <tr className="tableborder">
+                <td className="tableborder">건물</td>
+                <td placeholder="용도">용도 </td>
+                <td className="tableborder"> {contract.buildingPurpose} </td>
+                <td className="tableborder">면적</td>
+                <td className="tableborder">{contract.buildingArea} </td>
+              </tr>
+              <tr className="tableborder">
+                <td className="tableborder">임대할 부분</td>
+                <td className="tableborder" colspan="2">
+                  {" "}
+                  {contract.partOfLease}
+                </td>
+                <td className="tableborder">면적 </td>
+                <td className="tableborder">{contract.partOfLeaseArea} </td>
+              </tr>
+              <tr className="tableborder" className="tableborder">
+                <td className="tableborder">임대형태</td>
+                <td className="tableborder" colspan="4">
+                  {" "}
+                  {contract.rentType}
+                </td>
+              </tr>
+              <tr className="tableborder">
+                <td className="tableborder">보증금</td>
+                <td className="tableborder" colspan="4">
+                  {" "}
+                  {contract.securityDeposit}
+                </td>
+              </tr>
+              <tr className="tableborder">
+                <td className="tableborder">계약금</td>
+                <td className="tableborder" colspan="4">
+                  {contract.contractPrice}
+                </td>
+              </tr>
+              <tr className="tableborder">
+                <td className="tableborder">중도금</td>
+                <td className="tableborder" colspan="4">
+                  {contract.interimPrice}
+                </td>
+              </tr>
+              <tr className="tableborder">
+                <td className="tableborder">잔금</td>
+                <td className="tableborder" colspan="4">
+                  {contract.balane}
+                </td>
+              </tr>
+              <tr className="tableborder">
+                <td className="tableborder">차임</td>
+                <td className="tableborder" colspan="4">
+                  {contract.rent}
+                </td>
+              </tr>
+            </table>
+          </div>
 
           <Form.Label>특약사항</Form.Label>
           <table className="tablelayout">

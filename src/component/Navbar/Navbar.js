@@ -10,7 +10,7 @@ import Logo from "../icons/LogoIcon";
 import "./Navbar.css";
 
 import PageLink from "./pageLink";
-import AuthToken from '../../storages/Auth'
+import AuthToken from "../../storages/Auth";
 
 export default function Navbar(props) {
   const [token, setToken] = useState();
@@ -28,27 +28,27 @@ export default function Navbar(props) {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          "Authorization" : `Bearer ${_token}`
-        }
+          Authorization: `Bearer ${_token}`,
+        },
       })
-      .then((res) => {
-        if(res.status === 200) {
-          return res.json()
-        }
-      })
-      .then((res) => {
-        setUsername(res.user.username)
-      }).catch((e)=>{
-        console.error(e)
-      })
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          }
+        })
+        .then((res) => {
+          setUsername(res.user.username);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
-  },[token])
+  }, [token]);
 
-  const onClickSignOut = (() => {
-    setToken("")
-    AuthToken.set("")
-  });
-
+  const onClickSignOut = () => {
+    setToken("");
+    AuthToken.set("");
+  };
 
   return (
     <BootStrapNavbar

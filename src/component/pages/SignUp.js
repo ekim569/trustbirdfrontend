@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import "./Page.css";
 
 //Sign Up
-const SignUp = () => {
+const SignUp = (props) => {
   const history = useHistory();
   const [user, setUser] = useState({
     username: "",

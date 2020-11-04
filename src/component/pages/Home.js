@@ -1,9 +1,10 @@
 import React from "react";
 import { Card, Button, Container, Row, Col, Form } from "react-bootstrap";
-import ReactFullpage from '@fullpage/react-fullpage'
-import "./Page.css"
-import ServiceIntro from "./ServiceIntro2"
-import FoundationIntro from "./FoundationIntro2"
+import ReactFullpage from "@fullpage/react-fullpage";
+import "./Page.css";
+import ServiceIntro from "./ServiceIntro2";
+import FoundationIntro from "./FoundationIntro2";
+import { Link } from "react-router-dom";
 
 //Home
 const Home = () => {

@@ -80,10 +80,10 @@ const SignModified = () => {
   }
 
   return (
-    <Container style={{ maxWidth: "720px" }} >
+    <Container style={{ maxWidth: "720px" }}>
       <div className="pageheader">회원정보 수정</div>
 
-      <Form  className="sign-form">
+      <Form className="sign-form">
         <Form.Group controlId="formBasicUsername">
           <Form.Label> 사용자 이름 </Form.Label>
           <Form.Control
@@ -172,11 +172,7 @@ const SignModified = () => {
             required
           />
         </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          className="button3"
-        >
+        <Button variant="primary" type="submit" className="button3">
           수정하기
         </Button>
       </Form>

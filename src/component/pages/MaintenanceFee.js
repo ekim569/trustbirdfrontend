@@ -7,12 +7,12 @@ import "./Page.css";
 const MaintenanceFee = () => {
   const history = useHistory();
   const [maintenanceFee, setMaintenanceFee] = useState({
-    claimingAgency: "공작아파트",
-    electronicPaymentNum: "1546283",
-    startDate: "20/10/10",
-    dueDate: "20/11/10",
-    amountDeadline: "35000원",
-    amountDueDate:"42000원",
+    claimingAgency: "",
+    electronicPaymentNum: "",
+    startDate: "",
+    dueDate: "",
+    amountDeadline: "",
+    amountDueDate: "",
     payment: "",
     payer: "",
     giro: "",
@@ -33,21 +33,33 @@ const MaintenanceFee = () => {
   // useHistroy 라우터로 main
   return (
     <Container>
-    <Table bordered={true}>
-      <thead>
-        <tr><th>관리비 청구 기관</th><td>{maintenanceFee.claimingAgency}</td></tr>
-        <tr><th>관리비 전자납부번호</th><td>{maintenanceFee.electronicPaymentNum}</td></tr>
-        <tr><th>관리비 납기일</th><td>{maintenanceFee.dueDate}</td></tr>
-        <tr><th>관리비 납기 내 금액</th><td>{maintenanceFee.payment}</td></tr>
-        <tr><th>관리비 납기 후 금액</th><td>{maintenanceFee.amountDueDate}</td></tr>
-        <tr></tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </Table>
-
-   
-  </Container>
+      <Table bordered={true}>
+        <thead>
+          <tr>
+            <th>관리비 청구 기관</th>
+            <td>{maintenanceFee.claimingAgency}</td>
+          </tr>
+          <tr>
+            <th>관리비 전자납부번호</th>
+            <td>{maintenanceFee.electronicPaymentNum}</td>
+          </tr>
+          <tr>
+            <th>관리비 납기일</th>
+            <td>{maintenanceFee.dueDate}</td>
+          </tr>
+          <tr>
+            <th>관리비 납기 내 금액</th>
+            <td>{maintenanceFee.payment}</td>
+          </tr>
+          <tr>
+            <th>관리비 납기 후 금액</th>
+            <td>{maintenanceFee.amountDueDate}</td>
+          </tr>
+          <tr></tr>
+        </thead>
+        <tbody></tbody>
+      </Table>
+    </Container>
   );
 
   // );
