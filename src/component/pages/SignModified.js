@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+
+import AuthToken from '../../storages/Auth'
 
 import "./Page.css";
 
 //Sign Modified
 const SignModified = () => {
+  const token = AuthToken.get();
   const history = useHistory();
   const [user, setUser] = useState({
     username: "",
@@ -15,6 +18,28 @@ const SignModified = () => {
     gender: "",
     telephoneNum: "",
   });
+
+  useEffect(() => {
+    fetch("http://192.168.0.143:3001/api/user/find", {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${token}`
+      }
+    })
+    .then((res) => {
+      if(res.status === 200) {
+        return res.json()
+      }
+    })
+    .then((res) => {
+      setUser(res)
+    }).catch((e)=>{
+      console.error(e)
+    })
+    },[])
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -27,54 +52,16 @@ const SignModified = () => {
       ...user,
       [name]: value,
     });
-
-    // useEffect(() => {
-    //   const body= {
-    //     email : "page1111@naver.com"
-    //   }
-    //   fetch("http://192.168.0.143:3001/api/user/signmodified", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(body)
-    //   })
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     console.log(res)
-    //     const data = maintenanceFeeList.concat(res)
-    //     setMaintenanceFeeList(data)
-
-    // for(let i = 0; i < res.length; i++){
-    //   setMaintenanceFeeList([...maintenanceFeeList,
-    //     {
-    //       amountDue : res[0].amountDue,
-    //       claimingAgency : res[0].claimingAgency,
-    //       dueDate : res[0].dueDate,
-    //       electronicPaymentNum : res[0].electronicPaymentNum
-    //     }]);
-    //       // }
-    // //   });
-    // // },[])
-    // console.log(maintenanceFeeList)}
   }
 
   function onSubmit(e) {
     e.preventDefault();
 
-    // fetch("http://192.168.0.143:3001/test", {
-    //   mode: "cors",
-    //   method: "GET",
-    //   credentials: "include",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
     fetch("http://192.168.0.143:3001/api/user/modified", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(user),
     })
@@ -103,9 +90,9 @@ const SignModified = () => {
             type="text"
             name="username"
             value={user.username}
-            onChange={handleInputChange}
             placeholder="사용자 이름 입력"
-            required
+            readOnly
+
           />
         </Form.Group>
 
@@ -152,21 +139,35 @@ const SignModified = () => {
             name="dateOfBirth"
             value={user.dateOfBirth}
             onChange={handleInputChange}
-            required
+            readOnly
           />
         </Form.Group>
 
         <Form.Group controlId="formBasicGender">
           <Form.Label> 성별 </Form.Label>
-          <select onChange></select>
+          <Form.Control
+            as="select"
+            name="gender"
+            value={user.gender}
+            onChange={(e) => {
+              e.preventDefault();
+              setUser({ ...user, gender: e.target.value });
+            }}
+            option
+            custom
+            required
+          >
+            <option>선택</option>
+            <option value="남성">남성</option>
+            <option value="여성">여성</option>
+          </Form.Control>
         </Form.Group>
 
         <Form.Group controlId="formBasicTelephoneNum">
           <Form.Label> 전화번호 </Form.Label>
           <Form.Control
             type="text"
-            value={user.telephonNum}
-            onChange={handleInputChange}
+            value={user.telephoneNum}
             placeholder="전화번호 입력"
             required
           />

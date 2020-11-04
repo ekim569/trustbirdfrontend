@@ -5,7 +5,6 @@ import {
   NavDropdown,
   Container,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 
 import Logo from "../icons/LogoIcon";
 import "./Navbar.css";
@@ -20,9 +19,9 @@ export default function Navbar(props) {
   useEffect(() => {
     const _token = AuthToken.get();
 
-    if (_token !== "") {
-      setToken(_token);
-
+    if(_token !== ""){
+      setToken(_token)
+    
       fetch("http://192.168.0.143:3001/api/user/infomation", {
         mode: "cors",
         method: "GET",
@@ -82,13 +81,6 @@ export default function Navbar(props) {
               TrustBird
             </h3>
           </div>
-          {/* <img
-            alt=""
-            src={require("../images/bird.svg")}
-            width="30"
-            height="30"
-            className="d-inline-block align-top"
-          />{" "} */}
         </BootStrapNavbar.Brand>
         <BootStrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootStrapNavbar.Collapse id="basic-navbar-nav">
@@ -105,42 +97,44 @@ export default function Navbar(props) {
               <PageLink to="/serviceintro">정보소개</PageLink>
             </Nav.Link>
             {token ? (
-              <div>
-                <img
-                  className="usericon"
-                  src="https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg"
-                />
-                {username}
-                <NavDropdown
-                  title=""
-                  id="basic-nav-dropdown"
-                  style={{ display: "inline-block" }}
-                  className="navlink"
-                >
-                  <NavDropdown.Item href="#action/3.1">
-                    멤버십 신청
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/contract">
-                    신탁 내역 확인
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/maintenancefeelist">
-                    관리비 납부내역
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/signModified">
-                    회원 정보 수정
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/withdrawal">
-                    회원 탈퇴
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/" onClick={onClickSignOut}>
-                    로그아웃
-                  </NavDropdown.Item>
-                </NavDropdown>
+              <div >
+              <img className="usericon" src='https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg' /> 
+              <NavDropdown
+                title={username}
+                id="basic-nav-dropdown"
+                style={{display:"inline-block", fontWeight:"bold", }}
+                className="navlink nav"
+                
+              >
+                <NavDropdown.Item href="/membership">
+                  멤버십 신청
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/contract">
+                  신탁 내역 확인
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/maintenancefeelist">
+                  관리비 납부내역
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/signModified">
+                  회원 정보 수정
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/withdrawal">
+                  회원 탈퇴
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/" onClick={onClickSignOut}>
+                  로그아웃
+                </NavDropdown.Item>
+              </NavDropdown>
               </div>
             ) : (
+              <div style={{display:"inline-block"}}>
               <Nav.Link href="/signin" className="navlink">
                 로그인
               </Nav.Link>
+              <Nav.Link href="/signup" className="navlink">
+                회원가입
+                </Nav.Link>
+              </div>
             )}
           </Nav>
         </BootStrapNavbar.Collapse>

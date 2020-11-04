@@ -4,10 +4,10 @@ import serviceimage from "../icons/부동산2.svg"
 import "./Page.css"
 
 //Service Introduce
-const ServiceIntro = (children) => {
+const ServiceIntro = () => {
   return (
     <Container >
-      <Card className="cardlayout">
+      <Card className="cardlayout2">
       <Card.Img variant="top" src={serviceimage} className="imagesize" />
       <Card.Body>
         <Card.Text>

@@ -68,7 +68,6 @@ const TrustSub = () => {
     console.log(trustsub);
 
     fetch("http://192.168.0.143:3001/api/trust/subscription", {
-      mode: "cors",
       method: "POST",
       credentials: "include",
       headers: {
@@ -95,6 +94,7 @@ const TrustSub = () => {
     <Container style={{ maxWidth: "800px" }}>
       <div className="pageheader">신탁 신청</div>
       <Form className="sign-form" onSubmit={onSubmit}>
+
         <Form.Group controlId="formBasicTrustProfit">
           <Form.Label> 신탁자 </Form.Label>
           <PostFixInput
@@ -106,32 +106,21 @@ const TrustSub = () => {
             value={trustsub.username}
             onChange={handleInputChange}
           />
+          </Form.Group>
 
           <Form.Group controlId="formBasicNegligenceProfit">
             <Form.Label> 신탁자 전화번호 </Form.Label>
             <PostFixInput
-              labelText="중개인번호"
+              labelText="신탁자번호"
               postfix=""
               type="text"
               placeholder="전화번호"
-              name="realtorCellphoneNum"
-              value={trustsub.realtorCellphoneNum}
+              name="telephoneNum"
+              value={trustsub.telephoneNum}
               onChange={handleInputChange}
             />
           </Form.Group>
-        </Form.Group>
-        <Form.Group controlId="formBasicNegligenceProfit">
-          <Form.Label> 신탁자 전화번호 </Form.Label>
-          <PostFixInput
-            labelText="신탁자번호"
-            postfix=""
-            type="text"
-            placeholder="전화번호"
-            name="telephoneNum"
-            value={trustsub.telephoneNum}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
+  
 
         <Form.Group controlId="formBasicTrustProfit">
           <Form.Label> 중개인 이름 </Form.Label>
@@ -147,17 +136,30 @@ const TrustSub = () => {
         </Form.Group>
 
         <Form.Group controlId="formBasicNegligenceProfit">
-          <Form.Label> 중개인 전화번호 </Form.Label>
+          <Form.Label> 중개사 전화번호 </Form.Label>
           <PostFixInput
             labelText="중개인번호"
             postfix=""
             type="text"
             placeholder="전화번호"
-            name="realtorCellphoneNum"
-            value={trustsub.realtorCellphoneNum}
+            name="realtorTelephonephoneNum"
+            value={trustsub.realtorTelephonephoneNum}
             onChange={handleInputChange}
           />
         </Form.Group>
+
+        <Form.Group controlId="formBasicRealtor">
+            <Form.Label> 중개인 휴대전화번호 </Form.Label>
+            <PostFixInput
+              labelText="중개인번호"
+              postfix=""
+              type="text"
+              placeholder="전화번호"
+              name="realtorCellphoneNum"
+              value={trustsub.realtorCellphoneNum}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
 
         <Form.Group controlId="formBasicNegligenceProfit">
           <Form.Label> 중개인 주소</Form.Label>
@@ -172,50 +174,11 @@ const TrustSub = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicType">
-          <Form.Label> 신탁 부동산 종류 </Form.Label>
-          <PostFixInput
-            labelText="부동산종류"
-            postfix=""
-            type="text"
-            placeholder="종류"
-            name="type"
-            value={trustsub.type}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPrice">
-          <Form.Label> 신탁 부동산 보증금 </Form.Label>
-          <PostFixInput
-            labelText="부동산가격"
-            postfix="만원"
-            type="text"
-            placeholder="금액"
-            name="securityDeposit"
-            value={trustsub.securityDeposit}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPrice">
-          <Form.Label> 신탁 부동산 월세 </Form.Label>
-          <PostFixInput
-            labelText="부동산가격"
-            postfix="만원"
-            type="text"
-            placeholder="금액"
-            name="rent"
-            value={trustsub.rent}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-
         <div>
           <Form.Label>전 · 월세</Form.Label>
           <br />
           <Form
-            controlId="formBasicMonthly"
+            controlId="formBasicType"
             style={{ display: "inline-block", marginRight: "32px" }}
           >
             <Form.Check
@@ -233,7 +196,7 @@ const TrustSub = () => {
             />
           </Form>
           <Form
-            controlId="formBasicResevations"
+            controlId="formBasicTypeCheck"
             style={{ display: "inline-block" }}
           >
             <Form.Check
@@ -252,6 +215,32 @@ const TrustSub = () => {
           </Form>
         </div>
 
+        <Form.Group controlId="formBasiSecurityDeposit">
+          <Form.Label> 신탁 부동산 보증금 </Form.Label>
+          <PostFixInput
+            labelText="부동산가격"
+            postfix="만원"
+            type="text"
+            placeholder="금액"
+            name="securityDeposit"
+            value={trustsub.securityDeposit}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicRent">
+          <Form.Label> 신탁 부동산 월세 </Form.Label>
+          <PostFixInput
+            labelText="부동산가격"
+            postfix="만원"
+            type="text"
+            placeholder="금액"
+            name="rent"
+            value={trustsub.rent}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
         <Form.Group controlId="formBasicPeriodStart">
           <Form.Label> 신탁 시작일 </Form.Label>
           <Form.Control
@@ -262,7 +251,7 @@ const TrustSub = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPeriodStart">
+        <Form.Group controlId="formBasicPeriodEnd">
           <Form.Label> 신탁 종료일 </Form.Label>
           <Form.Control
             type="date"
