@@ -109,7 +109,7 @@ export default function Navbar(props) {
                 <NavDropdown.Item href="/membership">
                   멤버십 신청
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/contract">
+                <NavDropdown.Item href="/trustlist">
                   신탁 내역 확인
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/maintenancefeelist">

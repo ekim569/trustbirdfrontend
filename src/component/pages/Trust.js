@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Button, Form, Row, Col, table } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Page.css";
+import AuthToken from "../../storages/Auth";
+
 
 //Trust Output
-const Trust = () => {
+const Trust = ({location}) => {
   const history = useHistory();
+  const token = AuthToken.get();
   const [trust, setTrust] = useState({
     token: "",
     preToken: "",
@@ -27,18 +30,29 @@ const Trust = () => {
     email: "page1111@naver.com",
   });
 
-  function handleInputChange(e) {
-    e.preventDefault();
+  // useEffect(()=>{
+  //   const params = new URLSearchParams(location.search);  
+  //   console.log(params)
 
-    const { value, name } = e.target;
-
-    console.log(value, name);
-
-    setTrust({
-      ...trust,
-      [name]: value,
-    });
-  }
+  //   fetch(`http://192.168.0.143:3001/api/trust/find?token=${params.token}`, {
+  //     mode: "cors",
+  //     method: "GET",
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //   .then((res)=> {
+  //     if(res.status === 200) {
+  //       return res.json()
+  //     }
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //     setTrust(res)
+  //   })
+  // },[])  
 
   function onSubmit(e) {
     e.preventDefault();
@@ -73,46 +87,45 @@ const Trust = () => {
       <Form onSubmit={onSubmit}>
         <table className="tablelayout">
           <tr className="tableborder">
-            <td className="tableborder" style={{ width: "250px" }}>
-              중개인 이름
+            <td className="tableborder" style={{ width: "200px" }}>
+              신탁자
+            </td>
+            <td className="tableborder" colspan="2">
+              {" "}
+              {trust.username}{" "}
             </td>
             <td className="tableborder" colspan="4">
+              {" "}
+              {trust.telephoneNum}{" "}
+            </td>
+          </tr>
+          <tr className="tableborder">
+            <td className="tableborder">
+              중개인 이름
+            </td>
+            <td  colspan="6">
               {" "}
               {trust.realtorName}{" "}
             </td>
           </tr>
           <tr className="tableborder">
-            <td className="tableborder" style={{ width: "250px" }}>
-              중개인 이름
-            </td>
-            <td className="tableborder" colspan="4">
-              {" "}
-              {trust.realtorName}{" "}
-            </td>
-          </tr>
-          <tr className="tableborder">
-            <td className="tableborder" style={{ width: "250px" }}>
+            <td className="tableborder" >
               중개인 전화번호
             </td>
-            <td className="tableborder" colspan="4">
+            <td className="tableborder" colspan="3">
               {" "}
               {trust.realtorTelephoneNum}
             </td>
-          </tr>
-          <tr className="tableborder">
-            <td className="tableborder" style={{ width: "250px" }}>
-              중개인 휴대전화번호
-            </td>
-            <td className="tableborder" colspan="4">
+            <td className="tableborder" colspan="3">
               {" "}
               {trust.realtorCellPhoneNum}
             </td>
           </tr>
           <tr className="tableborder">
-            <td className="tableborder" style={{ width: "250px" }}>
+            <td className="tableborder" >
               신탁기간
             </td>
-            <td className="tableborder" colspan="4">
+            <td className="tableborder" colspan="6">
               {trust.periodStart} ~ {trust.periodEnd}{" "}
             </td>
           </tr>
@@ -134,7 +147,7 @@ const Trust = () => {
         </table>
 
         <div style={{ float: "right", marginTop: "60px" }}>
-          <Button variant="primary" type="submit" className="button2">
+          <Button variant="primary" type="submit" className="button2" onClick="/Home">
             취소하기
           </Button>
           <Button
@@ -143,12 +156,9 @@ const Trust = () => {
             className="button2"
             style={{ marginLeft: "16px" }}
           >
-            신청하기
+            수정하기
           </Button>
         </div>
-        <Button variant="primary" type="submit" className="button4">
-          가져오기
-        </Button>
       </Form>
     </Container>
   );

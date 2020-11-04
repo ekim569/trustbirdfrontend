@@ -56,8 +56,8 @@ const Main = (props) => {
             <Route path="/trustsub">
               <TrustSub />
             </Route>
-            <Route path="/trust">
-              <Trust />
+            <Route path="/trust" component={Trust}>
+              
             </Route>
             <Route path="/contractlist">
               <ContractList />
