@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Container, Table, Col } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Container, Table } from "react-bootstrap";
+import AuthToken from "../../storages/Auth";
 import "./Page.css";
 
 //Maintenance Fee
-const MaintenanceFee = () => {
-  const history = useHistory();
+const MaintenanceFee = ({ electronicPaymentNum }) => {
+  const token = AuthToken.get();
+
   const [maintenanceFee, setMaintenanceFee] = useState({
     claimingAgency: "",
     electronicPaymentNum: "",
@@ -19,15 +20,27 @@ const MaintenanceFee = () => {
   });
 
   useEffect(() => {
-    const body = {
-      email: "page1111@naver.com",
-    };
-
-    fetch("http://192.168.0.143:3001/api/user/maintenancefee/find", { method:"GET"}, ).then((maintenanceFee) => {
-     
-      setMaintenanceFee(maintenanceFee);
-    });
-  }, []);
+    fetch(
+      `http://192.168.0.143:3001/api/maintenanceFee/find?electronicPaymentNum=${electronicPaymentNum}`,
+      {
+        mode: "cors",
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        setMaintenanceFee(res);
+      });
+  }, [electronicPaymentNum]);
 
   // props, useEffect, useState
   // useHistroy 라우터로 main
