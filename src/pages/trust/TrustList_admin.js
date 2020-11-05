@@ -1,7 +1,7 @@
 import React from "react";
 import AuthToken from "../../storages/Auth";
-import Pagination from "./Pagination";
-import TrustListPage from "./TrustListPage"
+import Pagination from "../../component/Pagination";
+import TrustListPage from "./TrustListPage";
 
 const TrustList = () => {
   const token = AuthToken.get();
@@ -47,7 +47,7 @@ const TrustList = () => {
   }, [totalLength, pageLimit]);
 
   return (
-    <div >
+    <div>
       <TrustListPage trustList={trustList} loc={loc} pageLimit={pageLimit} />
       <Pagination
         total={totalLength}
@@ -59,6 +59,5 @@ const TrustList = () => {
     </div>
   );
 };
-
 
 export default TrustList;

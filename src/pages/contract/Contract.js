@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { Container, Button, Form} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import AuthToken from "../../storages/Auth";
 
 //Contract Output
 const Contract = () => {
+  const token = AuthToken.get();
+
   const history = useHistory();
+  const [loc, setLoc] = useState(1);
   const [contract, setContract] = useState({
     location: "",
     landCategory: "",
@@ -60,7 +64,7 @@ const Contract = () => {
       })
       .then((res) => {
         console.log(res);
-        setContractList(res);
+        setContract(res);
       });
   }, [token]);
 
@@ -111,7 +115,6 @@ const Contract = () => {
               <tr className="tableborder">
                 <td className="tableborder">임대할 부분</td>
                 <td className="tableborder" colspan="2">
-                  {" "}
                   {contract.partOfLease}
                 </td>
                 <td className="tableborder">면적 </td>
@@ -120,7 +123,6 @@ const Contract = () => {
               <tr className="tableborder" className="tableborder">
                 <td className="tableborder">임대형태</td>
                 <td className="tableborder" colspan="4">
-                  {" "}
                   {contract.rentType}
                 </td>
               </tr>
@@ -296,7 +298,7 @@ const Contract = () => {
             >
               수정
             </Button>
-            <Button variant="primary" type="submit" className="button2" on > 
+            <Button variant="primary" type="submit" className="button2" on>
               삭제
             </Button>
           </div>

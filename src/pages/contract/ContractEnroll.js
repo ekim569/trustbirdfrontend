@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Container, Button, Form, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import PostFixInput from "./PostFixInput";
+import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
-import "./Page.css";
 
 //Contract Enrollment
 const ContractEnroll = () => {
@@ -11,78 +10,85 @@ const ContractEnroll = () => {
 
   const history = useHistory();
   const [constractEnroll, setConstractEnroll] = useState({
-    token: "",
-    preToken: "",
-    location: "",
-    landCategory: "",
-    landArea: "",
-    buildingpurpose: "",
-    buildingArea: "",
-    partOfLease: "",
-    partOfLeaseArea: "",
-    rentType: "",
+    //   token: "",
+    //   preToken: "",
+    //   location: "",
+    //   landCategory: "",
+    //   landArea: "",
+    //   buildingpurpose: "",
+    //   buildingArea: "",
+    //   partOfLease: "",
+    //   partOfLeaseArea: "",
+    //   rentType: "",
+    //   periodStart: "",
+    //   periodEnd: "",
+    //   securityDeposit: "",
+    //   contractPrice: "",
+    //   interimPrice: "",
+    //   balance: "",
+    //   rent: "",
+    //   specialAgreement: "",
+    // lessor: {
+    //   address: "",
+    //   RRN: "",
+    //   name: "",
+    //   telephoneNum: "",
+    // },
+    // lessee: {
+    //   address: "",
+    //   RRN: "",
+    //   name: "",
+    //   telephoneNum: "",
+    // },
+    // realtor: {
+    //   address: "",
+    //   officeName: "",
+    //   name: "",
+    //   registrationNum: "",
+    //   telephoneNum: "",
+    // },
+    //   attachments: {},
+    // });
+
+    token: "100",
+    preToken: "50",
+    location: "지구",
+    landCategory: "몰라",
+    landArea: "100",
+    buildingpurpose: "100",
+    buildingArea: "적당히",
+    partOfLease: "몰라",
+    partOfLeaseArea: "몰라",
+    rentType: "ㅇㄹ",
     periodStart: "",
     periodEnd: "",
-    securityDeposit: "",
-    contractPrice: "",
-    interimPrice: "",
-    balance: "",
-    rent: "",
-    specialAgreement: "",
-    "lessor.name": "",
-    "lessor.address": "",
-    "lessor.RRN": "",
-    "lessor.telephoneNum": "",
-    "lessee.name": "",
-    "lessee.address": "",
-    "lessee.RRN": "",
-    "lessee.telephoneNum": "",
-    "realtor.name": "",
-    "realtor.telephoneNum": "",
-    "realtor.officeName": "",
-    " realtor.registrationNum": "",
-    " realtor.address": "",
+    securityDeposit: "10000",
+    contractPrice: "20",
+    interimPrice: "04",
+    balance: "1000",
+    rent: "390",
+    specialAgreement: "30434",
+    lessor: {
+      address: "대전 유성구",
+      RRN: "비밀",
+      name: "김",
+      telephoneNum: "000",
+    },
+    lessee: {
+      address: "대전 서구",
+      RRN: "비밀",
+      name: "이",
+      telephoneNum: "001",
+    },
+    realtor: {
+      address: "대전 동구",
+      officeName: "박동산",
+      name: "박",
+      registrationNum: "0022",
+      telephoneNum: "003",
+    },
     attachments: {},
   });
-
-  // token: "100",
-  // preToken: "50",
-  // location: "지구",
-  // landCategory: "몰라",
-  // landArea: "100",
-  // buildingpurpose: "100",
-  // buildingArea: "적당히",
-  // partOfLease: "몰라",
-  // partOfLeaseArea: "몰라",
-  // rentType: "ㅇㄹ",
-  // periodStart: "",
-  // periodEnd: "",
-  // securityDeposit: "10000",
-  // contractPrice: "20",
-  // interimPrice: "04",
-  // balance: "1000",
-  // rent: "390",
-  // specialAgreement: "30434",
-  // lessor: {
-  //   name: "",
-  //   address: "",
-  //   RRN: "",
-  //   telephoneNum: "",
-  // },
-  // lessee: {
-  //   name: "",
-  //   address: "",
-  //   RRN: "",
-  //   telephoneNum: "",
-  // },
-  // realtor: {
-  //   name: "",
-  //   telephoneNum: "",
-  //   officeName: "",
-  //   registrationNum: "",
-  //   address: "",
-  // },
-  // });
 
   // function subDataChange(e) {
   //   e.preventDefault();
@@ -254,7 +260,7 @@ const ContractEnroll = () => {
                   e.preventDefault();
                   setConstractEnroll({
                     ...constractEnroll,
-                    purpose: e.target.value,
+                    rentType: e.target.value,
                   });
                 }}
                 value="전세"
@@ -274,7 +280,7 @@ const ContractEnroll = () => {
                   e.preventDefault();
                   setConstractEnroll({
                     ...constractEnroll,
-                    purpose: e.target.value,
+                    rentType: e.target.value,
                   });
                 }}
                 value="월세"
@@ -386,8 +392,8 @@ const ContractEnroll = () => {
             <Form.Control
               type="text"
               placeholder="이름"
-              name="name"
-              value={constractEnroll.name}
+              name="lessor.name"
+              value={constractEnroll.lessor.name}
               onChange={(e) => {
                 setConstractEnroll({
                   ...constractEnroll,
@@ -403,9 +409,9 @@ const ContractEnroll = () => {
           <tr>
             <Form.Control
               type="text"
-              name="telephoneNum"
-              value={constractEnroll.lessor.telephoneNum}
               placeholder="전화번호"
+              value={constractEnroll.lessor.telephoneNum}
+              name="lessor.telephoneNum"
               onChange={(e) => {
                 setConstractEnroll({
                   ...constractEnroll,
@@ -422,7 +428,7 @@ const ContractEnroll = () => {
             <Form.Control
               type="text"
               placeholder="주소"
-              name="address"
+              name="lessor.address"
               value={constractEnroll.lessor.address}
               onChange={(e) => {
                 setConstractEnroll({
@@ -440,7 +446,7 @@ const ContractEnroll = () => {
             <Form.Control
               type="text"
               placeholder="주민번호"
-              name="RRN"
+              name="lessor.RRN"
               value={constractEnroll.lessor.RRN}
               onChange={(e) => {
                 setConstractEnroll({
@@ -463,7 +469,7 @@ const ContractEnroll = () => {
               <Form.Control
                 type="text"
                 placeholder="이름"
-                name="name"
+                name="lessee.name"
                 value={constractEnroll.lessee.name}
                 onChange={(e) => {
                   setConstractEnroll({
@@ -481,13 +487,13 @@ const ContractEnroll = () => {
               <Form.Control
                 type="text"
                 placeholder="전화번호"
-                name="telephoneNum"
-                value={constractEnroll.lessee.telephoneNum}
+                name="lessee.telephoneNum"
+                value={constractEnroll.telephoneNum}
                 onChange={(e) => {
                   setConstractEnroll({
                     ...constractEnroll,
                     lessee: {
-                      ...constractEnroll.lessee,
+                      ...constractEnroll.lessee.lessee,
                       telephoneNum: e.target.value,
                     },
                   });
@@ -499,7 +505,7 @@ const ContractEnroll = () => {
               <Form.Control
                 type="text"
                 placeholder="주소"
-                name="address"
+                name="lessee.address"
                 value={constractEnroll.lessee.address}
                 onChange={(e) => {
                   setConstractEnroll({
@@ -517,7 +523,7 @@ const ContractEnroll = () => {
               <Form.Control
                 type="text"
                 placeholder="주민번호"
-                name="RRN"
+                name="lessee.RRN"
                 value={constractEnroll.lessee.RRN}
                 onChange={(e) => {
                   setConstractEnroll({
@@ -540,7 +546,7 @@ const ContractEnroll = () => {
             <Form.Control
               type="text"
               placeholder="이름"
-              name="name"
+              name="realtor.name"
               value={constractEnroll.realtor.name}
               onChange={(e) => {
                 setConstractEnroll({
@@ -558,7 +564,7 @@ const ContractEnroll = () => {
             <Form.Control
               type="text"
               placeholder="전화번호"
-              name="telephoneNum"
+              name="realtor.telephoneNum"
               value={constractEnroll.realtor.telephoneNum}
               onChange={(e) => {
                 setConstractEnroll({
@@ -576,7 +582,7 @@ const ContractEnroll = () => {
             <Form.Control
               type="text"
               placeholder="사무실 이름"
-              name="officeName"
+              name="realtor.officeName"
               value={constractEnroll.realtor.officeName}
               onChange={(e) => {
                 setConstractEnroll({
@@ -594,7 +600,7 @@ const ContractEnroll = () => {
             <Form.Control
               type="text"
               placeholder="등록번호"
-              name="registrationNum"
+              name="realtor.registrationNum"
               value={constractEnroll.realtor.registrationNum}
               onChange={(e) => {
                 setConstractEnroll({
@@ -612,7 +618,7 @@ const ContractEnroll = () => {
             <Form.Control
               type="text"
               placeholder="주소"
-              name="address"
+              name="realtor.address"
               value={constractEnroll.realtor.address}
               onChange={(e) => {
                 setConstractEnroll({
