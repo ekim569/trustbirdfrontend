@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Button, Form} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
+import AuthToken from "../../storages/Auth";
+
 //Contract Output
 const Contract = () => {
+  const token = AuthToken.get()
   const history = useHistory();
+
   const [contract, setContract] = useState({
+    trustToken : "",
+    token:"",
+    preToken:"",
     location: "",
     landCategory: "",
     landArea: "",
@@ -43,29 +50,29 @@ const Contract = () => {
     },
   });
 
-  useEffect(() => {
-    fetch("http://192.168.0.143:3001/contract/find", {
-      mode: "cors",
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        setContractList(res);
-      });
-  }, [token]);
+  // useEffect(() => {
+  //   fetch(`http://192.168.0.143:3001/api/contract/find`, {
+  //     mode: "cors",
+  //     method: "GET",
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         return res.json();
+  //       }
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setContract(res);
+  //     });
+  // }, [token]);
 
   const onClick = (loc) => {
-    setLoc(loc);
+    // setLoc(loc);
   };
 
   return (
@@ -285,6 +292,12 @@ const Contract = () => {
               </td>
             </tr>
           </table>
+          <div>
+            <a href="../contract/ContractList.js"/>
+            <Button className="button4" >
+              돌아가기
+            </Button>
+          </div>
 
           <div style={{ float: "right" }}>
             <Button

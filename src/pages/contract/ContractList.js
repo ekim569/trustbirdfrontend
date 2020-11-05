@@ -8,7 +8,7 @@ const ContractList = () => {
   const token = AuthToken.get();
 
   const [contractList, setContractList] = useState([]);
-  const [loc, setLoc] = useState(1);
+  const [loc, setLoc] = useState(0);
 
   const pageLimit = 5;
   const paginationLimite = 5;
@@ -56,6 +56,7 @@ const ContractList = () => {
         pageLimit={pageLimit}
       />
       <Pagination
+        totalLength={totalLength}
         total={totalLength}
         active={loc}
         last={totalPageNum}

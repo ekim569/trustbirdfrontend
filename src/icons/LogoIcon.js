@@ -6,7 +6,7 @@ export default function LogoIcon() {
       version="1.0"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1920.000000 1920.000000"
-      style={{ border: "1px solid #222222", height: "60px",
+      style={{ border: "1px solid #222222", height: "60px", background: "#ffffff",
        display:"inline-block" }}
     >
       <g

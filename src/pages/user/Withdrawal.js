@@ -1,12 +1,31 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useHistory } from 'react-router-dom'
 import { Container, Button } from "react-bootstrap";
-
+import AuthToken from "../../storages/Auth";
 
 //Withdrawal
 const Withdrawal = () => {
-  useEffect({
-
-  })
+  const history = useHistory()
+  const token = AuthToken.get();
+  
+  const onSubmit = (e)=>{
+    fetch(`http://192.168.0.143:3001/api/user/withdrawal`, {
+        mode: "cors",
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res)=> {
+        if(res.status === 200) {
+          AuthToken.set("");
+          alert("회원 탈퇴 되었습니다.")
+          history.push("/")
+        }
+      })
+  }
   return (
     <Container style={{marginTop:"200px"}} >
       <div className="pageheader" style={{fontSize:"30px"}}>회원탈퇴</div>
@@ -33,6 +52,7 @@ const Withdrawal = () => {
           padding:"0",
           textAlign:"center"
       }}>
+        <a href="/main" >
         <Button
           variant="primary"
           type="submit"
@@ -40,6 +60,7 @@ const Withdrawal = () => {
         >
           취소
         </Button>
+        </a>
         <Button
           variant="primary"
           type="submit"
@@ -47,6 +68,7 @@ const Withdrawal = () => {
           style={{
             marginLeft:"16px",            
           }}
+          onClick={onSubmit}
         >
           탈퇴하기
         </Button>

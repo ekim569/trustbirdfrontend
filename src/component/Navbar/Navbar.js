@@ -57,13 +57,12 @@ export default function Navbar(props) {
   return (
     <BootStrapNavbar
       fixed="top"
-      bg="#ffffff"
       expand="lg"
       style={{
         borderBottomWidth: 1,
         borderColor: "#c2c2c2",
         borderBottomStyle: "solid",
-        background: "white",
+        background: "#ffffff",
       }}
     >
       <Container style={{ margin: "auto", maxWidth: "1500px" }}>
@@ -104,7 +103,7 @@ export default function Navbar(props) {
               <div >
               <img className="usericon" src='https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg' /> 
               
-                {user.permission === user ? ( 
+                {user.permission === 'user' ? ( 
                   <NavDropdown
                     title={user.username}
                     id="basic-nav-dropdown"

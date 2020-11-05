@@ -1,6 +1,6 @@
 import React from "react";
 import AuthToken from "../../storages/Auth";
-import Pagination from "./Pagination";
+import Pagination from "../../component/Pagination";
 import TrustListPage from "./TrustListPage"
 
 const TrustList = () => {

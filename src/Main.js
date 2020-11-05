@@ -22,13 +22,14 @@ import TrustList_admin from "./pages/trust/TrustList_admin"
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
 import ContractList from "./pages/contract/ContractList";
+import Contractmodified from "./pages/contract/ContractModified";
 
 import MaintenanceFee from "./pages/maintenanaceFee/MaintenanceFee";
 import MaintenanceFeeList from "./pages/maintenanaceFee/MaintenanceFeeList";
 
 import Footer from "./component/Footer";
 
-import AuthToken from "../../storages/Auth";
+import AuthToken from "./storages/Auth";
 
 const Main = (props) => {
   return (
@@ -58,7 +59,9 @@ const Main = (props) => {
 
             <Route exact path="/contractenroll" component={ContractEnroll} />
             <Route exact path="/contract" component={Contract} />
-            <Route exact path="/contractlist" component={ContractList} />            
+            <Route exact path="/contractlist" component={ContractList} />  
+            <Route exact path="/contractmodified" component={Contractmodified} />            
+
 
             <Route exact path="/maintenancefee" component={MaintenanceFee} />
             <Route exact path="/maintenancefeelist" component={MaintenanceFeeList} />

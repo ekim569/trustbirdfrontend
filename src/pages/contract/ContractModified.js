@@ -3,7 +3,7 @@ import { Container, Button, Form} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 //Contract Output
-const Contract = () => {
+const Contractmodified = () => {
   const history = useHistory();
   const [contract, setContract] = useState({
     trustToken: "",
@@ -45,8 +45,6 @@ const Contract = () => {
       telephoneNum: "",
     },
   });
-
-s
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -321,10 +319,10 @@ s
               className="button2"
               style={{ marginRight: "16px" }}
             >
-              수정
+              취소
             </Button>
             <Button variant="primary" type="submit" className="button2">
-              삭제
+              완료
             </Button>
           </div>
         </Form>
@@ -333,4 +331,4 @@ s
   );
 };
 
-export default Contract;
+export default Contractmodified;

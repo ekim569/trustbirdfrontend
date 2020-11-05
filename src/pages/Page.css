@@ -198,7 +198,26 @@
   color: white;
   margin-top: 0;
 }
-
+.serviceintroimage {
+  background: linear-gradient(
+      to left,
+      rgba(56, 56, 56, 0),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://cdn.pixabay.com/photo/2017/06/03/10/06/house-2368389_960_720.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  resize: both; /* 이미지 최대 사이즈에 적용 */
+  max-width: 1000px; /* 넓이를 지정 */
+  height: 500px; /* 높이를 지정 이를 지정 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-top: 0;
+}
 .scopeimage {
   background: linear-gradient(
       to left,

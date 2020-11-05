@@ -58,6 +58,7 @@ const MaintenanceFeeList = () => {
         pageLimit={pageLimit}
       />
       <Pagination
+        totalLength={totalLength}
         total={totalLength}
         active={loc}
         last={totalPageNum}
