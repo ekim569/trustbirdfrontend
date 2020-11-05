@@ -48,7 +48,7 @@ const TrustList = () => {
   }, [totalLength, pageLimit]);
 
   return (
-    <div >
+    <div>
       <TrustListPage trustList={trustList} loc={loc} pageLimit={pageLimit} />
       <Pagination
         totalLength={totalLength}
@@ -61,6 +61,5 @@ const TrustList = () => {
     </div>
   );
 };
-
 
 export default TrustList;

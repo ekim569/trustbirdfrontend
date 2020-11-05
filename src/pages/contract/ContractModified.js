@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Button, Form} from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 //Contract Output
@@ -70,7 +70,6 @@ const Contractmodified = () => {
         formData.append(key, value);
       }
     }
-  
 
     fetch("http://192.168.0.143:3001/api/user/contract", {
       method: "POST",

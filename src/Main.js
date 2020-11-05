@@ -17,7 +17,7 @@ import TrustWay from "./pages/trust/TrustWay";
 import TrustSub from "./pages/trust/TrustSub";
 import Trust from "./pages/trust/Trust";
 import TrustList from "./pages/trust/TrustList";
-import TrustList_admin from "./pages/trust/TrustList_admin"
+import TrustList_admin from "./pages/trust/TrustList_admin";
 
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
@@ -43,13 +43,13 @@ const Main = (props) => {
             <Route exact path="/home" component={Home} />
             <Route exact path="/main" component={Home} />
             <Route exact path="/serviceintro" component={ServiceIntro} />
-            <Route exact path="/fundationintro"  component={FoundationIntro}/>
+            <Route exact path="/fundationintro" component={FoundationIntro} />
 
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signmodified" component={SignModified} />
             <Route exact path="/membership" component={Membership} />
-            <Route exact path="/withdrawal" component={Withdrawal} />          
+            <Route exact path="/withdrawal" component={Withdrawal} />
 
             <Route exact path="/trustway" component={TrustWay} />
             <Route exact path="/trustsub" component={TrustSub} />
@@ -64,8 +64,12 @@ const Main = (props) => {
 
 
             <Route exact path="/maintenancefee" component={MaintenanceFee} />
-            <Route exact path="/maintenancefeelist" component={MaintenanceFeeList} />
-            
+            <Route
+              exact
+              path="/maintenancefeelist"
+              component={MaintenanceFeeList}
+            />
+
             <Route exact path="/footer" component={Footer} />
           </Switch>
         </div>
