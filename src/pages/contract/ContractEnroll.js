@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Container, Button, Form } from "react-bootstrap";
+import { Container, Button, Form, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import PostFixInput from "../../component/PostFixInput";
+import PostFixInput from "./PostFixInput";
 import AuthToken from "../../storages/Auth";
+import "./Page.css";
 
 //Contract Enrollment
 const ContractEnroll = () => {
@@ -28,25 +29,72 @@ const ContractEnroll = () => {
     balance: "",
     rent: "",
     specialAgreement: "",
-    lessor: {
-      name: "",
-      address: "",
-      RRN: "",
-      telephoneNum: "",
-    },
-    lessee: {
-      name: "",
-      address: "",
-      RRN: "",
-      telephoneNum: "",
-    },
-    realtor: {
-      name: "",
-      address: "",
-      RRN: "",
-      telephoneNum: "",
-    },
+    "lessor.name": "",
+    "lessor.address": "",
+    "lessor.RRN": "",
+    "lessor.telephoneNum": "",
+    "lessee.name": "",
+    "lessee.address": "",
+    "lessee.RRN": "",
+    "lessee.telephoneNum": "",
+    "realtor.name": "",
+    "realtor.telephoneNum": "",
+    "realtor.officeName": "",
+    " realtor.registrationNum": "",
+    " realtor.address": "",
+    attachments: {},
   });
+
+  // token: "100",
+  // preToken: "50",
+  // location: "지구",
+  // landCategory: "몰라",
+  // landArea: "100",
+  // buildingpurpose: "100",
+  // buildingArea: "적당히",
+  // partOfLease: "몰라",
+  // partOfLeaseArea: "몰라",
+  // rentType: "ㅇㄹ",
+  // periodStart: "",
+  // periodEnd: "",
+  // securityDeposit: "10000",
+  // contractPrice: "20",
+  // interimPrice: "04",
+  // balance: "1000",
+  // rent: "390",
+  // specialAgreement: "30434",
+  // lessor: {
+  //   name: "",
+  //   address: "",
+  //   RRN: "",
+  //   telephoneNum: "",
+  // },
+  // lessee: {
+  //   name: "",
+  //   address: "",
+  //   RRN: "",
+  //   telephoneNum: "",
+  // },
+  // realtor: {
+  //   name: "",
+  //   telephoneNum: "",
+  //   officeName: "",
+  //   registrationNum: "",
+  //   address: "",
+  // },
+  // });
+
+  // function subDataChange(e) {
+  //   e.preventDefault();
+
+  //   const { value, name } = e.target;
+  //   console.log(value, name);
+
+  //   setConstractEnroll({
+  //     ...lessor,
+  //     [name]: value,
+  //   });
+  // }
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -62,7 +110,13 @@ const ContractEnroll = () => {
   }
 
   function onSubmit(e) {
+    console.log(constractEnroll);
+    console.log(JSON.stringify(constractEnroll));
     e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("contract", JSON.stringify(constractEnroll));
 
     fetch("http://192.168.0.143:3001/api/contract/enroll", {
       method: "POST",
@@ -70,8 +124,9 @@ const ContractEnroll = () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(constractEnroll),
-    }).then((res) => {
+      body: formData,
+    })
+      .then((res) => {
         if (res.status === 200) {
           history.push("/signin");
         } else {
@@ -109,7 +164,6 @@ const ContractEnroll = () => {
 
         <Form.Group controlId="formBasicLandCategory">
           <Form.Label> 지목 </Form.Label>
-          <div>
           <PostFixInput
             labelText="지목"
             postfix=""
@@ -119,6 +173,10 @@ const ContractEnroll = () => {
             value={constractEnroll.landCategory}
             onChange={handleInputChange}
           />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicLandArea">
+          <Form.Label> 토지의 면적 </Form.Label>
           <PostFixInput
             labelText="토지의 면적"
             postfix="㎡"
@@ -128,14 +186,25 @@ const ContractEnroll = () => {
             value={constractEnroll.landArea}
             onChange={handleInputChange}
           />
-          </div>
         </Form.Group>
 
         <Form.Group controlId="formBasicBuildingPurpose">
           <Form.Label> 건물의 용도 </Form.Label>
-          <Form.Control labelText="건물의 용도" type="text" placeholder="용도" />
           <PostFixInput
-            labelText="건물의 면적"
+            labelText="건물의 용도"
+            postfix=""
+            type="text"
+            placeholder="종류"
+            name="buildingpurpose"
+            value={constractEnroll.buildingpurpose}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicBuildingArea">
+          <Form.Label> 건물의 면적 </Form.Label>
+          <PostFixInput
+            labelText="부동산종류"
             postfix="㎡"
             type="text"
             placeholder="면적"
@@ -147,7 +216,17 @@ const ContractEnroll = () => {
 
         <Form.Group controlId="formBasicPartOfLease">
           <Form.Label> 임대할 부분 </Form.Label>
-          <Form.Control type="text" placeholder="임대할 부분" />
+          <Form.Control
+            type="text"
+            placeholder="임대할 부분"
+            name="partOfArea"
+            value={constractEnroll.partOfArea}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPartOfLeaseArea">
+          <Form.Label> 임대할 부분의 면적 </Form.Label>
           <PostFixInput
             labelText="부동산 종류"
             postfix="㎡"
@@ -206,12 +285,24 @@ const ContractEnroll = () => {
         </div>
 
         <Form.Group controlId="formBasicPeriod">
-          <Form.Label> 임대 기간 </Form.Label>
+          <Form.Label> 임대 시작일 </Form.Label>
 
           <Form.Control
-            type="text"
-            name="Period"
-            value={constractEnroll.Period}
+            type="date"
+            name="periodStart"
+            value={constractEnroll.periodStart}
+            onChange={handleInputChange}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPeriod">
+          <Form.Label> 임대 만료일 </Form.Label>
+
+          <Form.Control
+            type="date"
+            name="periodEnd"
+            value={constractEnroll.periodEnd}
             onChange={handleInputChange}
             required
           />
@@ -296,15 +387,16 @@ const ContractEnroll = () => {
               type="text"
               placeholder="이름"
               name="name"
-              value={constractEnroll.lessor.name}
-              // onChange={(e) => {
-              //   console.log(e.target.value);
-              //   e.preventDefault();
-              //   setConstractEnroll({
-              //     ...constractEnroll,
-              //     name: e.target.value,
-              //   });
-              // }}
+              value={constractEnroll.name}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  lessor: {
+                    ...constractEnroll.lessor,
+                    name: e.target.value,
+                  },
+                });
+              }}
               required
             />
           </tr>
@@ -314,14 +406,15 @@ const ContractEnroll = () => {
               name="telephoneNum"
               value={constractEnroll.lessor.telephoneNum}
               placeholder="전화번호"
-              // onChange={(e) => {
-              //   console.log(e.target.value);
-              //   e.preventDefault();
-              //   setConstractEnroll({
-              //     ...constractEnroll,
-              //     purpose: e.target.value,
-              //   });
-              // }}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  lessor: {
+                    ...constractEnroll.lessor,
+                    telephoneNum: e.target.value,
+                  },
+                });
+              }}
               required
             />
           </tr>
@@ -331,7 +424,15 @@ const ContractEnroll = () => {
               placeholder="주소"
               name="address"
               value={constractEnroll.lessor.address}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  lessor: {
+                    ...constractEnroll.lessor,
+                    address: e.target.value,
+                  },
+                });
+              }}
               required
             />
           </tr>
@@ -341,7 +442,15 @@ const ContractEnroll = () => {
               placeholder="주민번호"
               name="RRN"
               value={constractEnroll.lessor.RRN}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  lessor: {
+                    ...constractEnroll.lessor,
+                    RRN: e.target.value,
+                  },
+                });
+              }}
               required
             />
           </tr>
@@ -356,7 +465,15 @@ const ContractEnroll = () => {
                 placeholder="이름"
                 name="name"
                 value={constractEnroll.lessee.name}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    lessee: {
+                      ...constractEnroll.lessee,
+                      name: e.target.value,
+                    },
+                  });
+                }}
                 required
               />
             </tr>
@@ -366,7 +483,15 @@ const ContractEnroll = () => {
                 placeholder="전화번호"
                 name="telephoneNum"
                 value={constractEnroll.lessee.telephoneNum}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    lessee: {
+                      ...constractEnroll.lessee,
+                      telephoneNum: e.target.value,
+                    },
+                  });
+                }}
                 required
               />
             </tr>
@@ -376,7 +501,15 @@ const ContractEnroll = () => {
                 placeholder="주소"
                 name="address"
                 value={constractEnroll.lessee.address}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    lessee: {
+                      ...constractEnroll.lessee,
+                      address: e.target.value,
+                    },
+                  });
+                }}
                 required
               />
             </tr>
@@ -386,7 +519,15 @@ const ContractEnroll = () => {
                 placeholder="주민번호"
                 name="RRN"
                 value={constractEnroll.lessee.RRN}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    lessee: {
+                      ...constractEnroll.lessee,
+                      RRN: e.target.value,
+                    },
+                  });
+                }}
                 required
               />
             </tr>
@@ -401,7 +542,15 @@ const ContractEnroll = () => {
               placeholder="이름"
               name="name"
               value={constractEnroll.realtor.name}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  realtor: {
+                    ...constractEnroll.realtor,
+                    name: e.target.value,
+                  },
+                });
+              }}
               required
             />
           </tr>
@@ -411,7 +560,51 @@ const ContractEnroll = () => {
               placeholder="전화번호"
               name="telephoneNum"
               value={constractEnroll.realtor.telephoneNum}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  realtor: {
+                    ...constractEnroll.realtor,
+                    telephoneNum: e.target.value,
+                  },
+                });
+              }}
+              required
+            />
+          </tr>
+          <tr>
+            <Form.Control
+              type="text"
+              placeholder="사무실 이름"
+              name="officeName"
+              value={constractEnroll.realtor.officeName}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  realtor: {
+                    ...constractEnroll.realtor,
+                    officeName: e.target.value,
+                  },
+                });
+              }}
+              required
+            />
+          </tr>
+          <tr>
+            <Form.Control
+              type="text"
+              placeholder="등록번호"
+              name="registrationNum"
+              value={constractEnroll.realtor.registrationNum}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  realtor: {
+                    ...constractEnroll.realtor,
+                    registrationNum: e.target.value,
+                  },
+                });
+              }}
               required
             />
           </tr>
@@ -421,21 +614,33 @@ const ContractEnroll = () => {
               placeholder="주소"
               name="address"
               value={constractEnroll.realtor.address}
-              onChange={handleInputChange}
-              required
-            />
-          </tr>
-          <tr>
-            <Form.Control
-              type="text"
-              placeholder="주민번호"
-              name="RRN"
-              value={constractEnroll.realtor.RRN}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                setConstractEnroll({
+                  ...constractEnroll,
+                  realtor: {
+                    ...constractEnroll.realtor,
+                    address: e.target.value,
+                  },
+                });
+              }}
               required
             />
           </tr>
         </table>
+
+        <Form.Group controlId="formBasicAttachments">
+          <Form.Label> 첨부파일 </Form.Label>
+          <Form.File
+            // onChange={handleInputChange}
+            onChange={(e) => {
+              setConstractEnroll({
+                ...constractEnroll,
+                attachments: e.target.files[0],
+              });
+            }}
+            name="attachments"
+          />
+        </Form.Group>
 
         <Button variant="primary" type="submit" className="button3">
           저장하기
