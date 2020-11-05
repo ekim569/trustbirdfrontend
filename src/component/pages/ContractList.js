@@ -1,75 +1,71 @@
-import React, { Container , useEffect, useState,Link, } from "react";
-import {Table, Pagination, Col,  Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import AuthToken from "../../storages/Auth";
+import Pagination from "./Pagination";
+import ContractListPage from "./ContractListPage";
+
 import "../Navbar/Navbar.css";
 import "./Page.css";
 
 //Contract List
 const ContractList = () => {
-  const [contractList, setContractList] = useState({
-    No: 0,
-    lesse: "",
-    preiodstart: "",
-    periodend: "",
-    renttype: "",
-  });
+  const token = AuthToken.get();
 
-  const history = useHistory();
+  const [contractList, setContractList] = useState([]);
+  const [loc, setLoc] = useState(1);
 
-  const pageLow = 7;
-  const paginationLow = 5;
+  const pageLimit = 5;
+  const paginationLimite = 5;
 
-  let currentPageNo = 0;
-  let currentPaginationNo = 0;
+  useEffect(() => {
+    fetch("http://192.168.0.143:3001/api/contract/list", {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        setContractList(res);
+      });
+  }, [token]);
 
-  const handleEvent = (e) => {
-    e.preventDefault();
-    history.push({
-      pathname: "/contract",
-      state: { contractList: contractList },
-    });
+  const onClick = (loc) => {
+    setLoc(loc);
   };
 
+  // list length
+  const totalLength = useMemo(() => {
+    return contractList.length;
+  }, [contractList]);
+
+  // page length
+  const totalPageNum = useMemo(() => {
+    return Math.ceil(totalLength / pageLimit);
+  }, [totalLength, pageLimit]);
+
   return (
-    <Container>
-      <div className="pageheader">계약서 목록</div>
-      <Table bordered={true} style={{ marginBottom: "100px" }}>
-        <thead>
-          <tr>
-            <th>NO.</th>
-            <th>사용자</th>
-            <th>계약 시점</th>
-            <th>계약 종료 시점</th>
-            <th>임대 종류</th>
-            <th>보기</th>
-          </tr>
-        </thead>
-        <tbody>
-          {() => {
-            for (let i = currentPageNo; i < currentPageNo + pageLow; i++) {
-              return (
-                <tr>
-                  <td>{contractList[i].No}</td>
-                  <td>{contractList[i].lesse}</td>
-                  <td>{contractList[i].preiodstart}</td>
-                  <td>{contractList[i].periodend}</td>
-                  <td>{contractList[i].renttype}</td>
-                  <td>
-                    <Link to="/maintenancefee" onClick={handleEvent}>
-                      <Button>관리비 내역</Button>
-                    </Link>
-                  </td>
-                </tr>
-              );
-            }
-            currentPageNo =
-              currentPageNo + pageLow > contractList.length
-                ? contractList.length
-                : currentPageNo + pageLow;
-          }}
-        </tbody>
-      </Table>
-    </Container>
+    <div>
+      <ContractListPage
+        contractList={contractList}
+        loc={loc}
+        pageLimit={pageLimit}
+      />
+      <Pagination
+        total={totalLength}
+        active={loc}
+        last={totalPageNum}
+        paginationLimite={paginationLimite}
+        onClick={onClick}
+      />
+    </div>
   );
 };
 
