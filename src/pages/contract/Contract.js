@@ -43,52 +43,30 @@ const Contract = () => {
     },
   });
 
-  function handleInputChange(e) {
-    e.preventDefault();
-
-    const { value, name } = e.target;
-
-    console.log(value, name);
-
-    setContract({
-      ...contract,
-      [name]: value,
-    });
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-
-    const formData = new FormData();
-
-    for (const [key, value] of Object.entries(contract)) {
-      formData.append(key, value);
-      if (key === "attachments") {
-        formData.append(key, value);
-      }
-    }
-
-    fetch("http://192.168.0.143:3001/api/user/contract", {
-      method: "POST",
+  useEffect(() => {
+    fetch("http://192.168.0.143:3001/contract/find", {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(contract),
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/signin");
-        } else {
-          const error = new Error(res.error);
-
-          throw error;
+          return res.json();
         }
       })
-      .catch((err) => {
-        console.error(err);
-        alert("Error loggin in please try again");
+      .then((res) => {
+        console.log(res);
+        setContractList(res);
       });
-  }
+  }, [token]);
+
+  const onClick = (loc) => {
+    setLoc(loc);
+  };
 
   return (
     <div>
@@ -314,10 +292,11 @@ const Contract = () => {
               type="submit"
               className="button2"
               style={{ marginRight: "16px" }}
+              onClick={onClick}
             >
               수정
             </Button>
-            <Button variant="primary" type="submit" className="button2">
+            <Button variant="primary" type="submit" className="button2" on > 
               삭제
             </Button>
           </div>

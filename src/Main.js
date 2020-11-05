@@ -17,6 +17,7 @@ import TrustWay from "./pages/trust/TrustWay";
 import TrustSub from "./pages/trust/TrustSub";
 import Trust from "./pages/trust/Trust";
 import TrustList from "./pages/trust/TrustList";
+import TrustList_admin from "./pages/trust/TrustList_admin"
 
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
@@ -27,6 +28,8 @@ import MaintenanceFeeList from "./pages/maintenanaceFee/MaintenanceFeeList";
 
 import Footer from "./component/Footer";
 
+import AuthToken from "../../storages/Auth";
+
 const Main = (props) => {
   return (
     <div>
@@ -34,6 +37,7 @@ const Main = (props) => {
         <Navbar />
         <div style={{ marginTop: 80 }}>
           <Switch>
+            {}
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/main" component={Home} />
@@ -50,6 +54,7 @@ const Main = (props) => {
             <Route exact path="/trustsub" component={TrustSub} />
             <Route exact path="/trust" component={Trust} />
             <Route exact path="/trustlist" component={TrustList} />
+            <Route exact path="/trustlist/admin" component={TrustList_admin} />
 
             <Route exact path="/contractenroll" component={ContractEnroll} />
             <Route exact path="/contract" component={Contract} />

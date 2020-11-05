@@ -6,6 +6,9 @@ import { useHistory } from "react-router-dom";
 const Contract = () => {
   const history = useHistory();
   const [contract, setContract] = useState({
+    trustToken: "",
+    token: "",
+    preToken: "",
     location: "",
     landCategory: "",
     landArea: "",
@@ -43,27 +46,8 @@ const Contract = () => {
     },
   });
 
-  useEffect(() => {
-    fetch("http://192.168.0.143:3001/contract/find", {
-      mode: "cors",
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        setContractList(res);
-      });
-  }, [token]);
-  
+s
+
   function handleInputChange(e) {
     e.preventDefault();
 
@@ -148,7 +132,7 @@ const Contract = () => {
               <tr className="tableborder">
                 <td className="tableborder">건물</td>
                 <td placeholder="용도">용도 </td>
-                <td className="tableborder"> {contract.buildingPurpose} </td>
+                <td className="tableborder">{contract.buildingPurpose} </td>
                 <td className="tableborder">면적</td>
                 <td className="tableborder">{contract.buildingArea} </td>
               </tr>

@@ -1,6 +1,5 @@
 import React from "react";
 import AuthToken from "../../storages/Auth";
-
 import Pagination from "./Pagination";
 import TrustListPage from "./TrustListPage"
 
@@ -14,7 +13,7 @@ const TrustList = () => {
   const paginationLimite = 5;
 
   React.useEffect(() => {
-    fetch("http://192.168.0.143:3001/api/user/trustlist", {
+    fetch("http://192.168.0.143:3001/api/trust/list", {
       mode: "cors",
       method: "GET",
       credentials: "include",
