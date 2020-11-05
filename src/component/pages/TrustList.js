@@ -62,5 +62,4 @@ const TrustList = () => {
 };
 
 
-
 export default TrustList;

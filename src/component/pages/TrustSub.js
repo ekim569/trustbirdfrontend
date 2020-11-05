@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PostFixInput from "./PostFixInput";
@@ -6,7 +6,7 @@ import AuthToken from "../../storages/Auth";
 import "./Page.css";
 
 //Trust Subscription
-const TrustSub = () => {
+const TrustSub = ({location}) => {
   const token = AuthToken.get();
 
   const history = useHistory();
@@ -31,6 +31,32 @@ const TrustSub = () => {
     attachments: {},
     etc: "",
   });
+
+  useEffect(()=>{
+    const params = new URLSearchParams(location.search);  
+
+    if(params.get('token')){
+        fetch(`http://192.168.0.143:3001/api/trust/find?token=${params.get('token')}`, {
+        mode: "cors",
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res)=> {
+        if(res.status === 200) {
+          return res.json()
+        }
+      })
+      .then((res) => {
+        setTrustsub(res)
+      })
+    }
+
+    
+  },[])  
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -57,15 +83,6 @@ const TrustSub = () => {
       formData.append(key, value);
     }
     formData.append("attachments", trustsub.attachments);
-    // formData.append("files", {
-    //   uri: pickerResponse.uri,
-    //   type: pickerResponse.type,
-    //   name: pickerResponse.fileName,
-    // });
-    // formData.append('attachement', trustsub.attachments)
-
-    console.log(formData);
-    console.log(trustsub);
 
     fetch("http://192.168.0.143:3001/api/trust/subscription", {
       method: "POST",

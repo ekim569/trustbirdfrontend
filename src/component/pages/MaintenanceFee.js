@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Container, Table, Col } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import {Button, Container, Table } from "react-bootstrap";
+import AuthToken from "../../storages/Auth";
 import "./Page.css";
 
 //Maintenance Fee
-const MaintenanceFee = () => {
-  const history = useHistory();
+const MaintenanceFee = ({ electronicPaymentNum }) => {
+  const token = AuthToken.get();
+
   const [maintenanceFee, setMaintenanceFee] = useState({
     claimingAgency: "",
     electronicPaymentNum: "",
-    startDate: "",
+    // deadline: "",
     dueDate: "",
     amountDeadline: "",
     amountDueDate: "",
@@ -19,25 +20,37 @@ const MaintenanceFee = () => {
   });
 
   useEffect(() => {
-    const body = {
-      email: "page1111@naver.com",
-    };
-
-    fetch("http://192.168.0.143:3001/api/user/maintenancefee/find", { method:"GET"}, ).then((maintenanceFee) => {
-     
-      setMaintenanceFee(maintenanceFee);
-    });
-  }, []);
+    fetch(
+      `http://192.168.0.143:3001/api/maintenanceFee/find?electronicPaymentNum=${electronicPaymentNum}`,
+      {
+        mode: "cors",
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        setMaintenanceFee(res);
+      });
+  }, [electronicPaymentNum]);
 
   // props, useEffect, useState
   // useHistroy 라우터로 main
   return (
-    <Container>
-      <Table bordered={true}>
+    <Container style={{textAlign:"center"}}>
+      <Table bordered={true}   >
         <thead>
           <tr>
-            <th>관리비 청구 기관</th>
-            <td>{maintenanceFee.claimingAgency}</td>
+            <th style={{width:"40%"}}> 관리비 청구 기관</th>
+            <td > {maintenanceFee.claimingAgency}</td>
           </tr>
           <tr>
             <th>관리비 전자납부번호</th>
@@ -49,13 +62,28 @@ const MaintenanceFee = () => {
           </tr>
           <tr>
             <th>관리비 납기 내 금액</th>
-            <td>{maintenanceFee.payment}</td>
+            <td>{maintenanceFee.amountDeadline}</td>
           </tr>
           <tr>
             <th>관리비 납기 후 금액</th>
             <td>{maintenanceFee.amountDueDate}</td>
           </tr>
-          <tr></tr>
+          <tr>
+            <th>납부자</th>
+            <td>{maintenanceFee.payer}</td>
+          </tr>
+          <tr>
+            <th>납입금액</th>
+            <td>{maintenanceFee.payment}</td>
+          </tr>
+          <tr> 
+            <th>지로</th>
+            <td>
+              <a href={`http://192.168.0.143:8080/ipfs/${maintenanceFee.giro.filePath}`}  target="_blank" ><Button
+                    variant=""
+                    className="scopeimage"
+                  ></Button></a></td>
+          </tr>
         </thead>
         <tbody></tbody>
       </Table>

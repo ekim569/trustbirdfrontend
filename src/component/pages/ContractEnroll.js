@@ -75,38 +75,27 @@ const ContractEnroll = () => {
 
         <Form.Group controlId="formBasicLandCategory">
           <Form.Label> 지목 </Form.Label>
+          <div>
           <PostFixInput
             labelText="지목"
             postfix=""
             type="text"
             placeholder="지번"
           />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicLandArea">
-          <Form.Label> 토지의 면적 </Form.Label>
           <PostFixInput
             labelText="토지의 면적"
             postfix="㎡"
             type="text"
             placeholder="면적"
           />
+          </div>
         </Form.Group>
 
         <Form.Group controlId="formBasicBuildingPurpose">
           <Form.Label> 건물의 용도 </Form.Label>
+          <Form.Control labelText="건물의 용도" type="text" placeholder="용도" />
           <PostFixInput
-            labelText="건물의 용도"
-            postfix=""
-            type="text"
-            placeholder="종류"
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicBuildingArea">
-          <Form.Label> 건물의 면적 </Form.Label>
-          <PostFixInput
-            labelText="부동산종류"
+            labelText="건물의 면적"
             postfix="㎡"
             type="text"
             placeholder="면적"
@@ -116,10 +105,6 @@ const ContractEnroll = () => {
         <Form.Group controlId="formBasicPartOfLease">
           <Form.Label> 임대할 부분 </Form.Label>
           <Form.Control type="text" placeholder="임대할 부분" />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPartOfLeaseArea">
-          <Form.Label> 임대할 부분의 면적 </Form.Label>
           <PostFixInput
             labelText="부동산 종류"
             postfix="㎡"

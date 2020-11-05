@@ -4,7 +4,7 @@ import "./Page.css"
 
 const PostFixInput = ({ type, placeholder, postfix, onChange, ...props }) => {
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", }}>
       <Form.Control
         type={type}
         onChange={onChange}

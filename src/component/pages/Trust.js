@@ -24,67 +24,37 @@ const Trust = ({location}) => {
     periodStart: "",
     periodEnd: "",
     etc: "",
-    attachments: "",
+    attachments: new Array(),
     Ttatus: "",
     contract: "",
-    email: "page1111@naver.com",
   });
 
-  // useEffect(()=>{
-  //   const params = new URLSearchParams(location.search);  
-  //   console.log(params)
+  useEffect(()=>{
+    const params = new URLSearchParams(location.search);  
 
-  //   fetch(`http://192.168.0.143:3001/api/trust/find?token=${params.token}`, {
-  //     mode: "cors",
-  //     method: "GET",
-  //     credentials: "include",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //   .then((res)=> {
-  //     if(res.status === 200) {
-  //       return res.json()
-  //     }
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //     setTrust(res)
-  //   })
-  // },[])  
-
-  function onSubmit(e) {
-    e.preventDefault();
-
-    console.log(trust);
-
-    fetch("http://192.168.0.143:3001/api/trust/subscription", {
-      method: "POST",
+    fetch(`http://192.168.0.143:3001/api/trust/find?token=${params.get('token')}`, {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(trust),
     })
-      .then((res) => {
-        if (res.status === 200) {
-          history.push("/trust");
-        } else {
-          const error = new Error(res.error);
-
-          throw error;
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Error loggin in please try again");
-      });
-  }
+    .then((res)=> {
+      if(res.status === 200) {
+        return res.json()
+      }
+    })
+    .then((res) => {
+      setTrust(res)
+    })
+  },[])  
 
   return (
     <Container style={{ maxWidth: "720px", padding: 0 }}>
       <div className="pageheader">신탁신청서</div>
-      <Form onSubmit={onSubmit}>
+      <Form>
         <table className="tablelayout">
           <tr className="tableborder">
             <td className="tableborder" style={{ width: "200px" }}>
@@ -142,7 +112,9 @@ const Trust = ({location}) => {
         <Form.Label>첨부파일</Form.Label>
         <table className="tablelayout">
           <tr className="tableborder">
-            <td>{trust.attachments} </td>
+            {trust.attachments.map((attachment) => {
+             return <td><a href= {`http://192.168.0.143:8080/ipfs/${attachment.filePath}`} target="_blank"> {attachment.fileName} </a> </td>
+            })}
           </tr>
         </table>
 
@@ -155,6 +127,10 @@ const Trust = ({location}) => {
             type="submit"
             className="button2"
             style={{ marginLeft: "16px" }}
+            onClick={(e)=>{
+              e.preventDefault();
+              history.push(`/trustsub?token=${trust.token}`)
+          }}
           >
             수정하기
           </Button>

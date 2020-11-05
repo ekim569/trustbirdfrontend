@@ -1,118 +1,74 @@
-import React, { useEffect, useState } from "react";
-import { Container, Table, Button } from "react-bootstrap";
+import React, { useEffect, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
-import MaintenanceFee from "./MaintenanceFee";
+import AuthToken from "../../storages/Auth";
+import MaintenanceFeeListPage from "../pages/MaintenanceFeeListPage";
+import Pagination from "./Pagination";
 
 import "./Page.css";
 //userEffect
 
 //Maintenance Fee List
 const MaintenanceFeeList = () => {
-  const [maintenanceFeeList, setMaintenanceFeeList] = useState([]);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const token = AuthToken.get();
+
   const history = useHistory();
 
-  const handleEvent = (e) => {
-    e.preventDefault();
-    history.push({
-      pathname: "/maintenancefee",
-      state: { maintenanceFeeList: maintenanceFeeList },
-    });
-  };
+  const [maintenanceFeeList, setMaintenanceFeeList] = useState([]);
+  const [loc, setLoc] = useState(1);
 
-  function handleInputChange(e) {
-    e.preventDefault();
-
-    const { value, name } = e.target;
-
-    console.log(value, name);
-
-    setMaintenanceFeeList({
-      ...maintenanceFeeList,
-      [name]: value,
-    });
-  }
+  const pageLimit = 5;
+  const paginationLimite = 5;
 
   useEffect(() => {
-    const body = {
-      email: "page1111@naver.com",
-    };
-
     fetch("http://192.168.0.143:3001/api/user/maintenancefeelist", {
-      method: "POST",
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(body),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
       .then((res) => {
         console.log(res);
-        const data = maintenanceFeeList.concat(res);
-        setMaintenanceFeeList(data);
+        setMaintenanceFeeList(res);
       });
-  });
-  console.log(maintenanceFeeList);
+  }, [token]);
+
+  const onClick = (loc) => {
+    setLoc(loc);
+  };
+
+  // list length
+  const totalLength = useMemo(() => {
+    return maintenanceFeeList.length;
+  }, [maintenanceFeeList]);
+
+  // page length
+  const totalPageNum = useMemo(() => {
+    return Math.ceil(totalLength / pageLimit);
+  }, [totalLength, pageLimit]);
 
   return (
-    <Container style={{ marginTop: "150px" }}>
-      <div className="maintenanceimage">
-        <div className="pageheader" style={{ marginTop: "50px" }}>
-          관리비 내역 목록
-        </div>
-      </div>
-      <Table
-        bordered={true}
-        style={{ marginBottom: "100px", textAlign: "center" }}
-      >
-        <thead>
-          <tr>
-            <th style={{ width: "5%" }}>NO.</th>
-            <th>관리비 청구 기관</th>
-            <th>납부 날짜</th>
-            <th>관리비</th>
-            <th>납부 여부</th>
-            <th style={{ width: "140px" }}>영수증 보기</th>
-          </tr>
-        </thead>
-        <tbody>
-          {maintenanceFeeList.map((data) => (
-            <tr>
-              <td>1</td>
-              <td>{data.amountDue}</td>
-              <td>{data.claimingAgency}</td>
-              <td>{data.dueDate}</td>
-              <td>{data.electronicPaymentNum}</td>
-              <td>
-                <Button
-                  variant=""
-                  onClick={handleShow}
-                  className="scopeimage"
-                ></Button>
-
-                <Modal
-                  show={show}
-                  onHide={handleClose}
-                  dialogClassName="custom-dialog"
-                >
-                  <Modal.Header closeButton style={{ maxWidth: "100%" }}>
-                    <Modal.Title className="modalheader">
-                      관리비 내역
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <MaintenanceFee />
-                  </Modal.Body>
-                </Modal>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </Container>
+    <div>
+      <MaintenanceFeeListPage
+        maintenanceFeeList={maintenanceFeeList}
+        loc={loc}
+        pageLimit={pageLimit}
+      />
+      <Pagination
+        total={totalLength}
+        active={loc}
+        last={totalPageNum}
+        paginationLimite={paginationLimite}
+        onClick={onClick}
+      />
+    </div>
   );
 };
 
