@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import "./Page.css"
 import AuthToken from '../../storages/Auth'
+
 
 //Withdrawal
 const Membership = () => {

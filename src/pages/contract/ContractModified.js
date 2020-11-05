@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Container, Button, Form, Row, Col } from "react-bootstrap";
+import { Container, Button, Form} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import "./Page.css";
 
 //Contract Output
 const Contract = () => {
@@ -44,6 +43,27 @@ const Contract = () => {
     },
   });
 
+  useEffect(() => {
+    fetch("http://192.168.0.143:3001/contract/find", {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        setContractList(res);
+      });
+  }, [token]);
+  
   function handleInputChange(e) {
     e.preventDefault();
 
@@ -68,6 +88,7 @@ const Contract = () => {
         formData.append(key, value);
       }
     }
+  
 
     fetch("http://192.168.0.143:3001/api/user/contract", {
       method: "POST",
@@ -316,10 +337,10 @@ const Contract = () => {
               className="button2"
               style={{ marginRight: "16px" }}
             >
-              등록
+              수정
             </Button>
             <Button variant="primary" type="submit" className="button2">
-              취소
+              삭제
             </Button>
           </div>
         </Form>

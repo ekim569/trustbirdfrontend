@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {Button, Container, Table } from "react-bootstrap";
 import AuthToken from "../../storages/Auth";
-import "./Page.css";
+
 
 //Maintenance Fee
 const MaintenanceFee = ({ electronicPaymentNum }) => {
@@ -42,8 +42,6 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
       });
   }, [electronicPaymentNum]);
 
-  // props, useEffect, useState
-  // useHistroy 라우터로 main
   return (
     <Container style={{textAlign:"center"}}>
       <Table bordered={true}   >
@@ -80,9 +78,8 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
             <th>지로</th>
             <td>
               <a href={`http://192.168.0.143:8080/ipfs/${maintenanceFee.giro.filePath}`}  target="_blank" ><Button
-                    variant=""
-                    className="scopeimage"
-                  ></Button></a></td>
+                className="scopeimage"
+              ></Button></a></td>
           </tr>
         </thead>
         <tbody></tbody>

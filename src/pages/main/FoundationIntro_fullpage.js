@@ -1,14 +1,12 @@
 import React from "react";
-import introimage from "../icons/KakaoTalk_20201021_142548256_02.png"
 import { Container, Card } from "react-bootstrap";
-import "./Page.css"
 
 //Foundation Introduce
 const FoundationIntro2 = () => {
   return (
     <Container >
       <Card className="cardlayout2">
-      <Card.Img variant="top" src={introimage} className="imagesize" />
+      <Card.Img variant="top" className="serviceintroimage"  />
       <Card.Body>
         <Card.Text>
           Some quick example text to build on the card title and make up the bulk

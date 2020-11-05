@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Container, Button, Form, Table } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import PostFixInput from "./PostFixInput";
+import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
-import "./Page.css";
 
 //Contract Enrollment
 const ContractEnroll = () => {
@@ -72,10 +71,7 @@ const ContractEnroll = () => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(constractEnroll),
-    });
-    console
-      .log(constractEnroll)
-      .then((res) => {
+    }).then((res) => {
         if (res.status === 200) {
           history.push("/signin");
         } else {

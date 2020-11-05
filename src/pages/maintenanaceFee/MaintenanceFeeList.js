@@ -1,17 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useHistory } from "react-router-dom";
 import AuthToken from "../../storages/Auth";
-import MaintenanceFeeListPage from "../pages/MaintenanceFeeListPage";
-import Pagination from "./Pagination";
+import MaintenanceFeeListPage from "./MaintenanceFeeListPage";
+import Pagination from "../../component/Pagination";
 
-import "./Page.css";
 //userEffect
 
 //Maintenance Fee List
 const MaintenanceFeeList = () => {
   const token = AuthToken.get();
-
-  const history = useHistory();
 
   const [maintenanceFeeList, setMaintenanceFeeList] = useState([]);
   const [loc, setLoc] = useState(1);

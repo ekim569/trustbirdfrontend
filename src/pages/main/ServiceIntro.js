@@ -1,16 +1,14 @@
 import React from "react";
-
-import introimage from "../icons/KakaoTalk_20201021_142548256_02.png"
 import { Container, Card } from "react-bootstrap";
-import "./Page.css"
+// import serviceimage from "../../../public/img/service_img.svg"
 
-//Foundation Introduce
-const FoundationIntro = () => {
+//Service Introduce
+const ServiceIntro = (children) => {
   return (
     <Container >
-      <div className="pageheader" >재단 소개</div>
+    <div className="pageheader">서비스 소개</div>
       <Card className="cardlayout">
-      <Card.Img variant="top" src={introimage} className="imagesize" />
+      <Card.Img variant="top" src={`${process.env.PUBLIC_URL}/img/service_img.svg`} className="imagesize" />
       <Card.Body>
         <Card.Text>
           Some quick example text to build on the card title and make up the bulk
@@ -18,9 +16,8 @@ const FoundationIntro = () => {
         </Card.Text>
       </Card.Body>
     </Card>
-    </Container>
-  );
+   </Container>
+    );
 };
 
-//Foundation Introduce
-export default FoundationIntro;
+export default ServiceIntro;

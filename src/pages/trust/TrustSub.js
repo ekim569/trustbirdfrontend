@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import PostFixInput from "./PostFixInput";
+import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
-import "./Page.css";
+
 
 //Trust Subscription
 const TrustSub = ({location}) => {

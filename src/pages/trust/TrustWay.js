@@ -1,7 +1,6 @@
 import React from "react";
-import "./Page.css"
-
 import { Container, Card } from "react-bootstrap";
+
 
 //Turst Way
 const TrustWay = () => {

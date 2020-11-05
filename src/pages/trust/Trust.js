@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Container, Button, Form, Row, Col, table } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
-import "./Page.css";
+import { Container, Button, Form} from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import AuthToken from "../../storages/Auth";
-
 
 //Trust Output
 const Trust = ({location}) => {
@@ -61,12 +59,10 @@ const Trust = ({location}) => {
               신탁자
             </td>
             <td className="tableborder" colspan="2">
-              {" "}
-              {trust.username}{" "}
+              {trust.username}
             </td>
             <td className="tableborder" colspan="4">
-              {" "}
-              {trust.telephoneNum}{" "}
+              {trust.telephoneNum}
             </td>
           </tr>
           <tr className="tableborder">
@@ -74,8 +70,7 @@ const Trust = ({location}) => {
               중개인 이름
             </td>
             <td  colspan="6">
-              {" "}
-              {trust.realtorName}{" "}
+              {trust.realtorName}
             </td>
           </tr>
           <tr className="tableborder">
@@ -83,11 +78,9 @@ const Trust = ({location}) => {
               중개인 전화번호
             </td>
             <td className="tableborder" colspan="3">
-              {" "}
               {trust.realtorTelephoneNum}
             </td>
             <td className="tableborder" colspan="3">
-              {" "}
               {trust.realtorCellPhoneNum}
             </td>
           </tr>
@@ -96,19 +89,16 @@ const Trust = ({location}) => {
               신탁기간
             </td>
             <td className="tableborder" colspan="6">
-              {trust.periodStart} ~ {trust.periodEnd}{" "}
+              {trust.periodStart} ~ {trust.periodEnd}
             </td>
           </tr>
         </table>
-
         <Form.Label>기타사항</Form.Label>
         <table className="tablelayout">
           <tr className="tableborder">
-            {" "}
-            <td> {trust.etc} </td>{" "}
+            <td> {trust.etc} </td>
           </tr>
         </table>
-
         <Form.Label>첨부파일</Form.Label>
         <table className="tablelayout">
           <tr className="tableborder">
@@ -117,7 +107,6 @@ const Trust = ({location}) => {
             })}
           </tr>
         </table>
-
         <div style={{ float: "right", marginTop: "60px" }}>
           <Button variant="primary" type="submit" className="button2" onClick="/Home">
             취소하기
@@ -130,7 +119,7 @@ const Trust = ({location}) => {
             onClick={(e)=>{
               e.preventDefault();
               history.push(`/trustsub?token=${trust.token}`)
-          }}
+            }}
           >
             수정하기
           </Button>

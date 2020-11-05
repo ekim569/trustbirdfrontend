@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Container, Form, Button } from "react-bootstrap";
-import "./Page.css"
+import { Container, Button } from "react-bootstrap";
+
 
 //Withdrawal
 const Withdrawal = () => {
@@ -32,8 +32,6 @@ const Withdrawal = () => {
           width:"800px",
           padding:"0",
           textAlign:"center"
-          //display:"flex",
-          //justify content:"space-between"
       }}>
         <Button
           variant="primary"

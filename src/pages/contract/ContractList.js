@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import AuthToken from "../../storages/Auth";
+import Pagination from "../../component/Pagination";
+import ContractListPage from "./ContractListPage";
 
-import Pagination from "./Pagination";
-import TrustListPage from "./TrustListPage"
-
-const TrustList = () => {
+//Contract List
+const ContractList = () => {
   const token = AuthToken.get();
 
-  const [trustList, setTrustList] = React.useState([]);
-  const [loc, setLoc] = React.useState(1);
+  const [contractList, setContractList] = useState([]);
+  const [loc, setLoc] = useState(1);
 
   const pageLimit = 5;
   const paginationLimite = 5;
 
-  React.useEffect(() => {
-    fetch("http://192.168.0.143:3001/api/user/trustlist", {
+  useEffect(() => {
+    fetch("http://192.168.0.143:3001/api/contract/list", {
       mode: "cors",
       method: "GET",
       credentials: "include",
@@ -29,7 +29,8 @@ const TrustList = () => {
         }
       })
       .then((res) => {
-        setTrustList(res);
+        console.log(res);
+        setContractList(res);
       });
   }, [token]);
 
@@ -38,18 +39,22 @@ const TrustList = () => {
   };
 
   // list length
-  const totalLength = React.useMemo(() => {
-    return trustList.length;
-  }, [trustList]);
+  const totalLength = useMemo(() => {
+    return contractList.length;
+  }, [contractList]);
 
   // page length
-  const totalPageNum = React.useMemo(() => {
+  const totalPageNum = useMemo(() => {
     return Math.ceil(totalLength / pageLimit);
   }, [totalLength, pageLimit]);
 
   return (
-    <div >
-      <TrustListPage trustList={trustList} loc={loc} pageLimit={pageLimit} />
+    <div>
+      <ContractListPage
+        contractList={contractList}
+        loc={loc}
+        pageLimit={pageLimit}
+      />
       <Pagination
         total={totalLength}
         active={loc}
@@ -61,5 +66,5 @@ const TrustList = () => {
   );
 };
 
-
-export default TrustList;
+//Contract List
+export default ContractList;

@@ -1,23 +1,19 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React from "react";
 import AuthToken from "../../storages/Auth";
-import Pagination from "./Pagination";
-import ContractListPage from "./ContractListPage";
+import Pagination from "../../component/Pagination";
+import TrustListPage from "./TrustListPage"
 
-import "../Navbar/Navbar.css";
-import "./Page.css";
-
-//Contract List
-const ContractList = () => {
+const TrustList = () => {
   const token = AuthToken.get();
 
-  const [contractList, setContractList] = useState([]);
-  const [loc, setLoc] = useState(1);
+  const [trustList, setTrustList] = React.useState([]);
+  const [loc, setLoc] = React.useState(1);
 
   const pageLimit = 5;
   const paginationLimite = 5;
 
-  useEffect(() => {
-    fetch("http://192.168.0.143:3001/api/contract/list", {
+  React.useEffect(() => {
+    fetch("http://192.168.0.143:3001/api/user/trustlist", {
       mode: "cors",
       method: "GET",
       credentials: "include",
@@ -32,8 +28,7 @@ const ContractList = () => {
         }
       })
       .then((res) => {
-        console.log(res);
-        setContractList(res);
+        setTrustList(res);
       });
   }, [token]);
 
@@ -42,22 +37,18 @@ const ContractList = () => {
   };
 
   // list length
-  const totalLength = useMemo(() => {
-    return contractList.length;
-  }, [contractList]);
+  const totalLength = React.useMemo(() => {
+    return trustList.length;
+  }, [trustList]);
 
   // page length
-  const totalPageNum = useMemo(() => {
+  const totalPageNum = React.useMemo(() => {
     return Math.ceil(totalLength / pageLimit);
   }, [totalLength, pageLimit]);
 
   return (
-    <div>
-      <ContractListPage
-        contractList={contractList}
-        loc={loc}
-        pageLimit={pageLimit}
-      />
+    <div >
+      <TrustListPage trustList={trustList} loc={loc} pageLimit={pageLimit} />
       <Pagination
         total={totalLength}
         active={loc}
@@ -69,5 +60,5 @@ const ContractList = () => {
   );
 };
 
-//Contract List
-export default ContractList;
+
+export default TrustList;

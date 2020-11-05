@@ -5,8 +5,8 @@ import {
   NavDropdown,
   Container,
 } from "react-bootstrap";
-
-import Logo from "../icons/LogoIcon";
+// import Logo from "../../icons/LogoIcon";
+import Logo from '../../icons/LogoIcon';
 import "./Navbar.css";
 
 import PageLink from "./pageLink";

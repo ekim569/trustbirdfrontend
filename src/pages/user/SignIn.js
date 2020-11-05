@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Alert } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import Logo from "../icons/LogoIcon";
+import Logo from '../../icons/LogoIcon';
 import AuthToken from "../../storages/Auth";
-import "./Page.css";
+
 
 //Sign In
 const SignIn = () => {
