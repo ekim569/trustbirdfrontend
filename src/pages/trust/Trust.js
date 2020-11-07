@@ -29,8 +29,10 @@ const Trust = ({ location }) => {
     contract: "",
   });
 
-  const onDelete = (()=>{
-    fetch(`http://192.168.0.143:3001/api/trust/delete`,{
+  const onDelete = ((e)=>{
+    e.preventDefault()
+
+    fetch("http://192.168.0.143:3001/api/trust/delete",{
       mode: "cors",
       method: "POST",
       credentials: "include",
@@ -41,10 +43,12 @@ const Trust = ({ location }) => {
       body:JSON.stringify({token : trust.token})
     })
       .then((res)=> {
+        console.log(res.status)
+
         if(res.status === 200) {
-          alert("User Delete Complete")
+          alert("Trust Delete Complete")
         } else {
-          alert("User Delete Fail")
+          alert("Trust Delete Fail")
         }      
         history.push('/trustlist')
       })
@@ -66,13 +70,14 @@ const Trust = ({ location }) => {
       }
     )
       .then((res) => {
-        console.log(token);
         if (res.status === 200) {
           return res.json();
         }
       })
       .then((res) => {
-        setTrust(res);
+        if(res !== undefined){
+          setTrust(res);
+        }
       });
   }, []);
 
@@ -121,27 +126,26 @@ const Trust = ({ location }) => {
         <Form.Label>첨부파일</Form.Label>
         <table className="tablelayout">
           <tr className="tableborder">
+            <td>
             {trust.attachments.map((attachment) => {
               return (
-                <td>
                   <a
                     href={`http://192.168.0.143:8080/ipfs/${attachment.filePath}`}
                     target="_blank"
-                  >
-                    {" "}
-                    {attachment.fileName}{" "}
-                  </a>{" "}
-                </td>
+                  >{attachment.fileName}
+                  </a>
               );
             })}
+            </td>
           </tr>
         </table>
         <div style={{ float: "right", marginTop: "60px" }}>
-          <Button variant="primary" type="submit" className="button2" onClick={() => {history.push('/trustlist')}}>
+          <Button variant="primary" type="submit" className="button4" style={{float:"left "}} onClick={() => {history.push('/trustlist')}}>
             취소하기
           </Button>
           
-          <Button variant="primary" type="submit" className="button2" onClick={() => onDelete()}>
+          <Button variant="primary" type="submit" className="button2" onClick={onDelete} 
+            style={{ marginLeft: "16px" }}>
             삭제하기
           </Button>
 

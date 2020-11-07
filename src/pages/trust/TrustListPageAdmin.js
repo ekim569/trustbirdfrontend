@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Table, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-const TrustListPage = ({ trustList, loc, pageLimit }) => {
+const TrustListPageAdmin = ({ trustList, loc, pageLimit }) => {
 const history = useHistory()
 
     return (

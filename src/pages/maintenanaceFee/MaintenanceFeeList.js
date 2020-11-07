@@ -31,8 +31,9 @@ const MaintenanceFeeList = () => {
         }
       })
       .then((res) => {
-        console.log(res);
-        setMaintenanceFeeList(res);
+        if(res !== undefined) {
+          setMaintenanceFeeList(res);
+        }
       });
   }, [token]);
 

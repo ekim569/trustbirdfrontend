@@ -1,92 +1,167 @@
-import React, { useEffect, useState } from "react";
-import {Button, Container, Table } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Button, Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
 
-
-//Maintenance Fee
-const MaintenanceFee = ({ electronicPaymentNum }) => {
+//Trust Subscription
+const MaintenanceFeeModified = () => {
   const token = AuthToken.get();
 
-  const [maintenanceFee, setMaintenanceFee] = useState({
+  const history = useHistory();
+
+  const [maintenanceFeeModified, setMaintenanceFeeModified] = useState({
+    email: "",
     claimingAgency: "",
     electronicPaymentNum: "",
     dueDate: "",
+    amountDue: "",
     amountDeadline: "",
-    amountDueDate: "",
     payment: "",
     payer: "",
-    giro: "",
+    giro: {},
   });
 
-  useEffect(() => {
-    fetch(
-      `http://192.168.0.143:3001/api/maintenanceFee/find?electronicPaymentNum=${electronicPaymentNum}`,
-      {
-        mode: "cors",
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+  function handleInputChange(e) {
+    e.preventDefault();
+
+    const { value, name } = e.target;
+
+    console.log(value, name);
+
+    setMaintenanceFeeModified({
+      ...maintenanceFeeModified,
+      [name]: value,
+    });
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    for (const [key, value] of Object.entries(maintenanceFeeModified)) {
+      if (key === "giro") {
+        continue;
       }
-    )
+      formData.append(key, value);
+    }
+    formData.append("giro", maintenanceFeeModified.giro);
+
+    fetch("http://192.168.0.143:3001/api/maintenanceFee/input", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
       .then((res) => {
         if (res.status === 200) {
-          return res.json();
+          history.push("/MaintenanceFeeList");
+        } else {
+          const error = new Error(res.error);
+
+          throw error;
         }
       })
-      .then((res) => {
-        setMaintenanceFee(res);
+      .catch((err) => {
+        console.error(err);
+        alert("Error loggin in please try again");
       });
-  }, [electronicPaymentNum]);
+  }
 
   return (
-    <Container style={{textAlign:"center"}}>
-      <Table bordered={true}   >
-        <thead>
-          <tr>
-            <th style={{width:"40%"}}> 관리비 청구 기관</th>
-            <td > {maintenanceFee.claimingAgency}</td>
-          </tr>
-          <tr>
-            <th>관리비 전자납부번호</th>
-            <td>{maintenanceFee.electronicPaymentNum}</td>
-          </tr>
-          <tr>
-            <th>관리비 납기일</th>
-            <td>{maintenanceFee.dueDate}</td>
-          </tr>
-          <tr>
-            <th>관리비 납기 내 금액</th>
-            <td>{maintenanceFee.amountDeadline}</td>
-          </tr>
-          <tr>
-            <th>관리비 납기 후 금액</th>
-            <td>{maintenanceFee.amountDueDate}</td>
-          </tr>
-          <tr>
-            <th>납부자</th>
-            <td>{maintenanceFee.payer}</td>
-          </tr>
-          <tr>
-            <th>납입금액</th>
-            <td>{maintenanceFee.payment}</td>
-          </tr>
-          <tr> 
-            <th>지로</th>
-            <td>
-              <a href={`http://192.168.0.143:8080/ipfs/${maintenanceFee.giro.filePath}`}  target="_blank" ><Button
-                className="scopeimage"
-              ></Button></a></td>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </Table>
+    <Container style={{ maxWidth: "800px" }}>
+      <div className="pageheader">관리비 입력</div>
+      <Form className="sign-form" onSubmit={onSubmit}>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label> 이메일 </Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="이메일"
+            name="email"
+            value={maintenanceFeeModified.email}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicClaimingAgency">
+          <Form.Label> 청구기관 </Form.Label>
+          <Form.Control
+            type="claimingAgency"
+            placeholder="창구기관"
+            name="claimingAgency"
+            value={maintenanceFeeModified.claimingAgency}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicElectronicPaymentNum">
+          <Form.Label> 전자 납부 번호 </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="전자 납부 번호"
+            name="electronicPaymentNum"
+            value={maintenanceFeeModified.electronicPaymentNum}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicDueDate">
+          <Form.Label> 관리비 납기 내 기한 </Form.Label>
+          <Form.Control
+            type="date"
+            name="dueDate"
+            value={maintenanceFeeModified.dueDate}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicAmountDue">
+          <Form.Label> 납기 내 금액 </Form.Label>
+          <PostFixInput
+            labelText=""
+            postfix="만원"
+            type="text"
+            placeholder="금액"
+            name="amountDue"
+            value={maintenanceFeeModified.amountDue}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicAmountDeadline">
+          <Form.Label> 납기 후 금액 </Form.Label>
+          <PostFixInput
+            labelText=""
+            postfix="만원"
+            type="text"
+            placeholder="금액"
+            name="amountDeadline"
+            value={maintenanceFeeModified.amountDeadline}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicGiro">
+          <Form.Label> 첨부파일 </Form.Label>
+          <Form.File
+            onChange={(e) => {
+              setMaintenanceFeeModified({
+                ...maintenanceFeeModified,
+                giro: e.target.files[0],
+              });
+            }}
+            name="giro"
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit" className="button3">
+          입력하기
+        </Button>
+      </Form>
     </Container>
   );
-
-  // );
 };
 
-export default MaintenanceFee;
+export default MaintenanceFeeModified;

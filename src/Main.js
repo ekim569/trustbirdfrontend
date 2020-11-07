@@ -20,7 +20,7 @@ import TrustSub from "./pages/trust/TrustSub";
 import Trust from "./pages/trust/Trust";
 import TrustList from "./pages/trust/TrustList";
 import TrustList_admin from "./pages/trust/TrustListAdmin";
-import Trustmodifeid from "./pages/trust/Trustmodified";
+import TrustModifeid from "./pages/trust/TrustModified";
 
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
@@ -30,6 +30,7 @@ import Contractmodified from "./pages/contract/ContractModified";
 import MaintenanceFee from "./pages/maintenanaceFee/MaintenanceFee";
 import MaintenanceFeeList from "./pages/maintenanaceFee/MaintenanceFeeList";
 import MaintenanceFeeInput from "./pages/maintenanaceFee/MaintenanceFeeInput";
+import MaintenanceFeeModified from "./pages/maintenanaceFee/MaintenanceFeeModified"
 
 import Footer from "./component/Footer";
 
@@ -60,7 +61,7 @@ const Main = (props) => {
             <Route exact path="/trust" component={Trust} />
             <Route exact path="/trustlist" component={TrustList} />
             <Route exact path="/trustlist/admin" component={TrustList_admin} />
-            <Route exact path="/trustmodified" component={Trustmodifeid} />
+            <Route exact path="/trustmodified" component={TrustModifeid} />
 
             <Route exact path="/contractenroll" component={ContractEnroll} />
             <Route exact path="/contract" component={Contract} />
@@ -82,6 +83,7 @@ const Main = (props) => {
               path="/maintenancefeeinput/admin"
               component={MaintenanceFeeInput}
             />
+            <Route exact path="/maintenancefeemodified" component={MaintenanceFeeModified} />
 
             <Route exact path="/footer" component={Footer} />
           </Switch>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PostFixInput from "../../component/PostFixInput";
+import PostFixInput2 from "../../component/PostFixInput2";
 import AuthToken from "../../storages/Auth";
 
 //Contract Enrollment
@@ -104,33 +105,28 @@ const ContractEnroll = () => {
       >
         <Form.Group controlId="formBasicLocation">
           <Form.Label> 계약 소재지 </Form.Label>
-          <PostFixInput
-            labelText="계약 소재지"
-            postfix=""
-            type="text"
-            placeholder="주소"
-            name="location"
-            value={constractEnroll.location}
-            onChange={handleInputChange}
-          />
+          <Form.Control
+          type="text"
+          placeholder="주소"
+          name="location"
+          value={constractEnroll.location}
+          onChange={handleInputChange}
+        />
+          
         </Form.Group>
 
         <Form.Group controlId="formBasicLandCategory">
           <Form.Label> 지목 </Form.Label>
-          <PostFixInput
-            labelText="지목"
-            postfix=""
+          <div style={{display:"flex"}}>
+          <Form.Control
             type="text"
-            placeholder="지번"
+            placeholder="지목"
             name="landCategory"
+            style={{width:"380px", marginRight:"20px", }}
             value={constractEnroll.landCategory}
             onChange={handleInputChange}
           />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicLandArea">
-          <Form.Label> 토지의 면적 </Form.Label>
-          <PostFixInput
+          <PostFixInput2
             labelText="토지의 면적"
             postfix="㎡"
             type="text"
@@ -139,24 +135,21 @@ const ContractEnroll = () => {
             value={constractEnroll.landArea}
             onChange={handleInputChange}
           />
+          </div>
         </Form.Group>
 
         <Form.Group controlId="formBasicBuildingPurpose">
           <Form.Label> 건물의 용도 </Form.Label>
-          <PostFixInput
-            labelText="건물의 용도"
-            postfix=""
+          <div style={{display:"flex"}}>
+          <Form.Control
             type="text"
             placeholder="종류"
             name="buildingPurpose"
+            style={{width:"380px", marginRight:"20px", }}
             value={constractEnroll.buildingPurpose}
             onChange={handleInputChange}
           />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicBuildingArea">
-          <Form.Label> 건물의 면적 </Form.Label>
-          <PostFixInput
+          <PostFixInput2
             labelText="부동산종류"
             postfix="㎡"
             type="text"
@@ -165,22 +158,21 @@ const ContractEnroll = () => {
             value={constractEnroll.buildingArea}
             onChange={handleInputChange}
           />
+          </div>
         </Form.Group>
 
         <Form.Group controlId="formBasicPartOfLease">
           <Form.Label> 임대할 부분 </Form.Label>
+          <div style={{display:"flex  "}}>
           <Form.Control
             type="text"
             placeholder="임대할 부분"
             name="partOfLease"
+            style={{width:"380px", marginRight:"20px", }}
             value={constractEnroll.partOfLease}
             onChange={handleInputChange}
           />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPartOfLeaseArea">
-          <Form.Label> 임대할 부분의 면적 </Form.Label>
-          <PostFixInput
+          <PostFixInput2
             labelText="부동산 종류"
             postfix="㎡"
             type="text"
@@ -189,6 +181,7 @@ const ContractEnroll = () => {
             value={constractEnroll.partOfLeaseArea}
             onChange={handleInputChange}
           />
+          </div>
         </Form.Group>
         <div>
           <Form.Group>
@@ -315,10 +308,13 @@ const ContractEnroll = () => {
 
         <Form.Group controlId="formBasicRent">
           <Form.Label> 차임 </Form.Label>
-          <Form.Control
+          <PostFixInput
+            labelText="차임"
+            postfix="만 원"
             type="text"
-            value={constractEnroll.rent}
+            placeholder="금액"
             name="rent"
+            value={constractEnroll.rent}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -340,6 +336,7 @@ const ContractEnroll = () => {
               type="text"
               placeholder="이름"
               name="lessor.name"
+              style={{width:"330px", display:"inline-block"}}
               value={constractEnroll.lessor.name}
               onChange={(e) => {
                 setConstractEnroll({
@@ -352,11 +349,10 @@ const ContractEnroll = () => {
               }}
               required
             />
-          </tr>
-          <tr>
             <Form.Control
               type="text"
               placeholder="전화번호"
+              style={{width:"450px", marginLeft:"20px", display:"inline-block"}}
               value={constractEnroll.lessor.telephoneNum}
               name="lessor.telephoneNum"
               onChange={(e) => {
@@ -418,6 +414,7 @@ const ContractEnroll = () => {
                 placeholder="이름"
                 name="lessee.name"
                 value={constractEnroll.lessee.name}
+                style={{width:"330px", display:"inline-block"}}
                 onChange={(e) => {
                   setConstractEnroll({
                     ...constractEnroll,
@@ -429,12 +426,11 @@ const ContractEnroll = () => {
                 }}
                 required
               />
-            </tr>
-            <tr>
               <Form.Control
                 type="text"
                 placeholder="전화번호"
                 name="lessee.telephoneNum"
+                style={{width:"450px", marginLeft:"20px", display:"inline-block"}}
                 value={constractEnroll.lessee.telephoneNum}
                 onChange={(e) => {
                   setConstractEnroll({
@@ -494,6 +490,7 @@ const ContractEnroll = () => {
               type="text"
               placeholder="이름"
               name="realtor.name"
+              style={{width:"330px", display:"inline-block"}}
               value={constractEnroll.realtor.name}
               onChange={(e) => {
                 setConstractEnroll({
@@ -506,12 +503,11 @@ const ContractEnroll = () => {
               }}
               required
             />
-          </tr>
-          <tr>
             <Form.Control
               type="text"
               placeholder="전화번호"
               name="realtor.telephoneNum"
+              style={{width:"450px", marginLeft:"20px", display:"inline-block"}}
               value={constractEnroll.realtor.telephoneNum}
               onChange={(e) => {
                 setConstractEnroll({
@@ -591,6 +587,7 @@ const ContractEnroll = () => {
             }}
             name="attachments"
           />
+
         </Form.Group>
 
         <Button variant="primary" type="submit" className="button3">

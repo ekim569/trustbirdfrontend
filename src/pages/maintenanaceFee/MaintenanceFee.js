@@ -13,7 +13,7 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
     electronicPaymentNum: "",
     dueDate: "",
     amountDeadline: "",
-    amountDueDate: "",
+    amountDue: "",
     payment: "",
     payer: "",
     giro: "",
@@ -64,7 +64,7 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
           </tr>
           <tr>
             <th>관리비 납기 후 금액</th>
-            <td>{maintenanceFee.amountDueDate}</td>
+            <td>{maintenanceFee.amountDue}</td>
           </tr>
           <tr>
             <th>납부자</th>
