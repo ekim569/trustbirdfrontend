@@ -235,8 +235,8 @@
   background-position: center;
   background-repeat: no-repeat;
   resize: both; /* 이미지 최대 사이즈에 적용 */
-  max-width: 1000px; /* 넓이를 지정 */
-  height: 500px; /* 높이를 지정 이를 지정 */
+  max-width: 24px; /* 넓이를 지정 */
+  height: 24px; /* 높이를 지정 이를 지정 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -244,6 +244,7 @@
   color: white;
   margin-top: 0;
 }
+
 .scopeimage {
   background: linear-gradient(
       to left,

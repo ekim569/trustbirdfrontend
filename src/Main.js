@@ -9,7 +9,7 @@ import ServiceIntro from "./pages/main/ServiceIntro";
 
 import SignIn from "./pages/user/SignIn";
 import SignUp from "./pages/user/SignUp";
-import Userlist from "./pages/user/Userlist"
+import Userlist from "./pages/user/Userlist";
 import SignModified from "./pages/user/SignModified";
 import Membership from "./pages/user/Membership";
 import Withdrawal from "./pages/user/Withdrawal";
@@ -28,9 +28,10 @@ import ContractList from "./pages/contract/ContractList";
 import Contractmodified from "./pages/contract/ContractModified";
 
 import MaintenanceFee from "./pages/maintenanaceFee/MaintenanceFee";
-import MaintenanceFeeList from "./pages/maintenanaceFee/MaintenanceFeeList";
 import MaintenanceFeeInput from "./pages/maintenanaceFee/MaintenanceFeeInput";
-import MaintenanceFeeModified from "./pages/maintenanaceFee/MaintenanceFeeModified"
+import MaintenanceFeeModified from "./pages/maintenanaceFee/MaintenanceFeeModified";
+import MaintenanceFeeList from "./pages/maintenanaceFee/MaintenanceFeeList";
+import MaintenanceFeeListAdmin from "./pages/maintenanaceFee/MaintenanceFeeListAdmin";
 
 import Footer from "./component/Footer";
 
@@ -83,7 +84,16 @@ const Main = (props) => {
               path="/maintenancefeeinput/admin"
               component={MaintenanceFeeInput}
             />
-            <Route exact path="/maintenancefeemodified" component={MaintenanceFeeModified} />
+            <Route
+              exact
+              path="/maintenancefeemodified/admin"
+              component={MaintenanceFeeModified}
+            />
+            <Route
+              exact
+              path="/maintenancefeelist/admin"
+              component={MaintenanceFeeListAdmin}
+            />
 
             <Route exact path="/footer" component={Footer} />
           </Switch>

@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Container, Button, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
+import PostFixInput from "../../component/PostFixInput";
 
-//Trust Subscription
-const MaintenanceFeeModified = () => {
+//Maintenance Fee
+const MaintenanceFeeModified = ({ location }) => {
   const token = AuthToken.get();
-
   const history = useHistory();
-
-  const [maintenanceFeeModified, setMaintenanceFeeModified] = useState({
+  const [maintenanceFeeInput, setMaintenanceFeeInput] = useState({
     email: "",
     claimingAgency: "",
     electronicPaymentNum: "",
@@ -22,6 +20,40 @@ const MaintenanceFeeModified = () => {
     giro: {},
   });
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+
+    fetch(`http://192.168.0.143:3001/api/maintenanceFee/find?electronicPaymentNum=${params.get("electronicPaymentNum")}`,{
+        mode: "cors",
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })   
+      .then((res) => {
+        if(res.status === 200) {
+          return res.json()
+        }
+      })
+      .then((res) => {
+        if (res !== undefined) {
+          setMaintenanceFeeInput({
+            email:res.email,
+            claimingAgency: res.claimingAgency,
+            electronicPaymentNum: res.electronicPaymentNum,
+            dueDate: res.dueDate,
+            amountDeadline: res.amountDeadline,
+            amountDueDate: res.amountDueDate,
+            payment: res.payment,
+            payer: res.payer,
+            giro: {},
+          });
+        }
+      });
+  }, []);
+
   function handleInputChange(e) {
     e.preventDefault();
 
@@ -29,8 +61,8 @@ const MaintenanceFeeModified = () => {
 
     console.log(value, name);
 
-    setMaintenanceFeeModified({
-      ...maintenanceFeeModified,
+    setMaintenanceFeeInput({
+      ...maintenanceFeeInput,
       [name]: value,
     });
   }
@@ -40,15 +72,15 @@ const MaintenanceFeeModified = () => {
 
     const formData = new FormData();
 
-    for (const [key, value] of Object.entries(maintenanceFeeModified)) {
+    for (const [key, value] of Object.entries(maintenanceFeeInput)) {
       if (key === "giro") {
         continue;
       }
       formData.append(key, value);
     }
-    formData.append("giro", maintenanceFeeModified.giro);
+    formData.append("giro", maintenanceFeeInput.giro);
 
-    fetch("http://192.168.0.143:3001/api/maintenanceFee/input", {
+    fetch("http://192.168.0.143:3001/api/maintenanceFee/update", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -58,16 +90,16 @@ const MaintenanceFeeModified = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/MaintenanceFeeList");
+          history.push("/maintenancefeelist/admin");
         } else {
           const error = new Error(res.error);
-
           throw error;
         }
       })
       .catch((err) => {
         console.error(err);
         alert("Error loggin in please try again");
+        history.push("/maintenancefeelist/admin");
       });
   }
 
@@ -81,8 +113,9 @@ const MaintenanceFeeModified = () => {
             type="email"
             placeholder="이메일"
             name="email"
-            value={maintenanceFeeModified.email}
+            value={maintenanceFeeInput.email}
             onChange={handleInputChange}
+            readOnly
           />
         </Form.Group>
 
@@ -92,7 +125,7 @@ const MaintenanceFeeModified = () => {
             type="claimingAgency"
             placeholder="창구기관"
             name="claimingAgency"
-            value={maintenanceFeeModified.claimingAgency}
+            value={maintenanceFeeInput.claimingAgency}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -103,8 +136,9 @@ const MaintenanceFeeModified = () => {
             type="text"
             placeholder="전자 납부 번호"
             name="electronicPaymentNum"
-            value={maintenanceFeeModified.electronicPaymentNum}
+            value={maintenanceFeeInput.electronicPaymentNum}
             onChange={handleInputChange}
+            readOnly
           />
         </Form.Group>
 
@@ -113,9 +147,9 @@ const MaintenanceFeeModified = () => {
           <Form.Control
             type="date"
             name="dueDate"
-            value={maintenanceFeeModified.dueDate}
+            value={maintenanceFeeInput.dueDate}
             onChange={handleInputChange}
-          />
+            />
         </Form.Group>
 
         <Form.Group controlId="formBasicAmountDue">
@@ -126,7 +160,7 @@ const MaintenanceFeeModified = () => {
             type="text"
             placeholder="금액"
             name="amountDue"
-            value={maintenanceFeeModified.amountDue}
+            value={maintenanceFeeInput.amountDue}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -139,7 +173,29 @@ const MaintenanceFeeModified = () => {
             type="text"
             placeholder="금액"
             name="amountDeadline"
-            value={maintenanceFeeModified.amountDeadline}
+            value={maintenanceFeeInput.amountDeadline}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPayer">
+          <Form.Label> 납부자 </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="납부자"
+            name="payer"
+            value={maintenanceFeeInput.payer}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPayment">
+          <Form.Label> 납부 금액 </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="납부 금액"
+            name="payment"
+            value={maintenanceFeeInput.payment}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -148,8 +204,8 @@ const MaintenanceFeeModified = () => {
           <Form.Label> 첨부파일 </Form.Label>
           <Form.File
             onChange={(e) => {
-              setMaintenanceFeeModified({
-                ...maintenanceFeeModified,
+              setMaintenanceFeeInput({
+                ...maintenanceFeeInput,
                 giro: e.target.files[0],
               });
             }}
@@ -157,7 +213,7 @@ const MaintenanceFeeModified = () => {
           />
         </Form.Group>
         <Button variant="primary" type="submit" className="button3">
-          입력하기
+          수정하기
         </Button>
       </Form>
     </Container>

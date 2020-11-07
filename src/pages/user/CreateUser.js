@@ -42,7 +42,7 @@ const CreateUser = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/signin");
+          history.push("/");
         } else {
           const error = new Error(res.error);
 
