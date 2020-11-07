@@ -4,9 +4,8 @@ import { useHistory } from "react-router-dom";
 import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
 
-
 //Trust Subscription
-const TrustSub = ({location}) => {
+const TrustSub = ({ location }) => {
   const token = AuthToken.get();
 
   const history = useHistory();
@@ -32,31 +31,32 @@ const TrustSub = ({location}) => {
     etc: "",
   });
 
-  useEffect(()=>{
-    const params = new URLSearchParams(location.search);  
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
 
-    if(params.get('token')){
-        fetch(`http://192.168.0.143:3001/api/trust/find?token=${params.get('token')}`, {
-        mode: "cors",
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res)=> {
-        if(res.status === 200) {
-          return res.json()
+    if (params.get("token")) {
+      fetch(
+        `http://192.168.0.143:3001/api/trust/find?token=${params.get("token")}`,
+        {
+          mode: "cors",
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-      .then((res) => {
-        setTrustsub(res)
-      })
+      )
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          }
+        })
+        .then((res) => {
+          setTrustsub(res);
+        });
     }
-
-    
-  },[])  
+  }, []);
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -94,7 +94,7 @@ const TrustSub = ({location}) => {
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/trust");
+          history.push("/trustlist");
         } else {
           const error = new Error(res.error);
 
@@ -111,7 +111,6 @@ const TrustSub = ({location}) => {
     <Container style={{ maxWidth: "800px" }}>
       <div className="pageheader">신탁 신청</div>
       <Form className="sign-form" onSubmit={onSubmit}>
-
         <Form.Group controlId="formBasicTrustProfit">
           <Form.Label> 신탁자 </Form.Label>
           <PostFixInput
@@ -123,21 +122,20 @@ const TrustSub = ({location}) => {
             value={trustsub.username}
             onChange={handleInputChange}
           />
-          </Form.Group>
+        </Form.Group>
 
-          <Form.Group controlId="formBasicNegligenceProfit">
-            <Form.Label> 신탁자 전화번호 </Form.Label>
-            <PostFixInput
-              labelText="신탁자번호"
-              postfix=""
-              type="text"
-              placeholder="전화번호"
-              name="telephoneNum"
-              value={trustsub.telephoneNum}
-              onChange={handleInputChange}
-            />
-          </Form.Group>
-  
+        <Form.Group controlId="formBasicNegligenceProfit">
+          <Form.Label> 신탁자 전화번호 </Form.Label>
+          <PostFixInput
+            labelText="신탁자번호"
+            postfix=""
+            type="text"
+            placeholder="전화번호"
+            name="telephoneNum"
+            value={trustsub.telephoneNum}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
 
         <Form.Group controlId="formBasicTrustProfit">
           <Form.Label> 중개인 이름 </Form.Label>
@@ -166,17 +164,17 @@ const TrustSub = ({location}) => {
         </Form.Group>
 
         <Form.Group controlId="formBasicRealtor">
-            <Form.Label> 중개인 휴대전화번호 </Form.Label>
-            <PostFixInput
-              labelText="중개인번호"
-              postfix=""
-              type="text"
-              placeholder="전화번호"
-              name="realtorCellphoneNum"
-              value={trustsub.realtorCellphoneNum}
-              onChange={handleInputChange}
-            />
-          </Form.Group>
+          <Form.Label> 중개인 휴대전화번호 </Form.Label>
+          <PostFixInput
+            labelText="중개인번호"
+            postfix=""
+            type="text"
+            placeholder="전화번호"
+            name="realtorCellphoneNum"
+            value={trustsub.realtorCellphoneNum}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
 
         <Form.Group controlId="formBasicNegligenceProfit">
           <Form.Label> 중개인 주소</Form.Label>
@@ -200,12 +198,11 @@ const TrustSub = ({location}) => {
           >
             <Form.Check
               type="checkbox"
-              name="purpose"
-              // value={trustsub.purpose}
+              name="type"
               onChange={(e) => {
                 console.log(e.target.value);
                 e.preventDefault();
-                setTrustsub({ ...trustsub, purpose: e.target.value });
+                setTrustsub({ ...trustsub, type: e.target.value });
               }}
               value="전세"
               label="전세"
@@ -218,12 +215,11 @@ const TrustSub = ({location}) => {
           >
             <Form.Check
               type="checkbox"
-              name="purpose"
-              // value={trustsub.purpose}
+              name="type"
               onChange={(e) => {
                 console.log(e.target.value);
                 e.preventDefault();
-                setTrustsub({ ...trustsub, purpose: e.target.value });
+                setTrustsub({ ...trustsub, type: e.target.value });
               }}
               value="월세"
               label="월세"

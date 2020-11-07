@@ -6,7 +6,7 @@ import {
   Container,
 } from "react-bootstrap";
 // import Logo from "../../icons/LogoIcon";
-import Logo from '../../icons/LogoIcon';
+import Logo from "../../icons/LogoIcon";
 import "./Navbar.css";
 
 import PageLink from "./pageLink";
@@ -15,17 +15,17 @@ import AuthToken from "../../storages/Auth";
 export default function Navbar(props) {
   const [token, setToken] = useState();
   const [user, setUser] = useState({
-    username : "",
-    email : "",
-    permission : ""
+    username: "",
+    email: "",
+    permission: "",
   });
 
   useEffect(() => {
     const _token = AuthToken.get();
 
-    if(_token !== ""){
-      setToken(_token)
-    
+    if (_token !== "") {
+      setToken(_token);
+
       fetch("http://192.168.0.143:3001/api/user/infomation", {
         mode: "cors",
         method: "GET",
@@ -93,21 +93,24 @@ export default function Navbar(props) {
             </Nav.Link>
 
             <Nav.Link className="navlink">
-              <PageLink to="/trust">신탁 계약</PageLink>
+              <PageLink to="/trustsub">신탁 계약</PageLink>
             </Nav.Link>
 
             <Nav.Link className="navlink">
               <PageLink to="/serviceintro">정보소개</PageLink>
             </Nav.Link>
             {token ? (
-              <div >
-              <img className="usericon" src='https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg' /> 
-              
-                {user.permission === 'user' ? ( 
+              <div>
+                <img
+                  className="usericon"
+                  src="https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg"
+                />
+
+                {user.permission === "user" ? (
                   <NavDropdown
                     title={user.username}
                     id="basic-nav-dropdown"
-                    style={{display:"inline-block", fontWeight:"bold", }}
+                    style={{ display: "inline-block", fontWeight: "bold" }}
                     className="navlink nav"
                   >
                     <NavDropdown.Item href="/membership">
@@ -133,26 +136,26 @@ export default function Navbar(props) {
                   <NavDropdown
                     title={user.username}
                     id="basic-nav-dropdown"
-                    style={{display:"inline-block", fontWeight:"bold", }}
+                    style={{ display: "inline-block", fontWeight: "bold" }}
                     className="navlink nav"
                   >
                     <NavDropdown.Item href="/createuser/admin">
-                     사용자 생성
+                      사용자 생성
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/userlist/admin">
-                    사용자 목록
+                      사용자 목록
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/trustlist/admin">
-                    신탁 내역 확인
+                      신탁 내역 확인
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/contractlist/admin">
-                    계약 내역 확인
+                      계약 내역 확인
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/maintenancefeelist/admin">
-                    관리비 납부내역
+                      관리비 납부내역
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/maintenancefeeinput/admin">
-                     관리비 입력
+                      관리비 입력
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/" onClick={onClickSignOut}>
                       로그아웃
@@ -161,12 +164,12 @@ export default function Navbar(props) {
                 )}
               </div>
             ) : (
-              <div style={{display:"inline-block"}}>
-              <Nav.Link href="/signin" className="navlink">
-                로그인
-              </Nav.Link>
-              <Nav.Link href="/signup" className="navlink">
-                회원가입
+              <div style={{ display: "inline-block" }}>
+                <Nav.Link href="/signin" className="navlink">
+                  로그인
+                </Nav.Link>
+                <Nav.Link href="/signup" className="navlink">
+                  회원가입
                 </Nav.Link>
               </div>
             )}

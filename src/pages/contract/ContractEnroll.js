@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Button, Form, Table } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
@@ -10,97 +10,45 @@ const ContractEnroll = () => {
 
   const history = useHistory();
   const [constractEnroll, setConstractEnroll] = useState({
-    //   token: "",
-    //   preToken: "",
-    //   location: "",
-    //   landCategory: "",
-    //   landArea: "",
-    //   buildingpurpose: "",
-    //   buildingArea: "",
-    //   partOfLease: "",
-    //   partOfLeaseArea: "",
-    //   rentType: "",
-    //   periodStart: "",
-    //   periodEnd: "",
-    //   securityDeposit: "",
-    //   contractPrice: "",
-    //   interimPrice: "",
-    //   balance: "",
-    //   rent: "",
-    //   specialAgreement: "",
-    // lessor: {
-    //   address: "",
-    //   RRN: "",
-    //   name: "",
-    //   telephoneNum: "",
-    // },
-    // lessee: {
-    //   address: "",
-    //   RRN: "",
-    //   name: "",
-    //   telephoneNum: "",
-    // },
-    // realtor: {
-    //   address: "",
-    //   officeName: "",
-    //   name: "",
-    //   registrationNum: "",
-    //   telephoneNum: "",
-    // },
-    //   attachments: {},
-    // });
-
-    token: "100",
-    preToken: "50",
-    location: "지구",
-    landCategory: "몰라",
-    landArea: "100",
-    buildingpurpose: "100",
-    buildingArea: "적당히",
-    partOfLease: "몰라",
-    partOfLeaseArea: "몰라",
-    rentType: "ㅇㄹ",
+    token: "",
+    preToken: "",
+    location: "",
+    landCategory: "",
+    landArea: "",
+    buildingPurpose: "",
+    buildingArea: "",
+    partOfLease: "",
+    partOfLeaseArea: "",
+    rentType: "",
     periodStart: "",
     periodEnd: "",
-    securityDeposit: "10000",
-    contractPrice: "20",
-    interimPrice: "04",
-    balance: "1000",
-    rent: "390",
-    specialAgreement: "30434",
+    securityDeposit: "",
+    contractPrice: "",
+    interimPrice: "",
+    balance: "",
+    rent: "",
+    specialAgreement: "",
     lessor: {
-      address: "대전 유성구",
-      RRN: "비밀",
-      name: "김",
-      telephoneNum: "000",
+      name: "",
+      address: "",
+      RRN: "",
+      telephoneNum: "",
     },
     lessee: {
-      address: "대전 서구",
-      RRN: "비밀",
-      name: "이",
-      telephoneNum: "001",
+      name: "",
+      address: "",
+      RRN: "",
+      telephoneNum: "",
     },
     realtor: {
-      address: "대전 동구",
-      officeName: "박동산",
-      name: "박",
-      registrationNum: "0022",
-      telephoneNum: "003",
+      name: "",
+      address: "",
+      officeName: "",
+      registrationNum: "",
+      telephoneNum: "",
     },
-    attachments: {},
   });
-
-  // function subDataChange(e) {
-  //   e.preventDefault();
-
-  //   const { value, name } = e.target;
-  //   console.log(value, name);
-
-  //   setConstractEnroll({
-  //     ...lessor,
-  //     [name]: value,
-  //   });
-  // }
+  const [attachments, setAttachments] = useState({});
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -116,13 +64,12 @@ const ContractEnroll = () => {
   }
 
   function onSubmit(e) {
-    console.log(constractEnroll);
-    console.log(JSON.stringify(constractEnroll));
     e.preventDefault();
 
     const formData = new FormData();
 
     formData.append("contract", JSON.stringify(constractEnroll));
+    formData.append("attachments", attachments);
 
     fetch("http://192.168.0.143:3001/api/contract/enroll", {
       method: "POST",
@@ -134,7 +81,7 @@ const ContractEnroll = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/signin");
+          history.push("/");
         } else {
           const error = new Error(res.error);
 
@@ -143,7 +90,7 @@ const ContractEnroll = () => {
       })
       .catch((err) => {
         console.error(err);
-        alert("Error loggin in please try again");
+        alert("Sorry Fail to Contract");
       });
   }
 
@@ -201,8 +148,8 @@ const ContractEnroll = () => {
             postfix=""
             type="text"
             placeholder="종류"
-            name="buildingpurpose"
-            value={constractEnroll.buildingpurpose}
+            name="buildingPurpose"
+            value={constractEnroll.buildingPurpose}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -225,8 +172,8 @@ const ContractEnroll = () => {
           <Form.Control
             type="text"
             placeholder="임대할 부분"
-            name="partOfArea"
-            value={constractEnroll.partOfArea}
+            name="partOfLease"
+            value={constractEnroll.partOfLease}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -488,12 +435,12 @@ const ContractEnroll = () => {
                 type="text"
                 placeholder="전화번호"
                 name="lessee.telephoneNum"
-                value={constractEnroll.telephoneNum}
+                value={constractEnroll.lessee.telephoneNum}
                 onChange={(e) => {
                   setConstractEnroll({
                     ...constractEnroll,
                     lessee: {
-                      ...constractEnroll.lessee.lessee,
+                      ...constractEnroll.lessee,
                       telephoneNum: e.target.value,
                     },
                   });
@@ -637,10 +584,8 @@ const ContractEnroll = () => {
         <Form.Group controlId="formBasicAttachments">
           <Form.Label> 첨부파일 </Form.Label>
           <Form.File
-            // onChange={handleInputChange}
             onChange={(e) => {
-              setConstractEnroll({
-                ...constractEnroll,
+              setAttachments({
                 attachments: e.target.files[0],
               });
             }}
