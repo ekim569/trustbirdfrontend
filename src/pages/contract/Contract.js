@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, Form} from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import AuthToken from "../../storages/Auth";
 
@@ -10,9 +10,9 @@ const Contract = () => {
   const history = useHistory();
   const [loc, setLoc] = useState(1);
   const [contract, setContract] = useState({
-    trustToken : "",
-    token:"",
-    preToken:"",
+    trustToken: "",
+    token: "",
+    preToken: "",
     location: "",
     landCategory: "",
     landArea: "",
@@ -291,10 +291,8 @@ const Contract = () => {
             </tr>
           </table>
           <div>
-            <a href="../contract/ContractList.js"/>
-            <Button className="button4" >
-              돌아가기
-            </Button>
+            <a href="../contract/ContractList.js" />
+            <Button className="button4">돌아가기</Button>
           </div>
 
           <div style={{ float: "right" }}>

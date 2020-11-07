@@ -20,7 +20,6 @@ const ContractListPage = ({ contractList, loc, pageLimit }) => {
             <th>임대 형태</th>
             <th>임대 시작일</th>
             <th>임대 만료일</th>
-
             <th style={{ width: "140px" }}>상세 보기</th>
           </tr>
         </thead>

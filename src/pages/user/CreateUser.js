@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-//Sign Up
-const SignUp = (props) => {
+//CreacteUser admin
+const CreateUser = () => {
   const history = useHistory();
   const [user, setUser] = useState({
     username: "",
@@ -12,9 +12,9 @@ const SignUp = (props) => {
     dateOfBirth: "",
     gender: "",
     telephoneNum: "",
-    permission: "user",
-    balance: "0",
-    membership: "0"
+    permission: "",
+    membership: "",
+    balance: "",
   });
 
   function handleInputChange(e) {
@@ -92,11 +92,6 @@ const SignUp = (props) => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPasswordCheck">
-          <Form.Label> 비밀번호 재확인 </Form.Label>
-          <Form.Control type="password" required />
-        </Form.Group>
-
         <Form.Group controlId="formBasicDateOfBirth">
           <Form.Label> 생년월일 </Form.Label>
           <Form.Control
@@ -123,8 +118,8 @@ const SignUp = (props) => {
             required
           >
             <option>선택</option>
-            <option value="남성">남성</option>
-            <option value="여성">여성</option>
+            <option value="male">남성</option>
+            <option value="felmale">여성</option>
           </Form.Control>
         </Form.Group>
 
@@ -139,6 +134,55 @@ const SignUp = (props) => {
             required
           />
         </Form.Group>
+
+        <Form.Group controlId="formBasicPermission">
+          <Form.Label>회원 권한</Form.Label>
+          <Form.Control
+            as="select"
+            name="permission"
+            value={user.permission}
+            onChange={(e) => {
+              e.preventDefault();
+              setUser({ ...user, permission: e.target.value });
+            }}
+            option
+            custom
+            required
+          >
+            <option>선택</option>
+            <option value="superVisor">관리자</option>
+            <option value="legalTL">법무 팀장</option>
+            <option value="maintenanceTL">시설 팀장</option>
+            <option value="accountingTL">회계 팀장</option>
+            <option value="warrantyServiceTL">사후관리 팀장</option>
+            <option value="pointManager">포인트 관리자</option>
+            <option value="User">유저</option>
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="formBasicMembership">
+          <Form.Label> 멤버쉽 </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="멤버쉽 가입"
+            name="membership"
+            value={user.membership}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicBalance">
+          <Form.Label> 잔금 </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="잔금"
+            name="balance"
+            value={user.balance}
+            onChange={handleInputChange}
+            required
+          />
+        </Form.Group>
+
         <Button variant="primary" type="submit" className="button3">
           회원가입
         </Button>
@@ -147,4 +191,4 @@ const SignUp = (props) => {
   );
 };
 
-export default SignUp;
+export default CreateUser;

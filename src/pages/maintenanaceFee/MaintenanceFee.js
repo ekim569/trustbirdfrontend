@@ -8,9 +8,9 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
   const token = AuthToken.get();
 
   const [maintenanceFee, setMaintenanceFee] = useState({
+    email:"",
     claimingAgency: "",
     electronicPaymentNum: "",
-    // deadline: "",
     dueDate: "",
     amountDeadline: "",
     amountDueDate: "",

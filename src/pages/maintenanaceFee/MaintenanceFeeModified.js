@@ -10,7 +10,6 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
   const [maintenanceFee, setMaintenanceFee] = useState({
     claimingAgency: "",
     electronicPaymentNum: "",
-    // deadline: "",
     dueDate: "",
     amountDeadline: "",
     amountDueDate: "",
