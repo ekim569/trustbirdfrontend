@@ -58,7 +58,7 @@ const MaintenanceFeeInput = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/MaintenanceFeeList");
+          history.push("/");
         } else {
           const error = new Error(res.error);
 

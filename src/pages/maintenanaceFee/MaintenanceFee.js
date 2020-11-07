@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {Button, Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 import AuthToken from "../../storages/Auth";
-
 
 //Maintenance Fee
 const MaintenanceFee = ({ electronicPaymentNum }) => {
   const token = AuthToken.get();
 
   const [maintenanceFee, setMaintenanceFee] = useState({
-    email:"",
     claimingAgency: "",
+    email: "",
     electronicPaymentNum: "",
     dueDate: "",
     amountDeadline: "",
@@ -43,12 +42,16 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
   }, [electronicPaymentNum]);
 
   return (
-    <Container style={{textAlign:"center"}}>
-      <Table bordered={true}   >
+    <Container style={{ textAlign: "center" }}>
+      <Table bordered={true}>
         <thead>
           <tr>
-            <th style={{width:"40%"}}> 관리비 청구 기관</th>
-            <td > {maintenanceFee.claimingAgency}</td>
+            <th>이메일</th>
+            <td>{maintenanceFee.email}</td>
+          </tr>
+          <tr>
+            <th style={{ width: "40%" }}> 관리비 청구 기관</th>
+            <td> {maintenanceFee.claimingAgency}</td>
           </tr>
           <tr>
             <th>관리비 전자납부번호</th>
@@ -64,7 +67,7 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
           </tr>
           <tr>
             <th>관리비 납기 후 금액</th>
-            <td>{maintenanceFee.amountDueDate}</td>
+            <td>{maintenanceFee.amountDue}</td>
           </tr>
           <tr>
             <th>납부자</th>
@@ -74,12 +77,16 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
             <th>납입금액</th>
             <td>{maintenanceFee.payment}</td>
           </tr>
-          <tr> 
+          <tr>
             <th>지로</th>
             <td>
-              <a href={`http://192.168.0.143:8080/ipfs/${maintenanceFee.giro.filePath}`}  target="_blank" ><Button
-                className="scopeimage"
-              ></Button></a></td>
+              <a
+                href={`http://192.168.0.143:8080/ipfs/${maintenanceFee.giro.filePath}`}
+                target="_blank"
+              >
+                <Button className="scopeimage"></Button>
+              </a>
+            </td>
           </tr>
         </thead>
         <tbody></tbody>
