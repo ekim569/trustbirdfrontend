@@ -14,6 +14,8 @@ const SignUp = (props) => {
     gender: "",
     telephoneNum: "",
     permission: "user",
+    balance: "0",
+    membership: "0"
   });
 
   function handleInputChange(e) {
@@ -122,8 +124,8 @@ const SignUp = (props) => {
             required
           >
             <option>선택</option>
-            <option value="male">남성</option>
-            <option value="felmale">여성</option>
+            <option value="남성">남성</option>
+            <option value="여성">여성</option>
           </Form.Control>
         </Form.Group>
 

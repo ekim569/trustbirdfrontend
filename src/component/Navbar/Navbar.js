@@ -8,7 +8,6 @@ import {
 // import Logo from "../../icons/LogoIcon";
 import Logo from '../../icons/LogoIcon';
 import "./Navbar.css";
-
 import PageLink from "./pageLink";
 import AuthToken from "../../storages/Auth";
 
@@ -93,7 +92,7 @@ export default function Navbar(props) {
             </Nav.Link>
 
             <Nav.Link className="navlink">
-              <PageLink to="/trust">신탁 계약</PageLink>
+              <PageLink to="/trustsub">신탁 계약</PageLink>
             </Nav.Link>
 
             <Nav.Link className="navlink">
@@ -137,7 +136,7 @@ export default function Navbar(props) {
                     className="navlink nav"
                   >
                     <NavDropdown.Item href="/createuser/admin">
-                     사용자 생성
+                    사용자 생성
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/userlist/admin">
                     사용자 목록

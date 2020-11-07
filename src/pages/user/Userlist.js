@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import AuthToken from "../../storages/Auth";
 import Pagination from "../../component/Pagination";
-import TrustListPage from "./TrustListPage"
+import UserListPage from "./UserListPage"
 
-const TrustList = () => {
+//userEffect
+
+//Maintenance Fee List
+const Userlist = () => {
   const token = AuthToken.get();
 
-  const [trustList, setTrustList] = React.useState([]);
-  const [loc, setLoc] = React.useState(1);
+  const [userList, setUserList] = useState([]);
+  const [loc, setLoc] = useState(1);
 
   const pageLimit = 5;
   const paginationLimite = 5;
 
-  React.useEffect(() => {
-    fetch("http://192.168.0.143:3001/api/trust/list", {
+  useEffect(() => {
+    fetch("http://192.168.0.143:3001/api/user/list", {
       mode: "cors",
       method: "GET",
       credentials: "include",
@@ -28,7 +31,8 @@ const TrustList = () => {
         }
       })
       .then((res) => {
-        setTrustList(res);
+        console.log(res);
+        setUserList(res);
       });
   }, [token]);
 
@@ -37,19 +41,24 @@ const TrustList = () => {
   };
 
   // list length
-  const totalLength = React.useMemo(() => {
-    return trustList.length;
-  }, [trustList]);
+  const totalLength = useMemo(() => {
+    return userList.length;
+  }, [userList]);
 
   // page length
-  const totalPageNum = React.useMemo(() => {
+  const totalPageNum = useMemo(() => {
     return Math.ceil(totalLength / pageLimit);
   }, [totalLength, pageLimit]);
 
   return (
-    <div>
-      <TrustListPage trustList={trustList} loc={loc} pageLimit={pageLimit} />
+    <div> 
+      <UserListPage
+        userList={userList}
+        loc={loc}
+        pageLimit={pageLimit}
+      />
       <Pagination
+        totalLength={totalLength}
         total={totalLength}
         active={loc}
         last={totalPageNum}
@@ -60,4 +69,4 @@ const TrustList = () => {
   );
 };
 
-export default TrustList;
+export default Userlist;

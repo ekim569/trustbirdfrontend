@@ -237,6 +237,25 @@
   color: white;
   margin: auto;
 }
+.deleteimage {
+  background: linear-gradient(
+      to left,
+      rgba(56, 56, 56, 0),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://static.vecteezy.com/system/resources/previews/000/501/351/non_2x/vector-cancel-icon-design.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 24px;
+  max-width: 24px; /* 넓이를 지정 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: auto;
+}
 
 @media (min-width: 576px) {
   .custom-dialog {

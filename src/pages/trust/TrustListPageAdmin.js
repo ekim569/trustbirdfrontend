@@ -60,4 +60,4 @@ const history = useHistory()
     );
   };
 
-export default TrustListPage;
+export default TrustListPageAdmin;

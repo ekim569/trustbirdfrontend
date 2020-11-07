@@ -6,7 +6,9 @@ import AuthToken from "../../storages/Auth";
 //Trust Output
 const Trust = ({location}) => {
   const history = useHistory();
+
   const token = AuthToken.get();
+
   const [trust, setTrust] = useState({
     token: "",
     preToken: "",
@@ -27,6 +29,27 @@ const Trust = ({location}) => {
     contract: "",
   });
 
+  const onDelete = (()=>{
+    fetch(`http://192.168.0.143:3001/api/trust/delete`,{
+      mode: "cors",
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body:JSON.stringify({token : trust.token})
+    })
+      .then((res)=> {
+        if(res.status === 200) {
+          alert("User Delete Complete")
+        } else {
+          alert("User Delete Fail")
+        }      
+        history.push('/trustlist')
+      })
+  })
+ 
   useEffect(()=>{
     const params = new URLSearchParams(location.search);  
 
@@ -108,9 +131,14 @@ const Trust = ({location}) => {
           </tr>
         </table>
         <div style={{ float: "right", marginTop: "60px" }}>
-          <Button variant="primary" type="submit" className="button2" onClick="/Home">
+          <Button variant="primary" type="submit" className="button2" onClick={() => {history.push('/trustlist')}}>
             취소하기
           </Button>
+          
+          <Button variant="primary" type="submit" className="button2" onClick={() => onDelete()}>
+            삭제하기
+          </Button>
+
           <Button
             variant="primary"
             type="submit"
@@ -118,7 +146,7 @@ const Trust = ({location}) => {
             style={{ marginLeft: "16px" }}
             onClick={(e)=>{
               e.preventDefault();
-              history.push(`/trustsub?token=${trust.token}`)
+              history.push(`/trustmodified?token=${trust.token}`)
             }}
           >
             수정하기

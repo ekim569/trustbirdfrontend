@@ -9,6 +9,7 @@ import ServiceIntro from "./pages/main/ServiceIntro";
 
 import SignIn from "./pages/user/SignIn";
 import SignUp from "./pages/user/SignUp";
+import Userlist from "./pages/user/Userlist"
 import SignModified from "./pages/user/SignModified";
 import Membership from "./pages/user/Membership";
 import Withdrawal from "./pages/user/Withdrawal";
@@ -17,7 +18,8 @@ import TrustWay from "./pages/trust/TrustWay";
 import TrustSub from "./pages/trust/TrustSub";
 import Trust from "./pages/trust/Trust";
 import TrustList from "./pages/trust/TrustList";
-import TrustList_admin from "./pages/trust/TrustList_admin";
+import TrustList_admin from "./pages/trust/TrustListAdmin";
+import Trustmodifeid from "./pages/trust/Trustmodified";
 
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
@@ -28,8 +30,6 @@ import MaintenanceFee from "./pages/maintenanaceFee/MaintenanceFee";
 import MaintenanceFeeList from "./pages/maintenanaceFee/MaintenanceFeeList";
 
 import Footer from "./component/Footer";
-
-import AuthToken from "./storages/Auth";
 
 const Main = (props) => {
   return (
@@ -48,6 +48,7 @@ const Main = (props) => {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signmodified" component={SignModified} />
+            <Route exact path="/userlist/admin" component={Userlist} />
             <Route exact path="/membership" component={Membership} />
             <Route exact path="/withdrawal" component={Withdrawal} />
 
@@ -56,6 +57,7 @@ const Main = (props) => {
             <Route exact path="/trust" component={Trust} />
             <Route exact path="/trustlist" component={TrustList} />
             <Route exact path="/trustlist/admin" component={TrustList_admin} />
+            <Route exact path="/trustmodified" component={Trustmodifeid} />
 
             <Route exact path="/contractenroll" component={ContractEnroll} />
             <Route exact path="/contract" component={Contract} />

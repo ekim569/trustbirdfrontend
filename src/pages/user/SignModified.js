@@ -7,7 +7,9 @@ import AuthToken from '../../storages/Auth'
 //Sign Modified
 const SignModified = () => {
   const token = AuthToken.get();
+
   const history = useHistory();
+
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -15,6 +17,11 @@ const SignModified = () => {
     dateOfBirth: "",
     gender: "",
     telephoneNum: "",
+    permission: "",
+    membership: "",
+    balance: "",
+    trust: new Array(),
+    maintenanceFee: new Array()
   });
 
   useEffect(() => {
@@ -33,7 +40,19 @@ const SignModified = () => {
       }
     })
     .then((res) => {
-      setUser(res)
+      setUser({
+        username: res.username,
+        email: res.email,
+        password: "",
+        dateOfBirth: res.dateOfBirth,
+        gender: res.gender,
+        telephoneNum: res.telephoneNum,
+        permission: res.permission,
+        membership: res.membership,
+        balance: res.balance,
+        trust: res.trust,
+        maintenanceFee: res.maintenanceFee
+      })
     }).catch((e)=>{
       console.error(e)
     })
@@ -89,8 +108,7 @@ const SignModified = () => {
             name="username"
             value={user.username}
             placeholder="사용자 이름 입력"
-            readOnly
-
+            required
           />
         </Form.Group>
 
@@ -102,7 +120,7 @@ const SignModified = () => {
             value={user.email}
             onChange={handleInputChange}
             placeholder="이메일 입력"
-            required
+            readOnly
           />
         </Form.Group>
 
@@ -137,7 +155,7 @@ const SignModified = () => {
             name="dateOfBirth"
             value={user.dateOfBirth}
             onChange={handleInputChange}
-            readOnly
+            required
           />
         </Form.Group>
 
@@ -170,9 +188,14 @@ const SignModified = () => {
             required
           />
         </Form.Group>
-        <Button variant="primary" type="submit" className="button3">
+        <Form style={{textAlign:"right"}}>
+        <Button variant="primary" type="submit" className="button2" onClick={() => {history.push('/')}} style={{marginRight:"20px"}} >
+            취소하기
+          </Button>
+        <Button variant="primary" type="submit" className="button2" onClick={onSubmit}>
           수정하기
         </Button>
+        </Form>
       </Form>
     </Container>
   );

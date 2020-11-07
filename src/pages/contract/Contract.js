@@ -3,8 +3,6 @@ import { Container, Button, Form} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import AuthToken from "../../storages/Auth";
 
-import AuthToken from "../../storages/Auth";
-
 //Contract Output
 const Contract = () => {
   const token = AuthToken.get();
@@ -309,7 +307,7 @@ const Contract = () => {
             >
               수정
             </Button>
-            <Button variant="primary" type="submit" className="button2" on>
+            <Button variant="primary" type="submit" className="button2"  onClick={() => {history.push('/')}} >
               삭제
             </Button>
           </div>

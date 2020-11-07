@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import AuthToken from '../../storages/Auth'
 
 
-//Withdrawal
 const Membership = () => {
     const token = AuthToken.get();
     const history = useHistory();

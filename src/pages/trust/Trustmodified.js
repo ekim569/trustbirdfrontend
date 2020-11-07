@@ -6,7 +6,7 @@ import AuthToken from "../../storages/Auth";
 
 
 //Trust Subscription
-const TrustSub = ({location}) => {
+const Trustmodified = ({location}) => {
   const token = AuthToken.get();
 
   const history = useHistory();
@@ -26,9 +26,10 @@ const TrustSub = ({location}) => {
     periodStart: "",
     periodEnd: "",
     etc: "",
-    status: "신탁 요청",
+    status: "",
     contract: "",
     attachments: {},
+    etc: "",
   });
 
   useEffect(()=>{
@@ -50,7 +51,26 @@ const TrustSub = ({location}) => {
         }
       })
       .then((res) => {
-        setTrustsub(res)
+        setTrustsub({
+          token: "",
+          preToken: res.token,
+          username: res.username,
+          telephoneNum: res.telephoneNum,
+          realtorName: res.realtorName,
+          realtorTelephoneNum: res.realtorTelephoneNum,
+          realtorCellphoneNum: res.realtorCellphoneNum,
+          realtorAddress: res.realtorAddress,
+          type: res.type,
+          securityDeposit: res.securityDeposit,
+          rent: res.rent,
+          purpose: res.purpose,
+          periodStart: res.periodStart,
+          periodEnd: res.periodEnd,
+          etc: res.etc,
+          status: res.status,
+          contract: res.contract,
+          attachments: {},
+        })
       })
     }
 
@@ -83,7 +103,7 @@ const TrustSub = ({location}) => {
     }
     formData.append("attachments", trustsub.attachments);
 
-    fetch("http://192.168.0.143:3001/api/trust/subscription", {
+    fetch("http://192.168.0.143:3001/api/trust/update", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -93,7 +113,7 @@ const TrustSub = ({location}) => {
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/trustlist");
+          history.push("/trust");
         } else {
           const error = new Error(res.error);
 
@@ -121,6 +141,7 @@ const TrustSub = ({location}) => {
             name="username"
             value={trustsub.username}
             onChange={handleInputChange}
+            required
           />
           </Form.Group>
 
@@ -134,6 +155,7 @@ const TrustSub = ({location}) => {
               name="telephoneNum"
               value={trustsub.telephoneNum}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
   
@@ -148,6 +170,7 @@ const TrustSub = ({location}) => {
             name="realtorName"
             value={trustsub.realtorName}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -161,6 +184,7 @@ const TrustSub = ({location}) => {
             name="realtorTelephonephoneNum"
             value={trustsub.realtorTelephonephoneNum}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -174,6 +198,7 @@ const TrustSub = ({location}) => {
               name="realtorCellphoneNum"
               value={trustsub.realtorCellphoneNum}
               onChange={handleInputChange}
+              required
             />
           </Form.Group>
 
@@ -187,6 +212,7 @@ const TrustSub = ({location}) => {
             name="realtorAddress"
             value={trustsub.realtorAddress}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -241,6 +267,7 @@ const TrustSub = ({location}) => {
             name="securityDeposit"
             value={trustsub.securityDeposit}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -254,6 +281,7 @@ const TrustSub = ({location}) => {
             name="rent"
             value={trustsub.rent}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -264,6 +292,7 @@ const TrustSub = ({location}) => {
             name="periodStart"
             value={trustsub.periodStart}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -274,6 +303,7 @@ const TrustSub = ({location}) => {
             name="periodEnd"
             value={trustsub.periodEnd}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -284,6 +314,7 @@ const TrustSub = ({location}) => {
             name="etc"
             value={trustsub.etc}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -305,4 +336,4 @@ const TrustSub = ({location}) => {
   );
 };
 
-export default TrustSub;
+export default Trustmodified;
