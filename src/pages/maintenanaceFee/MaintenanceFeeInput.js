@@ -122,7 +122,7 @@ const MaintenanceFeeInput = () => {
           <Form.Label> 납기 내 금액 </Form.Label>
           <PostFixInput
             labelText=""
-            postfix="만원"
+            postfix="원"
             type="text"
             placeholder="금액"
             name="amountDue"
@@ -135,7 +135,7 @@ const MaintenanceFeeInput = () => {
           <Form.Label> 납기 후 금액 </Form.Label>
           <PostFixInput
             labelText=""
-            postfix="만원"
+            postfix="원"
             type="text"
             placeholder="금액"
             name="amountDeadline"

@@ -9,14 +9,4 @@ const PageLink = ({ to, children }) => {
   );
 };
 
-// NavbarLink.defautProps = {
-//   to: "/",
-//   linkName: "link",
-// };
-
-// NavbarLink.propTypes = {
-//   to: PropTypes.string,
-//   linkName: PropTypes.string,
-// };
-
 export default PageLink;

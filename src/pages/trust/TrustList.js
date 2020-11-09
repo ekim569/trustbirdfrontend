@@ -2,7 +2,7 @@ import React from "react";
 import AuthToken from "../../storages/Auth";
 
 import Pagination from "../../component/Pagination";
-import TrustListPage from "./TrustListPage"
+import TrustListPage from "./TrustListPage";
 
 const TrustList = () => {
   const token = AuthToken.get();
@@ -30,7 +30,6 @@ const TrustList = () => {
       })
       .then((res) => {
         if( res !== undefined){
-
           setTrustList(res);
         }
         
