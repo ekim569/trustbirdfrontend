@@ -98,7 +98,7 @@ export default function Navbar(props) {
             <Nav.Link className="navlink">
               <PageLink to="/serviceintro">정보소개</PageLink>
             </Nav.Link>
-            {token ? (
+            {token !== undefined ? (
               <div>
                 <img
                   className="usericon"
@@ -139,7 +139,7 @@ export default function Navbar(props) {
                     className="navlink nav"
                   >
                     <NavDropdown.Item href="/createuser/admin">
-                    사용자 생성
+                      사용자 생성
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/userlist/admin">
                       사용자 목록

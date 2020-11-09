@@ -25,12 +25,12 @@ const Trust = ({ location }) => {
     periodEnd: "",
     etc: "",
     attachments: new Array(),
-    Ttatus: "",
+    status: "",
     contract: "",
   });
 
-  const onDelete = (()=>{
-    fetch(`http://192.168.0.143:3001/api/trust/delete`,{
+  const onDelete = () => {
+    fetch(`http://192.168.0.143:3001/api/trust/delete`, {
       mode: "cors",
       method: "POST",
       credentials: "include",
@@ -38,20 +38,19 @@ const Trust = ({ location }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body:JSON.stringify({token : trust.token})
-    })
-      .then((res)=> {
-        if(res.status === 200) {
-          alert("User Delete Complete")
-        } else {
-          alert("User Delete Fail")
-        }      
-        history.push('/trustlist')
-      })
-  })
- 
-  useEffect(()=>{
-    const params = new URLSearchParams(location.search);  
+      body: JSON.stringify({ token: trust.token }),
+    }).then((res) => {
+      if (res.status === 200) {
+        alert("User Delete Complete");
+      } else {
+        alert("User Delete Fail");
+      }
+      history.push("/trustlist");
+    });
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
 
     fetch(
       `http://192.168.0.143:3001/api/trust/find?token=${params.get("token")}`,
@@ -72,7 +71,9 @@ const Trust = ({ location }) => {
         }
       })
       .then((res) => {
-        setTrust(res);
+        if (res !== undefined) {
+          setTrust(res);
+        }
       });
   }, []);
 
@@ -128,35 +129,48 @@ const Trust = ({ location }) => {
                     href={`http://192.168.0.143:8080/ipfs/${attachment.filePath}`}
                     target="_blank"
                   >
-                    {" "}
-                    {attachment.fileName}{" "}
-                  </a>{" "}
+                    {attachment.fileName}
+                  </a>
                 </td>
               );
             })}
           </tr>
         </table>
         <div style={{ float: "right", marginTop: "60px" }}>
-          <Button variant="primary" type="submit" className="button2" onClick={() => {history.push('/trustlist')}}>
+          <Button
+            variant="primary"
+            type="submit"
+            className="button2"
+            onClick={() => {
+              history.push("/trustlist");
+            }}
+          >
             취소하기
-          </Button>
-          
-          <Button variant="primary" type="submit" className="button2" onClick={() => onDelete()}>
-            삭제하기
           </Button>
 
           <Button
             variant="primary"
             type="submit"
             className="button2"
-            style={{ marginLeft: "16px" }}
-            onClick={(e) => {
-              e.preventDefault();
-              history.push(`/trustmodified?token=${trust.token}`)
-            }}
+            onClick={() => onDelete()}
           >
-            수정하기
+            삭제하기
           </Button>
+
+          {trust.status.match(/수정/) || trust.status.match(/요청/) ? (
+            <Button
+              variant="primary"
+              type="submit"
+              className="button2"
+              style={{ marginLeft: "16px" }}
+              onClick={(e) => {
+                e.preventDefault();
+                history.push(`/trustmodified?token=${trust.token}`);
+              }}
+            >
+              수정하기
+            </Button>
+          ) : null}
         </div>
       </Form>
     </Container>

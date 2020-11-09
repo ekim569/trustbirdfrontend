@@ -12,7 +12,7 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
     electronicPaymentNum: "",
     dueDate: "",
     amountDeadline: "",
-    amountDueDate: "",
+    amountDue: "",
     payment: "",
     payer: "",
     giro: "",

@@ -102,7 +102,7 @@ const TrustSub = ({ location }) => {
       })
       .catch((err) => {
         console.error(err);
-        alert("Error loggin in please try again");
+        alert("Fail! You are trust send! try again!");
       });
   }
 
@@ -152,12 +152,12 @@ const TrustSub = ({ location }) => {
         <Form.Group controlId="formBasicNegligenceProfit">
           <Form.Label> 중개사 전화번호 </Form.Label>
           <PostFixInput
-            labelText="중개인번호"
+            labelText="중개사번호"
             postfix=""
             type="text"
             placeholder="전화번호"
-            name="realtorTelephonephoneNum"
-            value={trustsub.realtorTelephonephoneNum}
+            name="realtorTelephoneNum"
+            value={trustsub.realtorTelephoneNum}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -181,7 +181,7 @@ const TrustSub = ({ location }) => {
             labelText="중개인번호"
             postfix=""
             type="text"
-            placeholder="전화번호"
+            placeholder="주소"
             name="realtorAddress"
             value={trustsub.realtorAddress}
             onChange={handleInputChange}

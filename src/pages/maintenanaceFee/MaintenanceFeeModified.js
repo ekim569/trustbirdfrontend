@@ -15,7 +15,7 @@ const MaintenanceFeeModified = ({ location }) => {
     electronicPaymentNum: "",
     dueDate: "",
     amountDeadline: "",
-    amountDueDate: "",
+    amountDue: "",
     payment: "",
     payer: "",
     giro: {},
@@ -51,7 +51,7 @@ const MaintenanceFeeModified = ({ location }) => {
             electronicPaymentNum: res.electronicPaymentNum,
             dueDate: res.dueDate,
             amountDeadline: res.amountDeadline,
-            amountDueDate: res.amountDueDate,
+            amountDue: res.amountDue,
             payment: res.payment,
             payer: res.payer,
             giro: {},
@@ -162,7 +162,7 @@ const MaintenanceFeeModified = ({ location }) => {
           <Form.Label> 납기 내 금액 </Form.Label>
           <PostFixInput
             labelText=""
-            postfix="만원"
+            postfix="원"
             type="text"
             placeholder="금액"
             name="amountDue"
@@ -175,7 +175,7 @@ const MaintenanceFeeModified = ({ location }) => {
           <Form.Label> 납기 후 금액 </Form.Label>
           <PostFixInput
             labelText=""
-            postfix="만원"
+            postfix="원"
             type="text"
             placeholder="금액"
             name="amountDeadline"
@@ -197,7 +197,9 @@ const MaintenanceFeeModified = ({ location }) => {
 
         <Form.Group controlId="formBasicPayment">
           <Form.Label> 납부 금액 </Form.Label>
-          <Form.Control
+          <PostFixInput
+            labelText=""
+            postfix="원"
             type="text"
             placeholder="납부 금액"
             name="payment"
