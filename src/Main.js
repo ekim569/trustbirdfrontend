@@ -42,7 +42,6 @@ const Main = (props) => {
         <Navbar />
         <div style={{ marginTop: 80 }}>
           <Switch>
-            {}
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/main" component={Home} />
@@ -64,7 +63,7 @@ const Main = (props) => {
             <Route exact path="/trustlist/admin" component={TrustList_admin} />
             <Route exact path="/trustmodified" component={TrustModifeid} />
 
-            <Route exact path="/contractenroll" component={ContractEnroll} />
+            <Route exact path="/contractenroll/admin" component={ContractEnroll} />
             <Route exact path="/contract" component={Contract} />
             <Route exact path="/contractlist" component={ContractList} />
             <Route

@@ -17,6 +17,7 @@ const Trust = ({ location }) => {
     realtorName: "",
     realtorTelephoneNum: "",
     realtorCellPhoneNum: "",
+    realtorAddress: "",
     type: "",
     securityDeposit: "",
     rent: "",
@@ -109,6 +110,11 @@ const Trust = ({ location }) => {
             <td className="tableborder" colspan="3">
               {trust.realtorCellPhoneNum}
             </td>
+            </tr>
+            <tr>
+            <td className="tableborder">중개인 주소</td>
+            <td className="tableborder" colspan="6">
+              {trust.realtorAddress}</td>
           </tr>
           <tr className="tableborder">
             <td className="tableborder">신탁기간</td>

@@ -8,7 +8,7 @@ const Membership = () => {
     const token = AuthToken.get();
     const history = useHistory();
     const [balance, setBalance] = useState()
-    const [membership, setMembership] = useState()
+    const [membership, setMembership] = useState("")
     const [account, setAccount] = useState()
 
     useEffect(()=>{
@@ -29,7 +29,10 @@ const Membership = () => {
         }
       })
       .then((res) => {
-        setMembership(parseInt(res))
+        if (res==="0"){
+          return 
+        }
+        setMembership(res)
       })
       .catch((err) => {
         console.error(err);
@@ -63,15 +66,15 @@ const Membership = () => {
       });
     },[balance])
 
-    function handleInputChange(e) {
-        e.preventDefault();
-    
-        const { value, name } = e.target;
-    
-        console.log(value, name);
-    
-        setAccount(parseInt(value));
+    function handleMembershipChange(e){
+      e.preventDefault();
+      
+      const {value} = e.target;
+      
+      if ("0123456789".includes(value[value.length-1]) || value===''){
+        setMembership(value)
       }
+    }
     
   function onSubmit(e) {
     e.preventDefault();
@@ -80,7 +83,7 @@ const Membership = () => {
             email : "kkkk123@naver.com",
             invoke : "add",
             targetAttr : "Membership",
-            value :  (membership + account).toString()
+            value :  (parseInt(membership) + account).toString()
         }
 
         fetch("http://192.168.0.143:3001/api/user/attribute", {
@@ -157,10 +160,10 @@ const Membership = () => {
       }}>
           <Form.Control
            type="text"
-           value={account}      
+           value={membership}
            name="membership"
-           onChange={handleInputChange} 
-            ></Form.Control>
+           onChange={handleMembershipChange} 
+          />
 
         <Button
           variant="primary"

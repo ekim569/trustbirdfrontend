@@ -29,7 +29,11 @@ const TrustList = () => {
         }
       })
       .then((res) => {
-        setTrustList(res);
+        if( res !== undefined){
+
+          setTrustList(res);
+        }
+        
       });
   }, [token]);
 
