@@ -6,9 +6,7 @@ import AuthToken from "../../storages/Auth";
 //Contract Output
 const Contract = () => {
   const token = AuthToken.get();
-
   const history = useHistory();
-  const [loc, setLoc] = useState(1);
   const [contract, setContract] = useState({
     trustToken: "",
     token: "",
@@ -62,18 +60,40 @@ const Contract = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          return res.json();
+            return res.json();
         }
       })
       .then((res) => {
-        console.log(res);
-        setContract(res);
+        if(res !== undefined){
+          setContract(res);
+        }
       });
   }, [token]);
 
-  const onClick = (loc) => {
-    // setLoc(loc);
-  };
+  const onDelete = ((e)=>{
+    e.preventDefault()
+
+    fetch("http://192.168.0.143:3001/api/contract/delete",{
+      mode: "cors",
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body:JSON.stringify({token : contract.token})
+    })
+      .then((res)=> {
+        console.log(res.status)
+
+        if(res.status === 200) {
+          alert("Contract Delete Complete")
+        } else {
+          alert("Contract Delete Fail")
+        }      
+        history.push('/contractlist')
+      })
+  })
 
   return (
     <div>
@@ -84,7 +104,7 @@ const Contract = () => {
           <div>
             <table className="tablelayout">
               <tr className="tableborder">
-                <td className="tableborder" style={{ width: "180px" }}>
+                <td className="tableborder" >
                   소재지
                 </td>
                 <td className="tableborder" colspan="4"></td>
@@ -104,8 +124,9 @@ const Contract = () => {
                 <td className="tableborder" style={{ width: "135px" }}>
                   면적
                 </td>
-                <td className="tableborder" style={{ width: "135px" }}>
+                <td className="tableborder" style={{ width: "135px", textAlign:"end", paddingRight:"16px"}}>
                   {contract.landArea}
+                  <span className="fixoutput" >㎡</span>
                 </td>
               </tr>
               <tr className="tableborder">
@@ -113,7 +134,10 @@ const Contract = () => {
                 <td placeholder="용도">용도 </td>
                 <td className="tableborder"> {contract.buildingPurpose} </td>
                 <td className="tableborder">면적</td>
-                <td className="tableborder">{contract.buildingArea} </td>
+                <td className="tableborder" style={{ width: "135px", textAlign:"end", paddingRight:"16px"}}>
+                  {contract.buildingArea}
+                  <span className="fixoutput" >㎡</span>
+                </td>
               </tr>
               <tr className="tableborder">
                 <td className="tableborder">임대할 부분</td>
@@ -121,7 +145,10 @@ const Contract = () => {
                   {contract.partOfLease}
                 </td>
                 <td className="tableborder">면적 </td>
-                <td className="tableborder">{contract.partOfLeaseArea} </td>
+                <td className="tableborder" style={{ width: "135px", textAlign:"end", paddingRight:"16px"}}>
+                  {contract.partOfLeaseArea}
+                  <span className="fixoutput" >㎡</span>
+                </td>
               </tr>
               <tr className="tableborder" className="tableborder">
                 <td className="tableborder">임대형태</td>
@@ -174,7 +201,7 @@ const Contract = () => {
 
           <table className="tablelayout">
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" style={{width:"200px"}}>
                 임대인
               </td>
               <td className="tableborder" colspan="4">
@@ -182,7 +209,7 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 주소
               </td>
               <td className="tableborder" colspan="4">
@@ -190,7 +217,7 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 전화번호
               </td>
               <td className="tableborder" colspan="4">
@@ -198,7 +225,7 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 주민등록번호
               </td>
               <td className="tableborder" colspan="4">
@@ -208,7 +235,7 @@ const Contract = () => {
           </table>
           <table className="tablelayout">
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" style={{width:"200px"}} >
                 임차인
               </td>
               <td className="tableborder" colspan="4">
@@ -216,7 +243,7 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 주소
               </td>
               <td className="tableborder" colspan="4">
@@ -224,7 +251,7 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 전화번호
               </td>
               <td className="tableborder" colspan="4">
@@ -232,7 +259,7 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 주민등록번호
               </td>
               <td className="tableborder" colspan="4">
@@ -243,7 +270,7 @@ const Contract = () => {
 
           <table className="tablelayout">
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" style={{ width: "200px" }}>
                 중개인
               </td>
               <td className="tableborder" colspan="4">
@@ -251,7 +278,7 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 사무실 명칭
               </td>
               <td className="tableborder" colspan="4">
@@ -259,7 +286,7 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 사무실 주소
               </td>
               <td className="tableborder" colspan="4">
@@ -267,13 +294,13 @@ const Contract = () => {
               </td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder" >
                 공인중개사 등록번호
               </td>
               <td className="tableborder" colspan="4"></td>
             </tr>
             <tr className="tableborder">
-              <td className="tableborder" style={{ width: "180px" }}>
+              <td className="tableborder">
                 전화번호
               </td>
               <td className="tableborder" colspan="4">
@@ -290,22 +317,25 @@ const Contract = () => {
               </td>
             </tr>
           </table>
-          <div>
-            <a href="../contract/ContractList.js" />
-            <Button className="button4">돌아가기</Button>
-          </div>
 
-          <div style={{ float: "right" }}>
+          <div style={{ float: "right" }}>            
+          <Button className="button4" style={{float:"left", marginRight:"16px"}} onClick={() => {history.push('/contractlist')}}>
+              돌아가기
+          </Button>
             <Button
               variant="primary"
               type="submit"
               className="button2"
               style={{ marginRight: "16px" }}
-              onClick={onClick}
-            >
+              onClick={(e) => {
+                e.preventDefault();
+                history.push(`/contractmodified?token=${contract.token}`)
+              }}
+              >
               수정
+
             </Button>
-            <Button variant="primary" type="submit" className="button2"  onClick={() => {history.push('/')}} >
+            <Button variant="primary" type="submit" className="button2" onClick={onDelete}  >
               삭제
             </Button>
           </div>

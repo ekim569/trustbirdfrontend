@@ -8,7 +8,7 @@ const ContractList = () => {
   const token = AuthToken.get();
 
   const [contractList, setContractList] = useState([]);
-  const [loc, setLoc] = useState(0);
+  const [loc, setLoc] = useState(1);
 
   const pageLimit = 5;
   const paginationLimite = 5;
@@ -29,8 +29,9 @@ const ContractList = () => {
         }
       })
       .then((res) => {
-        console.log(res);
-        setContractList(res);
+        if(res !== undefined) {
+          setContractList(res);
+        }
       });
   }, [token]);
 

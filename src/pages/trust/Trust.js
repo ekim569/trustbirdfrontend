@@ -29,8 +29,10 @@ const Trust = ({ location }) => {
     contract: "",
   });
 
-  const onDelete = () => {
-    fetch(`http://192.168.0.143:3001/api/trust/delete`, {
+  const onDelete = ((e)=>{
+    e.preventDefault()
+
+    fetch("http://192.168.0.143:3001/api/trust/delete",{
       mode: "cors",
       method: "POST",
       credentials: "include",
@@ -65,7 +67,6 @@ const Trust = ({ location }) => {
       }
     )
       .then((res) => {
-        console.log(token);
         if (res.status === 200) {
           return res.json();
         }
@@ -122,9 +123,9 @@ const Trust = ({ location }) => {
         <Form.Label>첨부파일</Form.Label>
         <table className="tablelayout">
           <tr className="tableborder">
+            <td>
             {trust.attachments.map((attachment) => {
               return (
-                <td>
                   <a
                     href={`http://192.168.0.143:8080/ipfs/${attachment.filePath}`}
                     target="_blank"
@@ -134,6 +135,7 @@ const Trust = ({ location }) => {
                 </td>
               );
             })}
+            </td>
           </tr>
         </table>
         <div style={{ float: "right", marginTop: "60px" }}>

@@ -3,7 +3,7 @@ import { Container, Table, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 const TrustListPageAdmin = ({ trustList, loc, pageLimit }) => {
-  const history = useHistory();
+const history = useHistory()
 
   return (
     <Container style={{ marginTop: "150px" }}>

@@ -20,7 +20,7 @@ import TrustSub from "./pages/trust/TrustSub";
 import Trust from "./pages/trust/Trust";
 import TrustList from "./pages/trust/TrustList";
 import TrustList_admin from "./pages/trust/TrustListAdmin";
-import Trustmodifeid from "./pages/trust/Trustmodified";
+import TrustModifeid from "./pages/trust/TrustModified";
 
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
@@ -62,7 +62,7 @@ const Main = (props) => {
             <Route exact path="/trust" component={Trust} />
             <Route exact path="/trustlist" component={TrustList} />
             <Route exact path="/trustlist/admin" component={TrustList_admin} />
-            <Route exact path="/trustmodified" component={Trustmodifeid} />
+            <Route exact path="/trustmodified" component={TrustModifeid} />
 
             <Route exact path="/contractenroll" component={ContractEnroll} />
             <Route exact path="/contract" component={Contract} />
