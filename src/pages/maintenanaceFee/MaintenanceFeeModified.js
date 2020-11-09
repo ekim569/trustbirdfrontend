@@ -15,10 +15,7 @@ const MaintenanceFeeModified = ({ location }) => {
     dueDate: "",
     amountDue: "",
     amountDeadline: "",
-<<<<<<< HEAD
     amountDue: "",
-=======
->>>>>>> 02a2e62c0a559ae2e58ef294c95d189b9a058b29
     payment: "",
     payer: "",
     giro: {},
@@ -27,7 +24,11 @@ const MaintenanceFeeModified = ({ location }) => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
 
-    fetch(`http://192.168.0.143:3001/api/maintenanceFee/find?electronicPaymentNum=${params.get("electronicPaymentNum")}`,{
+    fetch(
+      `http://192.168.0.143:3001/api/maintenanceFee/find?electronicPaymentNum=${params.get(
+        "electronicPaymentNum"
+      )}`,
+      {
         mode: "cors",
         method: "GET",
         credentials: "include",
@@ -35,16 +36,17 @@ const MaintenanceFeeModified = ({ location }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      })   
+      }
+    )
       .then((res) => {
-        if(res.status === 200) {
-          return res.json()
+        if (res.status === 200) {
+          return res.json();
         }
       })
       .then((res) => {
         if (res !== undefined) {
           setMaintenanceFeeInput({
-            email:res.email,
+            email: res.email,
             claimingAgency: res.claimingAgency,
             electronicPaymentNum: res.electronicPaymentNum,
             dueDate: res.dueDate,
@@ -153,7 +155,7 @@ const MaintenanceFeeModified = ({ location }) => {
             name="dueDate"
             value={maintenanceFeeInput.dueDate}
             onChange={handleInputChange}
-            />
+          />
         </Form.Group>
 
         <Form.Group controlId="formBasicAmountDue">
