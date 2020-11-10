@@ -68,7 +68,7 @@ const BalanceAdmin = () => {
             })
             .then((res) => {
                 if(res.status === 200){
-                    alert('멤버십이 추가되었습니다.')
+                    alert(`${email}의 포인트가 ${balance}원 추가되었습니다.`)
                     history.push('/')
                 }
             })

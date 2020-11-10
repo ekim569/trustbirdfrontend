@@ -55,7 +55,7 @@ const CreateUser = () => {
 
   return (
     <Container style={{ maxWidth: "750px" }}>
-      <div className="pageheader">회원가입</div>
+      <div className="pageheader">유저 생성</div>
       <Form className="sign-form" onSubmit={onSubmit}>
         <Form.Group controlId="formBasicUsername">
           <Form.Label> 이름 </Form.Label>
@@ -85,8 +85,8 @@ const CreateUser = () => {
               setUser({ ...user, gender: e.target.value });
             }}>
             <option>선택</option>
-            <option value="male">남성</option>
-            <option value="felmale">여성</option>
+            <option value="남성">남성</option>
+            <option value="여성">여성</option>
           </Form.Control>
         </Form.Group>
 
@@ -123,7 +123,7 @@ const CreateUser = () => {
           <Form.Control type="text" placeholder="잔금" name="balance" value={user.balance} onChange={handleInputChange} required />
         </Form.Group>
 
-        <Button variant="primary" type="submit" className="button3"> 회원가입 </Button>
+        <Button variant="primary" type="submit" className="button3"> 생성 </Button>
       </Form>
     </Container>
   )

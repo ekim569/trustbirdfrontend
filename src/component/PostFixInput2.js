@@ -1,7 +1,7 @@
 import React from "react"
 import { Form } from "react-bootstrap"
 
-import "../pages/Page.css
+import "../pages/Page.css"
 
 const PostFixInput2 = ({ type, placeholder, postfix, onChange, ...props }) => {
   return (

@@ -56,7 +56,7 @@ const MembershipAdmin = () => {
                 value :  (parseInt(membership) + parseInt(ownMembership)).toString()
             }
         
-            fetch("${process.env.REACT_APP_SERVER}/api/user/attribute", {
+            fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute`, {
                 mode: "cors",
                 method: "POST",
                 credentials: "include",
@@ -68,7 +68,7 @@ const MembershipAdmin = () => {
             })
             .then((res) => {
                 if(res.status === 200){
-                    alert('멤버십이 추가되었습니다.')
+                    alert(`${email}의 멤버십이 ${membership}개 추가되었습니다.`)
                     history.push('/')
                 }
             })

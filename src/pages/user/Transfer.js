@@ -34,23 +34,24 @@ const Transfer = ({location}) => {
         credentials: "include",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${authToken}`
         }
       })
       .then((res) => {
         if (res.status === 200) {
-          return res.json(res)
+          return res.json()
         } else {
           alert("Try again login")
         }
       })
       .then((ownBalance) => {
-        if(parseInt(ownBalance) > parseInt(balance)){
+        console.log(ownBalance)
+        if(parseInt(ownBalance) > parseInt(balance) * 10000){
           let request = {
             email: "",
             invoke: "add",
             targetAttr: "Balance",
-            value: (parseInt(ownBalance) - parseInt(balance)).toString()
+            value: (parseInt(ownBalance) - parseInt(balance) * 10000).toString()
           }
     
           fetch("${process.env.REACT_APP_SERVER}/api/user/attribute", {
@@ -59,7 +60,7 @@ const Transfer = ({location}) => {
             credentials: "include",
             headers: {
               "Content-Type": "application/json;charset=utf-8",
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${authToken}`,
             },
             body: JSON.stringify(request),
           })
@@ -90,10 +91,6 @@ const Transfer = ({location}) => {
           alert('잔액이 부족합니다.')
           history.push('/trustlist')
         }
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Error!");
       })
     } else {
       alert('금액이 일치하지 않습니다.')
@@ -160,7 +157,7 @@ const Transfer = ({location}) => {
     <Container style={{ marginTop: "200px", width: "800px" }}>
       <div className="pageheader"> { params.get('status').match(/계약금/) ? "계약금 입금" : "잔금 입금" } </div>
       <Form.Group style={{ textAlign:"end" }}>
-        <Form.Label style={{ color:"#3b72f2", fontWeight:"bold"}}>입금 할 금액 : {payment} 만원</Form.Label>
+        <Form.Label style={{ color:"#3b72f2", fontWeight:"bold"}}>입금 해야 할 금액 : {payment} 만원</Form.Label>
       </Form.Group>
 
       <Form onSubmit={onSubmit}>
@@ -169,7 +166,7 @@ const Transfer = ({location}) => {
           <Form.Control type="text" value={balance} name="balance" onChange={handleBalanceChange} />
         </Form.Group>
 
-        <Button variant="primary" type="submit" className="button3">입금</Button>
+        <Button variant="primary" type="submit" className="button3"> 입금하기 </Button>
       </Form>
     </Container>
   );

@@ -78,77 +78,66 @@ const TrustSub = () => {
         alert("Try again login")
       }
     })
-    .then((res) => {
-      if (res !== "0"){
-        ownMembership(res)
+    .then((ownMembership) => {
+      
+      if(ownMembership > 0) {
+        const formData = new FormData()
+
+        for (const [key, value] of Object.entries(trustsub)) {
+          formData.append(key, value)
+        }
+
+        for (let file of Object.values(uppy.state.files)) {
+          formData.append("attachments", file.data)
+        }
+
+        fetch(`${process.env.REACT_APP_SERVER}/api/trust/subscription`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${authToken}`
+          },
+          body: formData
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json()  
+          }
+        })
+        .then((membership) => {
+          if(membership !== undefined){
+            let request = {
+              email : "",
+              invoke : "add",
+              targetAttr : "Balance",
+              value :  (parseInt(membership) - 1).toString()
+            }
+
+            fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute`, {
+                mode: "cors",
+                method: "POST",
+                credentials: "include",
+                headers: {
+                  "Content-Type": "application/json;charset=utf-8",
+                  "Authorization" : `Bearer ${authToken}`
+                },
+                body: JSON.stringify(request)
+              })
+            .then((res) => {
+                if(res.status === 200){
+                  alert("완료되었습니다.")
+                  history.push("/trustlist")
+                } else {
+                  alert("Try again")
+                }
+            })
+          }
+        })
+      } else {
+        alert('멤버십이 부족합니다.')
+        history.push('/')
       }
     })
-    .catch((err) => {
-      console.error(err);
-      alert("Error!");
-    });
-
-    if(ownMembership > 0) {
-      const formData = new FormData()
-
-      for (const [key, value] of Object.entries(trustsub)) {
-        formData.append(key, value)
-      }
-
-      for (let file of Object.values(uppy.state.files)) {
-        formData.append("attachments", file.data)
-      }
-
-      fetch(`${process.env.REACT_APP_SERVER}/api/trust/subscription`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${authToken}`
-        },
-        body: formData
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json()  
-        }
-      })
-      .then((membership) => {
-        if(membership !== undefined){
-          let request = {
-            email : "",
-            invoke : "add",
-            targetAttr : "Balance",
-            value :  (parseInt(membership) - 1).toString()
-          }
-
-          fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute`, {
-              mode: "cors",
-              method: "POST",
-              credentials: "include",
-              headers: {
-                "Content-Type": "application/json;charset=utf-8",
-                "Authorization" : `Bearer ${authToken}`
-              },
-              body: JSON.stringify(request)
-            })
-          .then((res) => {
-              if(res.status === 200){
-                alert("완료되었습니다.")
-                history.push("/trustlist")
-              } else {
-                alert("Try again")
-              }
-          })
-        }
-      })
-      .catch((err) => {
-        console.error(err)
-        alert("Error!")
-      })
-    } else {
-      alert('멤버십이 부족합니다.')
-      history.push('/trustlist')
-    }
   }
 
   return (

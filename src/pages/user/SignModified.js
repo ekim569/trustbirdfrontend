@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react"
 import { Container, Form, Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
-import AuthToken from ""../../storages/Auth"
+import AuthToken from "../../storages/Auth"
 
 //Sign Modified
 const SignModified = () => {
-  const history = useHistory();
+  const history = useHistory()
   const authToken = AuthToken.get()
 
   const [user, setUser] = useState({
@@ -41,7 +41,7 @@ const SignModified = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${token}`
+        "Authorization" : `Bearer ${authToken}`
       },
       body: JSON.stringify(user)
     })

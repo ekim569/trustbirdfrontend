@@ -73,7 +73,7 @@ const TrustModified = ({ location }) => {
       method: "POST",
       credentials: "include",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: formData
     })

@@ -27,7 +27,7 @@ const TrustListPageAdmin = ({ trustList, loc, pageLimit }) => {
     })
     .then((res) => {
       if(res.status === 200) {
-        alert(`${status} 완료`)
+        permission === "legalTL" ? alert('법무팀 승인 완료') : alert('시설팀 승인 완료') 
       } else {
         alert('Try again')
       }

@@ -39,7 +39,7 @@ const Membership = () => {
         credentials: "include",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
-          "Authorization" : `Bearer ${token}`
+          "Authorization" : `Bearer ${authToken}`
         },
         body: JSON.stringify(request)
       })
@@ -57,7 +57,7 @@ const Membership = () => {
             credentials: "include",
             headers: {
               "Content-Type": "application/json;charset=utf-8",
-              "Authorization" : `Bearer ${token}`
+              "Authorization" : `Bearer ${authToken}`
             },
             body: JSON.stringify(request)
           })
@@ -81,7 +81,7 @@ const Membership = () => {
   }
 
   useEffect(()=>{
-    fetch(`${REACT_APP_SERVER}/api/user/attribute?targetAttr=Membership`, {
+    fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute?targetAttr=Membership`, {
       mode: "cors",
       method: "GET",
       credentials: "include",
@@ -109,7 +109,7 @@ const Membership = () => {
   },[ownMembership])
 
   useEffect(()=>{
-    fetch(`${REACT_APP_SERVER}/api/user/attribute?targetAttr=Balance`, {
+    fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute?targetAttr=Balance`, {
       mode: "cors",
       method: "GET",
       credentials: "include",

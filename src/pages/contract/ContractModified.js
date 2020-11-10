@@ -175,7 +175,7 @@ const ContractModified = ({location}) => {
         }
       })
     }
-  }, [token])
+  }, [authToken])
 
   return (
     <Container>

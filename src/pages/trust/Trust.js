@@ -7,7 +7,7 @@ import AuthToken from "../../storages/Auth"
 //Trust Output
 const Trust = ({ location }) => {
   const history = useHistory()
-  const autuToken = AuthToken.get()
+  const authToken = AuthToken.get()
 
   const [trust, setTrust] = useState({
     token: "",
@@ -39,7 +39,7 @@ const Trust = ({ location }) => {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         }
     })
     .then((res) => {
@@ -59,7 +59,7 @@ const Trust = ({ location }) => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       }
     })
     .then((res) => {
@@ -85,7 +85,7 @@ const Trust = ({ location }) => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${autuToken}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({ token: trust.token })
     })

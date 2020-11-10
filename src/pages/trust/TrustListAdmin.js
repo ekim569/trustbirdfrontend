@@ -44,11 +44,12 @@ const TrustListAdmin = () => {
       }
     })
     .then((res) => {
+      console.log(res)
       if(res !== undefined) {
         setTrustList(res)
       }
     })
-  }, [autoToken])
+  }, [authToken])
 
   return (
     <div>

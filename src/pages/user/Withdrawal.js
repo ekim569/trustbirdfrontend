@@ -40,7 +40,7 @@ const Withdrawal = () => {
       </div>
       <Container style={{ maxWidth: "100%", marginTop: "16px", width:"800px", padding:"0", textAlign:"center"}}>
         <Button variant="primary" type="submit" className="button2" onClick={() => {history.push('/')}}>취소</Button>
-        <Button variant="primary" type="submit" className="button2" onClick={onSubmit} style={{ marginLeft:"16px"}}>탈퇴하기</Button>
+        <Button variant="primary" type="submit" className="button2" onClick={onSubmit} style={{ marginLeft:"16px"}}> 탈퇴하기 </Button>
       </Container>
     </Container>
   )

@@ -32,7 +32,7 @@ export default function NavbarPointManager(props) {
               <img className="usericon" src="https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg" />
               <NavDropdown title={props.username} id="basic-nav-dropdown" style={{ display: "inline-block", fontWeight: "bold" }} className="navlink nav">
                 <NavDropdown.Item href="/membership/admin">
-                멤버쉽 포인트 관리
+                멤버쉽 관리
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/balance/admin">
                 포인트 관리
