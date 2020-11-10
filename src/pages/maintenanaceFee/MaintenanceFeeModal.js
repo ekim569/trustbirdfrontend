@@ -1,6 +1,7 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
-import MaintenanceFee from "./MaintenanceFee";
+import React from "react"
+import Modal from "react-bootstrap/Modal"
+
+import MaintenanceFee from "./MaintenanceFee"
 
 const MaintenanceFeeModal = ({ electronicPaymentNum, handleClose }) => {
   return (
@@ -12,7 +13,7 @@ const MaintenanceFeeModal = ({ electronicPaymentNum, handleClose }) => {
         <MaintenanceFee electronicPaymentNum={electronicPaymentNum} />
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default MaintenanceFeeModal;
+export default MaintenanceFeeModal

@@ -5,7 +5,7 @@ import AuthToken from "../../storages/Auth";
 
 //Maintenance Fee
 const MaintenanceFee = ({ electronicPaymentNum }) => {
-  const token = AuthToken.get();
+  const authToken = AuthToken.get();
 
   const [maintenanceFee, setMaintenanceFee] = useState({
     claimingAgency: "",
@@ -16,31 +16,28 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
     amountDue: "",
     payment: "",
     payer: "",
-    giro: "",
-  });
+    giro: ""
+  })
 
   useEffect(() => {
-    fetch(
-      `http://192.168.0.143:3001/api/maintenanceFee/find?electronicPaymentNum=${electronicPaymentNum}`,
-      {
-        mode: "cors",
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    fetch(`${process.env.REACT_APP_SERVER}/api/maintenanceFee/find?electronicPaymentNum=${electronicPaymentNum}`, {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      }}
     )
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        setMaintenanceFee(res);
-      });
-  }, [electronicPaymentNum]);
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json()
+      }
+    })
+    .then((res) => {
+      setMaintenanceFee(res)
+    })
+  }, [electronicPaymentNum])
 
   return (
     <Container style={{ textAlign: "center" }}>
@@ -81,21 +78,15 @@ const MaintenanceFee = ({ electronicPaymentNum }) => {
           <tr>
             <th>지로</th>
             <td>
-              <a
-                href={`http://192.168.0.143:8080/ipfs/${maintenanceFee.giro.filePath}`}
-                target="_blank"
-              >
+              <a href={`${process.env.REACT_APP_IPFS}/ipfs/${maintenanceFee.giro.filePath}`} target="_blank">
                 <Button className="scopeimage"></Button>
               </a>
             </td>
           </tr>
         </thead>
-        <tbody></tbody>
       </Table>
     </Container>
-  );
+  )
+}
 
-  // );
-};
-
-export default MaintenanceFee;
+export default MaintenanceFee

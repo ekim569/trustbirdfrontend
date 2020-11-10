@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Card } from "react-bootstrap";
+import React from "react"
+import { Container, Card } from "react-bootstrap"
 
 //Foundation Introduce
 const FoundationIntro2 = () => {
@@ -15,8 +15,7 @@ const FoundationIntro2 = () => {
         </Card.Body>
       </Card>
     </Container>
-  );
-};
+  )
+}
 
-//Foundation Introduce
-export default FoundationIntro2;
+export default FoundationIntro2

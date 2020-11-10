@@ -1,54 +1,52 @@
-import React, { useEffect, useState, useMemo } from "react";
-import AuthToken from "../../storages/Auth";
-import Pagination from "../../component/Pagination";
+import React, { useEffect, useState, useMemo } from "react"
+
+import Pagination from "../../component/Pagination"
 import UserListPage from "./UserListPage"
 
-//userEffect
+import AuthToken from "../../storages/Auth"
 
-//Maintenance Fee List
 const Userlist = () => {
-  const token = AuthToken.get();
+  const authToken = AuthToken.get()
 
-  const [userList, setUserList] = useState([]);
-  const [loc, setLoc] = useState(1);
+  const [userList, setUserList] = useState([])
+  const [loc, setLoc] = useState(1)
 
-  const pageLimit = 5;
-  const paginationLimite = 5;
+  const pageLimit = 5
+  const paginationLimite = 5
 
   useEffect(() => {
-    fetch("http://192.168.0.143:3001/api/user/list", {
+    fetch(`${process.env.REACT_APP_SERVER}/api/user/list`, {
       mode: "cors",
       method: "GET",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+        Authorization: `Bearer ${authToken}`,
+      }
     })
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        setUserList(res);
-      });
-  }, [token]);
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json()
+      }
+    })
+    .then((res) => {
+      setUserList(res)
+    })
+  }, [authToken])
 
   const onClick = (loc) => {
-    setLoc(loc);
+    setLoc(loc)
   };
 
   // list length
   const totalLength = useMemo(() => {
-    return userList.length;
-  }, [userList]);
+    return userList.length
+  }, [userList])
 
   // page length
   const totalPageNum = useMemo(() => {
-    return Math.ceil(totalLength / pageLimit);
-  }, [totalLength, pageLimit]);
+    return Math.ceil(totalLength / pageLimit)
+  }, [totalLength, pageLimit])
 
   return (
     <div> 
@@ -66,7 +64,7 @@ const Userlist = () => {
         onClick={onClick}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Userlist;
+export default Userlist

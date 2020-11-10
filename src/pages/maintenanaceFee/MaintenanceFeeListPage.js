@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import { Container, Table, Button } from "react-bootstrap";
-import MaintenanceFeeModal from "./MaintenanceFeeModal";
+import React, { useState } from "react"
+import { Container, Table, Button } from "react-bootstrap"
+
+import MaintenanceFeeModal from "./MaintenanceFeeModal"
 
 const MaintenanceFeeListPage = ({ maintenanceFeeList, loc, pageLimit }) => {
-  const [targetModalNum, setTargetModalNum] = useState(null);
+  const [targetModalNum, setTargetModalNum] = useState(null)
 
   return (
     <Container style={{ marginTop: "150px" }}>
       <div className="maintenanceimage">
-        <div className="pageheader" style={{ marginTop: "50px" }}>
-          관리비 내역 목록
-        </div>
+        <div className="pageheader" style={{ marginTop: "50px" }}> 관리비 내역 목록 </div>
       </div>
-      <Table
-        bordered={true}
-        style={{ marginBottom: "100px", textAlign: "center" }}
-      >
+      <Table bordered={true} style={{ marginBottom: "100px", textAlign: "center" }}>
         <thead>
           <tr>
             <th style={{ width: "5%" }}>NO.</th>
@@ -36,26 +32,14 @@ const MaintenanceFeeListPage = ({ maintenanceFeeList, loc, pageLimit }) => {
                 <td>{maintenanceFee.electronicPaymentNum}</td>
                 <td>{maintenanceFee.dueDate}</td>
                 <td>{maintenanceFee.amountDue}</td>
-                <td>
-                  <Button
-                    className="scopeimage"
-                    onClick={() =>
-                      setTargetModalNum(maintenanceFee.electronicPaymentNum)
-                    }
-                  />
-                </td>
+                <td><Button className="scopeimage" onClick={() => setTargetModalNum(maintenanceFee.electronicPaymentNum)} /></td>
               </tr>
             ))}
-          {targetModalNum ? (
-            <MaintenanceFeeModal
-              electronicPaymentNum={targetModalNum}
-              handleClose={() => setTargetModalNum(null)}
-            />
-          ) : null}
+          {targetModalNum ? (<MaintenanceFeeModal electronicPaymentNum={targetModalNum} handleClose={() => setTargetModalNum(null)} />) : null}
         </tbody>
       </Table>
     </Container>
-  );
-};
+  )
+}
 
-export default MaintenanceFeeListPage;
+export default MaintenanceFeeListPage

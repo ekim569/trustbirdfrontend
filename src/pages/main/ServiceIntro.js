@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Card } from "react-bootstrap";
+import React from "react"
+import { Container, Card } from "react-bootstrap"
 
 //Service Introduce
 const ServiceIntro = (children) => {
@@ -16,7 +16,7 @@ const ServiceIntro = (children) => {
         </Card.Body>
       </Card>
    </Container>
-    );
-};
+    )
+}
 
-export default ServiceIntro;
+export default ServiceIntro

@@ -1,21 +1,16 @@
-import React from "react";
-import { Container, Table, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import React from "react"
+import { Container, Table, Button } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 
 const TrustListPage = ({ trustList, loc, pageLimit }) => {
-  const history = useHistory();
+  const history = useHistory()
 
   return (
     <Container style={{ marginTop: "150px" }}>
       <div className="maintenanceimage">
-        <div className="pageheader" style={{ marginTop: "50px" }}>
-          신탁 계약 내역 목록
-        </div>
+        <div className="pageheader" style={{ marginTop: "50px" }}> 신탁 계약 내역 목록 </div>
       </div>
-      <Table
-        bordered={true}
-        style={{ marginBottom: "100px", textAlign: "center" }}
-      >
+      <Table bordered={true} style={{ marginBottom: "100px", textAlign: "center" }}>
         <thead>
           <tr>
             <th>NO.</th>
@@ -42,27 +37,25 @@ const TrustListPage = ({ trustList, loc, pageLimit }) => {
                 <td>{trust.periodEnd}</td>
                 <td>{trust.status}</td>
                 <td>
-                  <Button
-                    variant=""
-                    className="scopeimage"
+                  <Button variant="" className="scopeimage"
                     onClick={(e) => {
                       e.preventDefault();
                       history.push(`/trust?token=${trust.token}`);
-                    }}
-                  />
+                    }} />
                 </td>
-                <td> <Button variant="info" onClick={(e) => {
-                  e.preventDefault()
-                  history.push('')
-                }}
-                    >입금 </Button>
-                    </td>
-                    </tr>
+                <td> 
+                  {trust.status.match(/입금 대기/) ? (
+                  <Button variant="info" onClick={(e) => {
+                    e.preventDefault()
+                    history.push(`/transfer?token=${trust.token}&status=${trust.status}`)
+                  }}> 입금 </Button>) : null }
+                </td>
+              </tr>
             ))}
         </tbody>
       </Table>
     </Container>
-  );
-};
+  )
+}
 
-export default TrustListPage;
+export default TrustListPage

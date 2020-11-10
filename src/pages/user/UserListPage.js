@@ -1,29 +1,31 @@
-import React from "react";
-import { Container, Table, Button } from "react-bootstrap";
-import AuthToken from "../../storages/Auth";
+import React from "react"
+import { Container, Table, Button } from "react-bootstrap"
+
+import AuthToken from "../../storages/Auth"
 
 const UserListPage = ({ userList, loc, pageLimit }) => {
-  const onClick = (email) => {
-    const token = AuthToken.get();
+  const authToken = AuthToken.get()
 
-    fetch(`http://192.168.0.143:3001/api/user/withdrawal`, {
+  const onClick = (email) => {
+    fetch(`${process.env.REACT_APP_SERVER}/api/user/withdrawal`, {
       mode: "cors",
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
-      body: JSON.stringify({ email }),
-    }).then((res) => {
+      body: JSON.stringify({ email })
+    })
+    .then((res) => {
       if (res.status === 200) {
-        alert("User Delete Complete");
+        alert("User Delete Complete")
       } else {
-        alert("User Delete Fail");
+        alert("User Delete Fail")
       }
-      window.location.reload();
-    });
-  };
+      window.location.reload()
+    })
+  }
 
   return (
     <Container style={{ marginTop: "150px" }}>
@@ -32,10 +34,7 @@ const UserListPage = ({ userList, loc, pageLimit }) => {
           유저 현황
         </div>
       </div>
-      <Table
-        bordered={true}
-        style={{ marginBottom: "100px", textAlign: "center" }}
-      >
+      <Table bordered={true} style={{ marginBottom: "100px", textAlign: "center" }}>
         <thead>
           <tr>
             <th>NO.</th>
@@ -60,18 +59,14 @@ const UserListPage = ({ userList, loc, pageLimit }) => {
                 <td>{user.gender}</td>
                 <td>{user.telephoneNum}</td>
                 <td>{user.permission}</td>
-                <td>
-                  <Button
-                    className="deleteimage"
-                    onClick={() => onClick(user.email)}
-                  />
-                </td>
+                <td><Button className="deleteimage" onClick={() => onClick(user.email)} /></td>
               </tr>
-            ))}
+            ))
+          }
         </tbody>
       </Table>
     </Container>
-  );
-};
+  )
+}
 
-export default UserListPage;
+export default UserListPage

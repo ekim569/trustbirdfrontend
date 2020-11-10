@@ -1,35 +1,24 @@
-import React from "react";
-import {
-  Navbar as BootStrapNavbar,
-  Nav,
-  Container,
-} from "react-bootstrap";
-import Logo from "../../icons/LogoIcon";
-import PageLink from "./pageLink";
+import React from "react"
+import { Navbar as BootStrapNavbar, Nav, Container } from "react-bootstrap"
 
-import "./Navbar.css";
+import PageLink from "./pageLink"
+import Logo from "../../icons/LogoIcon"
+
+import "./Navbar.css"
 
 export default function NavbarBasic(props) {
   return (
-    <BootStrapNavbar fixed="top" expand="lg"
-      style={{
-        borderBottomWidth: 1,
-        borderColor: "#c2c2c2",
-        borderBottomStyle: "solid",
-        background: "#ffffff",
-      }}
-    >
+    <BootStrapNavbar fixed="top" expand="lg" style={{ borderBottomWidth: 1, borderColor: "#c2c2c2", borderBottomStyle: "solid", background: "#ffffff" }}>
       <Container style={{ margin: "auto", maxWidth: "1500px" }}>
         <BootStrapNavbar.Brand href="/">
           <div>
             <div style={{ display: "inline-block" }}>
               <Logo />
             </div>
-            <h3 style={{ fontSize: 24, display: "inline-block", marginLeft: "16px", marginBottom: "0", color: " #3B72F2", fontWeight: "bold" }}>
-              TrustBird
-            </h3>
+            <h3 style={{ fontSize: 24, display: "inline-block", marginLeft: "16px", marginBottom: "0", color: " #3B72F2", fontWeight: "bold" }}> TrustBird </h3>
           </div>
         </BootStrapNavbar.Brand>
+        
         <BootStrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootStrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
@@ -53,5 +42,5 @@ export default function NavbarBasic(props) {
         </BootStrapNavbar.Collapse>
       </Container>
     </BootStrapNavbar>
-  );
+  )
 }

@@ -1,62 +1,59 @@
-import React, { useState } from "react";
-import { Form, Button, Container } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import Logo from '../../icons/LogoIcon';
-import AuthToken from "../../storages/Auth";
+import React, { useState } from "react"
+import { Form, Button, Container } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 
+import AuthToken from "../../storages/Auth"
+
+import Logo from '../../icons/LogoIcon'
 
 //Sign In
 const SignIn = () => {
-  const history = useHistory();
+  const history = useHistory()
+
   const [user, setUser] = useState({
     email: "",
-    password: "",
-  });
+    password: ""
+  })
 
-  function handleInputChange(e) {
-    e.preventDefault();
+  const handleInputChange = (e) => {
+    e.preventDefault()
 
-    const { value, name } = e.target;
-
-    console.log(value, name);
+    const { value, name } = e.target
 
     setUser({
       ...user,
-      [name]: value,
-    });
+      [name]: value
+    })
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault()
 
-    fetch("http://192.168.0.143:3001/api/user/signin", {
+    fetch(`${process.env.REACT_APP_SERVER}/api/user/signin`, {
       mode: "cors",
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(user)
     })
-      .then((res) => {
-        if (res.status === 201) {
-          return res.json(res);
-        } else {
-          alert("Try again login");
-        }
-      })
-      .then((res) => {
-        AuthToken.set(res.token);
-
-        console.log(AuthToken.get());
-
-        history.push("/");
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("You account not Found!");
-      });
+    .then((res) => {
+      if (res.status === 201) {
+        return res.json(res);
+      } else {
+        alert("Try again login")
+      }
+    })
+    .then((res) => {
+      AuthToken.set(res.token)
+      history.push("/")
+      window.location.reload()
+    })
+    .catch((err) => {
+      console.error(err)
+      alert("Error!")
+    })
   }
 
   return (
@@ -65,51 +62,23 @@ const SignIn = () => {
         <Logo />
         <div className="login">로그인</div>
       </div>
-      <Form
-        style={{ marginTop: "5rem" }}
-        className="sign-form"
-        onSubmit={onSubmit}
-      >
+      <Form style={{ marginTop: "5rem" }} className="sign-form" onSubmit={onSubmit} >
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>이메일</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            placeholder="이메일"
-            value={user.email}
-            onChange={handleInputChange}
-            required
-          />
+          <Form.Label> 이메일 </Form.Label>
+          <Form.Control type="email" name="email" placeholder="이메일" value={user.email} onChange={handleInputChange} required />
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>비밀번호</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            placeholder="비밀번호"
-            value={user.password}
-            onChange={handleInputChange}
-            required
-          />
+          <Form.Label> 비밀번호 </Form.Label>
+          <Form.Control type="password" name="password" placeholder="비밀번호" value={user.password} onChange={handleInputChange} required />
         </Form.Group>
 
-        <Button
-          variant="primary"
-          type="submit"
-          style={{
-            width: "100%",
-            backgroundColor: "#3B72F2",
-            outlineColor: "#3B72F2",
-            marginTop: "16px",
-            marginBottom: "80",
-          }}
-        >
+        <Button variant="primary" type="submit" style={{ width: "100%", backgroundColor: "#3B72F2", outlineColor: "#3B72F2", marginTop: "16px", marginBottom: "80" }}>
           로그인
         </Button>
       </Form>
     </Container>
-  );
-};
+  )
+}
 
 export default SignIn;

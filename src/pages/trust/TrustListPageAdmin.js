@@ -1,107 +1,104 @@
-import React, {useState,useEffect} from "react";
-import { Container, Table, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import React, {useState,useEffect} from "react"
+import { Container, Table, Button } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 
 import AuthToken from '../../storages/Auth'
 
 const TrustListPageAdmin = ({ trustList, loc, pageLimit }) => {
-const history = useHistory()
-const _token = AuthToken.get()
-const [permission, setPermission] = useState()
+  const history = useHistory()
+  const authToken = AuthToken.get()
 
-const onAcknowledge = (token)=>{
-  let status = ""
+  const [permission, setPermission] = useState()
 
-  permission === "legalTL" ? status = "법무팀 승인" : status = "계약금 입금 대기" 
+  const onAcknowledge = (token) => {
+    let status = ""
 
-  fetch('http://192.168.0.143:3001/api/trust/status',{
-    mode: "cors",
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${_token}`,
-    },
-    body : JSON.stringify({token, status})
-  })
-  .then((res) => {
-    if(res.status === 200) {
-      alert(`${status} 완료`)
-    } else {
-      alert('Try again')
-    }
-    history.push('trustlist/admin')
-  })
-  .catch((err) => {
-    console.error(err);
-    alert("Sorry to fail");
-  });
-}
+    permission === "legalTL" ? status = "법무팀 승인" : status = "계약금 입금 대기" 
 
-const onReject = (token) => {
-  let status = ""
-
-  permission === "legalTL" ? status = "법무팀 반려" : status = "시설팀 반려" 
-
-  fetch('http://192.168.0.143:3001/api/trust/status',{
-    mode: "cors",
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${_token}`,
-    },
-    body : JSON.stringify({token, status})
-  })
-  .then((res) => {
-    if(res.status === 200) {
-      alert(`${status} 완료`)
-    } else {
-      alert('Try again')
-    }
-    history.push('trustlist/admin')
-  })
-  .catch((err) => {
-    console.error(err);
-    alert("Sorry to fail");
-  });
-}
-
-useEffect(() => {
-  if (_token !== "") {
-    fetch("http://192.168.0.143:3001/api/user/infomation", {
+    fetch(`${process.env.REACT_APP_SERVER}/api/trust/status`, {
       mode: "cors",
-      method: "GET",
+      method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${_token}`,
+        Authorization: `Bearer ${authToken}`
       },
+      body : JSON.stringify({token, status})
     })
     .then((res) => {
-      if (res.status === 200) {
-        return res.json();
+      if(res.status === 200) {
+        alert(`${status} 완료`)
+      } else {
+        alert('Try again')
       }
+      history.push('trustlist/admin')
+    })
+    .catch((err) => {
+      console.error(err)
+      alert("Error!")
+    })
+  }
+
+  const onReject = (token) => {
+    let status = ""
+
+    permission === "legalTL" ? status = "법무팀 반려" : status = "시설팀 반려" 
+
+    fetch(`${process.env.REACT_APP_SERVER}/api/trust/status`, {
+      mode: "cors",
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`
+      },
+      body : JSON.stringify({token, status})
     })
     .then((res) => {
-      setPermission(res.user.permission);
+      if(res.status === 200) {
+        alert(`${status} 완료`)
+      } else {
+        alert('Try again')
+      }
+      history.push('trustlist/admin')
     })
-    .catch((e) => {
-      console.error(e);
-    });
+    .catch((err) => {
+      console.error(err)
+      alert("Error!")
+    })
   }
-}, []);
+
+  useEffect(() => {
+    if (authToken !== "") {
+      fetch(`${process.env.REACT_APP_SERVER}/api/user/infomation`, {
+        mode: "cors",
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`
+        }
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json()
+        }
+      })
+      .then((res) => {
+        setPermission(res.user.permission)
+      })
+      .catch((e) => {
+        console.error(e)
+      })
+    }
+  }, [])
+
   return (
     <Container style={{ marginTop: "150px" }}>
       <div className="maintenanceimage">
-        <div className="pageheader" style={{ marginTop: "50px" }}>
-          신탁 계약 내역 목록
-        </div>
+        <div className="pageheader" style={{ marginTop: "50px" }}> 신탁 계약 내역 목록 </div>
       </div>
-      <Table
-        bordered={true}
-        style={{ marginBottom: "100px", textAlign: "center" }}
-      >
+      <Table bordered={true} style={{ marginBottom: "100px", textAlign: "center" }}>
         <thead>
           <tr>
             <th>NO.</th>
@@ -128,26 +125,23 @@ useEffect(() => {
                 <td>{trust.periodEnd}</td>
                 <td>{trust.status}</td>
                 <td>
-                  <Button
-                    variant=""
-                    className="scopeimage"
+                  <Button variant="" className="scopeimage"
                     onClick={(e) => {
                       e.preventDefault();
                       history.push(`/trust?token=${trust.token}`);
-                    }}
-                  />
+                    }} />
                 </td>
                 { permission === "legalTL" || permission === "maintenanceTL" ? (
                   <td> 
-                    <Button variant="success" style={{marginRight:"16px"}} onClick={()=>{onAcknowledge(trust.token)}}>승인</Button>
-                    <Button variant="danger" onClick={()=>{onReject(trust.token)}}>반려</Button>
+                    <Button variant="success" style={{ marginRight:"16px" }} onClick={() => { onAcknowledge(trust.token) }}> 승인 </Button>
+                    <Button variant="danger" onClick={() => { onReject(trust.token) }}> 반려 </Button>
                   </td>) : null }
               </tr>
             ))}
         </tbody>
       </Table>
     </Container>
-  );
-};
+  )
+}
 
-export default TrustListPageAdmin;
+export default TrustListPageAdmin

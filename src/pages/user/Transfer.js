@@ -1,125 +1,178 @@
-import React, { useState } from "react";
-import { Container, Form, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import { Container, Form, Button } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 
-import AuthToken from "../../storages/Auth";
+import AuthToken from "../../storages/Auth"
 
-const BalanceAdmin = () => {
-  const token = AuthToken.get();
-  const history = useHistory();
+const Transfer = ({location}) => {
+  const history = useHistory()
+  const authToken = AuthToken.get()
 
-  const [email, setEmail] = useState("");
-  const [balance, setBalance] = useState("");
+  const params = new URLSearchParams(location.search)
 
-  function handleInputChange(e) {
-    e.preventDefault();
+  const [payment, setPayment] = useState("0")
+  const [balance, setBalance] = useState("")
 
-    const { value } = e.target;
 
-    console.log(value);
+  const handleBalanceChange = (e) => {
+    e.preventDefault()
 
-    setEmail(value);
-  }
-
-  function handleBalanceChange(e) {
-    e.preventDefault();
-
-    const { value } = e.target;
+    const { value } = e.target
 
     if ("0123456789".includes(value[value.length - 1]) || value === "") {
-      setBalance(value);
+      setBalance(value)
     }
   }
 
-  async function onSubmit(e) {
+  const onSubmit = (e) => {
     e.preventDefault();
 
-    await fetch(
-      `http://192.168.0.143:3001/api/user/attribute?targetAttr=Balance&email=${email}`,
-      {
+    if(payment === balance) {
+      fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute?targetAttr=Balance`, {
         mode: "cors",
         method: "GET",
         credentials: "include",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
       .then((res) => {
         if (res.status === 200) {
-          return res.json(res);
+          return res.json(res)
         } else {
-          alert("Try again login");
+          alert("Try again login")
         }
       })
       .then((ownBalance) => {
-        let request = {
-          email: email,
-          invoke: "add",
-          targetAttr: "Balance",
-          value: (parseInt(balance) + parseInt(ownBalance)).toString(),
-        };
-
-        fetch("http://192.168.0.143:3001/api/user/attribute", {
-          mode: "cors",
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(request),
-        }).then((res) => {
-          if (res.status === 200) {
-            alert("멤버십이 추가되었습니다.");
-            history.push("/");
+        if(parseInt(ownBalance) > parseInt(balance)){
+          let request = {
+            email: "",
+            invoke: "add",
+            targetAttr: "Balance",
+            value: (parseInt(ownBalance) - parseInt(balance)).toString()
           }
-        });
+    
+          fetch("${process.env.REACT_APP_SERVER}/api/user/attribute", {
+            mode: "cors",
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json;charset=utf-8",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(request),
+          })
+          .then((res) => {
+            let status = params.get('status').match(/계약금/) ? "사용자 계약 승인" : "사용자 계약 전환" 
+
+            if (res.status === 200) {
+              fetch(`${process.env.REACT_APP_SERVER}/api/trust/status`, {
+                mode: "cors",
+                method: "POST",
+                credentials: "include",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${authToken}`,
+                },
+                body : JSON.stringify({token : params.get('token'), status})
+              })
+              .then((res) => {
+                if(res.status === 200) {
+                  alert("입금되었습니다.");
+                } else {
+                  alert("입금을 실패했습니다.");
+                }
+              })
+            }
+          })
+        } else {
+          alert('잔액이 부족합니다.')
+          history.push('/trustlist')
+        }
       })
       .catch((err) => {
         console.error(err);
-        alert("You balance not Found!");
-      });
+        alert("Error!");
+      })
+    } else {
+      alert('금액이 일치하지 않습니다.')
+    }
   }
+
+  useEffect(() => {
+    const status = params.get('status')
+    
+    fetch(`${process.env.REACT_APP_SERVER}/api/trust/find?token=${params.get('token')}`, {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Authorization: `Bearer ${authToken}`,
+      }
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json(res)
+      } else {
+        alert("Try again login")
+      }
+    })
+    .then((trust) => {
+      if(trust !== undefined){
+        if(status.match(/계약금/)){ 
+          setPayment(Math.ceil(trust.securityDeposit / 10).toString())
+        } else {
+          if(trust.contract){
+            fetch(`${process.env.REACT_APP_SERVER}/api/contract/find?token=${trust.contract}`, {
+              mode: "cors",
+              method: "GET",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                Authorization: `Bearer ${authToken}`,
+              }
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                return res.json(res);
+              } else {
+                alert("Try again login");
+              }
+            })
+            .then((contract) => {
+              if(contract !== undefined){
+                setPayment(contract.balance)
+              }
+            })
+          }
+        }
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+      alert("Error!")
+    });
+  },[])
 
   return (
     <Container style={{ marginTop: "200px", width: "800px" }}>
-      <div className="pageheader"> 계약금 </div>
-      <Form.Group>
-        <Form.Label>금액</Form.Label>
-        <Form.Control
-          type="text"
-          value={balance}
-          name="balance"
-          onChange={handleBalanceChange}
-        />
-        <Form.Label>입금</Form.Label>
-        <Form.Control
-          type="text"
-          value={balance}
-          name="balance"
-          onChange={handleBalanceChange}
-        />
+      <div className="pageheader"> { params.get('status').match(/계약금/) ? "계약금 입금" : "잔금 입금" } </div>
+      <Form.Group style={{ textAlign:"end" }}>
+        <Form.Label style={{ color:"#3b72f2", fontWeight:"bold"}}>입금 할 금액 : {payment} 만원</Form.Label>
       </Form.Group>
 
       <Form onSubmit={onSubmit}>
-        <Form.Group>
+        <Form.Group >
           <Form.Label>금액</Form.Label>
-          <Form.Control
-            type="text"
-            value={balance}
-            name="balance"
-            onChange={handleBalanceChange}
-          />
+          <Form.Control type="text" value={balance} name="balance" onChange={handleBalanceChange} />
         </Form.Group>
 
-        <Button variant="primary" type="submit" className="button3">
-          추가
-        </Button>
+        <Button variant="primary" type="submit" className="button3">입금</Button>
       </Form>
     </Container>
   );
 };
 
-export default BalanceAdmin;
+export default Transfer;

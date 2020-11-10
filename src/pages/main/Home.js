@@ -1,15 +1,15 @@
-import React from "react";
-import ReactFullpage from "@fullpage/react-fullpage";
+import React from "react"
 
-import ServiceIntro from "./ServiceIntro_fullpage";
-import FoundationIntro from "./FoundationIntro_fullpage";
-import TrustWay from "../trust/TrustWay";
+import ReactFullpage from "@fullpage/react-fullpage"
+import ServiceIntro from "./ServiceIntro_fullpage"
+import FoundationIntro from "./FoundationIntro_fullpage"
+import TrustWay from "../trust/TrustWay"
 
 //Home
 const Home = () => {
   return(
   <ReactFullpage scrollingSpeed = {1000}
-    render={({ state, fullpageApi }) => {
+    render={({ fullpageApi }) => {
       return (
         <ReactFullpage.Wrapper>
           <div class="section"  >
@@ -17,7 +17,7 @@ const Home = () => {
           </div>
           <div class="section" onClick={() => fullpageApi.moveSectionDown()}>
           <div className="sectionheader" >서비스 소개</div>
-          <ServiceIntro />      
+            <ServiceIntro />      
           </div>
           <div class="section" onClick={() => fullpageApi.moveSectionDown()}>
             <div className="sectionheader">재단 소개</div>
@@ -28,10 +28,10 @@ const Home = () => {
             <TrustWay />
           </div>
         </ReactFullpage.Wrapper>
-      );
+      )
     }}
   />
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

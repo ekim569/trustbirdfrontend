@@ -16,13 +16,14 @@ import Withdrawal from "./pages/user/Withdrawal";
 import CreateUser from "./pages/user/CreateUser";
 import MembershipAdmin from "./pages/user/MembershipAdmin";
 import BalanceAdmin from "./pages/user/BalanceAdmin";
+import Transfer from "./pages/user/Transfer"
 
 import TrustWay from "./pages/trust/TrustWay";
 import TrustSub from "./pages/trust/TrustSub";
 import Trust from "./pages/trust/Trust";
 import TrustList from "./pages/trust/TrustList";
 import TrustListAdmin from "./pages/trust/TrustListAdmin";
-import TrustModifeid from "./pages/trust/TrustModified";
+import TrustModified from "./pages/trust/TrustModified";
 
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
@@ -54,44 +55,28 @@ const Main = (props) => {
             <Route exact path="/membership" component={Membership} />
             <Route exact path="/withdrawal" component={Withdrawal} />
             <Route exact path="/createuser/admin" component={CreateUser} />
+
             <Route exact path="/trustway" component={TrustWay} />
             <Route exact path="/trustsub" component={TrustSub} />
             <Route exact path="/trust" component={Trust} />
             <Route exact path="/trustlist" component={TrustList} />
             <Route exact path="/trustlist/admin" component={TrustListAdmin} />
-            <Route exact path="/trustmodified" component={TrustModifeid} />
+            <Route exact path="/trustmodified" component={TrustModified} />
 
             <Route exact path="/contractenroll/admin" component={ContractEnroll} />
             <Route exact path="/contract" component={Contract} />
             <Route exact path="/contractlist/admin" component={ContractList} />
-            <Route
-              exact
-              path="/contractmodified/admin"
-              component={ContractModified}
-            />
+            <Route exact path="/contractmodified/admin" component={ContractModified} />
+
             <Route exact path="/maintenancefee" component={MaintenanceFee} />
-            <Route
-              exact
-              path="/maintenancefeelist"
-              component={MaintenanceFeeList}
-            />
-            <Route
-              exact
-              path="/maintenancefeeinput/admin"
-              component={MaintenanceFeeInput}
-            />
-            <Route
-              exact
-              path="/maintenancefeemodified/admin"
-              component={MaintenanceFeeModified}
-            />
-            <Route
-              exact
-              path="/maintenancefeelist/admin"
-              component={MaintenanceFeeListAdmin}
-            />
+            <Route exact path="/maintenancefeelist" component={MaintenanceFeeList}/>
+            <Route exact path="/maintenancefeeinput/admin" component={MaintenanceFeeInput} />
+            <Route exact path="/maintenancefeemodified/admin" component={MaintenanceFeeModified} />
+            <Route exact path="/maintenancefeelist/admin"  component={MaintenanceFeeListAdmin} />
+
+            <Route exact path="/transfer" component={Transfer} />
             <Route exact path="/membership/admin" component={MembershipAdmin} />
-            <Route exact path="/balance/admin" component={BalanceAdmin} />ㄴ
+            <Route exact path="/balance/admin" component={BalanceAdmin} />
             <Route exact path="/footer" component={Footer} />
           </Switch>
         </div>

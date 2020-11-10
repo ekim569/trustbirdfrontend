@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 import { useHistory } from 'react-router-dom'
-import { Container, Table, Button } from "react-bootstrap";
+import { Container, Table, Button } from "react-bootstrap"
 
 const ContractListPage = ({ contractList, loc, pageLimit }) => {
   const history = useHistory()
@@ -8,14 +8,9 @@ const ContractListPage = ({ contractList, loc, pageLimit }) => {
   return (
     <Container style={{ marginTop: "150px" }}>
       <div className="maintenanceimage">
-        <div className="pageheader" style={{ marginTop: "50px" }}>
-          계약서 리스트
-        </div>
+        <div className="pageheader" style={{ marginTop: "50px" }}> 계약서 리스트 </div>
       </div>
-      <Table
-        bordered={true}
-        style={{ marginBottom: "100px", textAlign: "center" }}
-      >
+      <Table bordered={true} style={{ marginBottom: "100px", textAlign: "center" }}>
         <thead>
           <tr>
             <th style={{ width: "5%" }}>NO.</th>
@@ -39,7 +34,7 @@ const ContractListPage = ({ contractList, loc, pageLimit }) => {
                 <td>
                   <Button variant="" className="scopeimage" onClick={(e) => {
                       e.preventDefault();
-                      history.push(`/contract?token=${contract.token}`);
+                      history.push(`/contract?token=${contract.token}`)
                     }}></Button>
                 </td>
               </tr>
@@ -47,7 +42,7 @@ const ContractListPage = ({ contractList, loc, pageLimit }) => {
         </tbody>
       </Table>
     </Container>
-  );
-};
+  )
+}
 
-export default ContractListPage;
+export default ContractListPage
