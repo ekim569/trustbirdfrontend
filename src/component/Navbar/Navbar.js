@@ -7,11 +7,14 @@ import NavbarUser from "./NavbarUser";
 import NavbarSupervisor from "./NavbarSupervisior"
 import NavbarMaintenance from "./NavbarMaintenance"
 import NavbarPointManager from './NavbarPointManager'
+
 import AuthToken from "../../storages/Auth";
 
 import "./Navbar.css";
 
 export default function Navbar(props) {
+  const _token = AuthToken.get();
+
   const [token, setToken] = useState();
   const [user, setUser] = useState({
     username: "",
@@ -20,8 +23,6 @@ export default function Navbar(props) {
   });
 
   useEffect(() => {
-    const _token = AuthToken.get();
-
     if (_token !== "") {
       setToken(_token);
 
@@ -34,17 +35,17 @@ export default function Navbar(props) {
           Authorization: `Bearer ${_token}`,
         },
       })
-        .then((res) => {
-          if (res.status === 200) {
-            return res.json();
-          }
-        })
-        .then((res) => {
-          setUser(res.user);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        setUser(res.user);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
     }
   }, []);
 

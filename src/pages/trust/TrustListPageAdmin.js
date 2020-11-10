@@ -1,10 +1,96 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import { Container, Table, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-const TrustListPageAdmin = ({ trustList, loc, pageLimit }) => {
+import AuthToken from '../../storages/Auth'
 
+const TrustListPageAdmin = ({ trustList, loc, pageLimit }) => {
 const history = useHistory()
+const _token = AuthToken.get()
+const [permission, setPermission] = useState()
+
+const onAcknowledge = (token)=>{
+  let status = ""
+
+  permission === "legalTL" ? status = "법무팀 승인" : status = "계약금 입금 대기" 
+
+  fetch('http://192.168.0.143:3001/api/trust/status',{
+    mode: "cors",
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${_token}`,
+    },
+    body : JSON.stringify({token, status})
+  })
+  .then((res) => {
+    if(res.status === 200) {
+      alert(`${status} 완료`)
+    } else {
+      alert('Try again')
+    }
+    history.push('trustlist/admin')
+  })
+  .catch((err) => {
+    console.error(err);
+    alert("Sorry to fail");
+  });
+}
+
+const onReject = (token) => {
+  let status = ""
+
+  permission === "legalTL" ? status = "법무팀 반려" : status = "시설팀 반려" 
+
+  fetch('http://192.168.0.143:3001/api/trust/status',{
+    mode: "cors",
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${_token}`,
+    },
+    body : JSON.stringify({token, status})
+  })
+  .then((res) => {
+    if(res.status === 200) {
+      alert(`${status} 완료`)
+    } else {
+      alert('Try again')
+    }
+    history.push('trustlist/admin')
+  })
+  .catch((err) => {
+    console.error(err);
+    alert("Sorry to fail");
+  });
+}
+
+useEffect(() => {
+  if (_token !== "") {
+    fetch("http://192.168.0.143:3001/api/user/infomation", {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${_token}`,
+      },
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      }
+    })
+    .then((res) => {
+      setPermission(res.user.permission);
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+  }
+}, []);
   return (
     <Container style={{ marginTop: "150px" }}>
       <div className="maintenanceimage">
@@ -25,15 +111,15 @@ const history = useHistory()
             <th>신탁 시작일</th>
             <th>신탁 종류일</th>
             <th>신탁 상태</th>
-            <th style={{ width: "140px" }}>상세 보기</th>
+            <th style={{ width: "120px" }}>상세 보기</th>
+            { permission === "legalTL" || permission === "maintenanceTL" ? ( <th style={{ width: "175px" }}>승인확인</th>) : null}
           </tr>
         </thead>
         <tbody>
           {trustList
             .slice(pageLimit * (parseInt(loc) - 1), pageLimit * parseInt(loc))
             .map((trust) => (
-              <tr>
-                <td> key={trust.token}</td>
+              <tr key={trust.token}>
                 <td>{trust.no}</td>
                 <td>{trust.type}</td>
                 <td>{trust.securityDeposit}</td>
@@ -51,6 +137,11 @@ const history = useHistory()
                     }}
                   />
                 </td>
+                { permission === "legalTL" || permission === "maintenanceTL" ? (
+                  <td> 
+                    <Button variant="success" style={{marginRight:"16px"}} onClick={()=>{onAcknowledge(trust.token)}}>승인</Button>
+                    <Button variant="danger" onClick={()=>{onReject(trust.token)}}>반려</Button>
+                  </td>) : null }
               </tr>
             ))}
         </tbody>

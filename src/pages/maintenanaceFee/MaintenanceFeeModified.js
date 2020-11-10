@@ -4,6 +4,10 @@ import { useHistory } from "react-router-dom";
 import AuthToken from "../../storages/Auth";
 import PostFixInput from "../../component/PostFixInput";
 
+import Uppy from '@uppy/core'
+import { Dashboard  } from '@uppy/react'
+import '@uppy/core/dist/style.css'
+import '@uppy/dashboard/dist/style.css'
 //Maintenance Fee
 const MaintenanceFeeModified = ({ location }) => {
   const token = AuthToken.get();
@@ -19,6 +23,15 @@ const MaintenanceFeeModified = ({ location }) => {
     payment: "",
     payer: "",
     giro: {},
+  });
+  const uppy = new Uppy({
+    debug: true,
+    autoProceed: false,
+    restrictions: {
+      maxFileSize: 100000000,
+      maxNumberOfFiles: 1,
+      allowedFileTypes: [".jpg", ".png", ".pdf"],
+    },
   });
 
   useEffect(() => {
@@ -210,15 +223,14 @@ const MaintenanceFeeModified = ({ location }) => {
 
         <Form.Group controlId="formBasicGiro">
           <Form.Label> 첨부파일 </Form.Label>
-          <Form.File
-            onChange={(e) => {
-              setMaintenanceFeeInput({
-                ...maintenanceFeeInput,
-                giro: e.target.files[0],
-              });
-            }}
-            name="giro"
-          />
+          <div>
+            <Dashboard
+              uppy={uppy}
+              // plugins={['Webcam']}
+              // {...props}
+              hideUploadButton={true}
+            />
+          </div>
         </Form.Group>
         <Button variant="primary" type="submit" className="button3">
           수정하기

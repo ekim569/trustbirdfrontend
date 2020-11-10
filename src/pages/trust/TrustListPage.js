@@ -26,6 +26,7 @@ const TrustListPage = ({ trustList, loc, pageLimit }) => {
             <th>신탁 종류일</th>
             <th>신탁 상태</th>
             <th style={{ width: "140px" }}>상세 보기</th>
+            <th>입금</th>
           </tr>
         </thead>
         <tbody>
@@ -50,7 +51,13 @@ const TrustListPage = ({ trustList, loc, pageLimit }) => {
                     }}
                   />
                 </td>
-              </tr>
+                <td> <Button variant="info" onClick={(e) => {
+                  e.preventDefault()
+                  history.push('')
+                }}
+                    >입금 </Button>
+                    </td>
+                    </tr>
             ))}
         </tbody>
       </Table>

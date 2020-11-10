@@ -4,12 +4,14 @@ import { useHistory } from "react-router-dom";
 import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
 
+import Uppy from '@uppy/core'
+import { Dashboard  } from '@uppy/react'
+import '@uppy/core/dist/style.css'
+import '@uppy/dashboard/dist/style.css'
 //Trust Subscription
 const MaintenanceFeeInput = () => {
   const token = AuthToken.get();
-
   const history = useHistory();
-
   const [maintenanceFeeInput, setMaintenanceFeeInput] = useState({
     email: "",
     claimingAgency: "",
@@ -18,8 +20,17 @@ const MaintenanceFeeInput = () => {
     amountDue: "",
     amountDeadline: "",
     payment: "",
-    payer: "",
-    giro: {},
+    payer: ""
+  });
+
+  const uppy = new Uppy({
+    debug: true,
+    autoProceed: false,
+    restrictions: {
+      maxFileSize: 100000000,
+      maxNumberOfFiles: 1,
+      allowedFileTypes: [".jpg", ".png", ".pdf"],
+    },
   });
 
   function handleInputChange(e) {
@@ -46,7 +57,10 @@ const MaintenanceFeeInput = () => {
       }
       formData.append(key, value);
     }
-    formData.append("giro", maintenanceFeeInput.giro);
+
+    for(let file of Object.values(uppy.state.files)){
+      formData.append("giro", file.data);
+    }
 
     fetch("http://192.168.0.143:3001/api/maintenanceFee/input", {
       method: "POST",
@@ -58,7 +72,7 @@ const MaintenanceFeeInput = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/maintenancefeelist");
+          history.push("/maintenancefeelist/admin");
         } else {
           const error = new Error(res.error);
 
@@ -146,15 +160,14 @@ const MaintenanceFeeInput = () => {
 
         <Form.Group controlId="formBasicGiro">
           <Form.Label> 첨부파일 </Form.Label>
-          <Form.File
-            onChange={(e) => {
-              setMaintenanceFeeInput({
-                ...maintenanceFeeInput,
-                giro: e.target.files[0],
-              });
-            }}
-            name="giro"
-          />
+          <div>
+            <Dashboard
+              uppy={uppy}
+              // plugins={['Webcam']}
+              // {...props}
+              hideUploadButton={true}
+            />
+          </div>
         </Form.Group>
         <Button variant="primary" type="submit" className="button3">
           입력하기
