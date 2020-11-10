@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import PostFixInput from "../../component/PostFixInput";
+import PostFixInput3 from "../../component/PostFixInput3";
 import PostFixInput2 from "../../component/PostFixInput2";
 import AuthToken from "../../storages/Auth";
+
+import Uppy from "@uppy/core";
+import { Dashboard } from "@uppy/react";
+import "@uppy/core/dist/style.css";
+import "@uppy/dashboard/dist/style.css";
 
 //Contract Enrollment
 const ContractEnroll = () => {
   const token = AuthToken.get();
-
   const history = useHistory();
   const [constractEnroll, setConstractEnroll] = useState({
     trustToken: "",
@@ -50,7 +54,16 @@ const ContractEnroll = () => {
       telephoneNum: "",
     },
   });
-  const [attachments, setAttachments] = useState({});
+
+  const uppy = new Uppy({
+    debug: true,
+    autoProceed: false,
+    restrictions: {
+      maxFileSize: 100000000,
+      maxNumberOfFiles: 3,
+      allowedFileTypes: [".jpg", ".png", ".pdf"],
+    },
+  });
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -70,8 +83,14 @@ const ContractEnroll = () => {
 
     const formData = new FormData();
 
+    const files = new Array();
+
+    for (let file of Object.values(uppy.state.files)) {
+      files.push(file.data);
+    }
+
     formData.append("contract", JSON.stringify(constractEnroll));
-    formData.append("attachments", attachments);
+    formData.append("attachments", files);
 
     fetch("http://192.168.0.143:3001/api/contract/enroll", {
       method: "POST",
@@ -231,92 +250,89 @@ const ContractEnroll = () => {
         </div>
 
         <Form.Group controlId="formBasicPeriod">
-          <Form.Label> 임대 시작일 </Form.Label>
-
-          <Form.Control
-            type="date"
-            name="periodStart"
-            value={constractEnroll.periodStart}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPeriod">
-          <Form.Label> 임대 만료일 </Form.Label>
-
-          <Form.Control
-            type="date"
-            name="periodEnd"
-            value={constractEnroll.periodEnd}
-            onChange={handleInputChange}
-            required
-          />
+          <Form.Label> 임대 기간 </Form.Label>
+          <div>
+            <Form.Control
+              type="date"
+              name="periodStart"
+              style={{
+                width: "390px",
+                marginRight: "20px",
+                display: "inline-block",
+              }}
+              value={constractEnroll.periodStart}
+              onChange={handleInputChange}
+              required
+            />
+            <Form.Control
+              type="date"
+              name="periodEnd"
+              style={{ width: "390px", display: "inline-block" }}
+              value={constractEnroll.periodEnd}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
         </Form.Group>
 
         <Form.Group controlId="formBasicSecurityDeposit">
-          <Form.Label> 보증금 </Form.Label>
-          <PostFixInput
-            labelText="보증금"
-            postfix="만 원"
-            type="text"
-            name="securityDeposit"
-            value={constractEnroll.securityDeposit}
-            onChange={handleInputChange}
-            placeholder="금액"
-          />
+          <Form.Label> 보증금 / 차임 </Form.Label>
+          <div>
+            <PostFixInput2
+              labelText="보증금"
+              postfix="만 원"
+              type="text"
+              name="securityDeposit"
+              style={{ width: "390px", marginRight: "10px" }}
+              value={constractEnroll.securityDeposit}
+              onChange={handleInputChange}
+              placeholder="금액"
+            />
+            <PostFixInput2
+              labelText="차임"
+              postfix="만 원"
+              type="text"
+              placeholder="금액"
+              name="rent"
+              style={{ width: "390px", marginLeft: "10px" }}
+              value={constractEnroll.rent}
+              onChange={handleInputChange}
+            />
+          </div>
         </Form.Group>
 
         <Form.Group controlId="formBasicContractPrice">
-          <Form.Label> 계약금 </Form.Label>
-          <PostFixInput
-            labelText="계약금"
-            postfix="만 원"
-            type="text"
-            placeholder="금액"
-            name="contractPrice"
-            value={constractEnroll.contractPrice}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicInterimPrice">
-          <Form.Label> 중도금 </Form.Label>
-          <PostFixInput
-            labelText="중도금"
-            postfix="만 원"
-            type="text"
-            placeholder="금액"
-            name="interimPrice"
-            value={constractEnroll.interimPrice}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicBalance">
-          <Form.Label> 잔금</Form.Label>
-          <PostFixInput
-            labelText="잔금"
-            postfix="만 원"
-            type="text"
-            placeholder="금액"
-            name="balance"
-            value={constractEnroll.balance}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicRent">
-          <Form.Label> 차임 </Form.Label>
-          <PostFixInput
-            labelText="차임"
-            postfix="만 원"
-            type="text"
-            placeholder="금액"
-            name="rent"
-            value={constractEnroll.rent}
-            onChange={handleInputChange}
-          />
+          <Form.Label> 계약금 / 중도금 / 잔금 </Form.Label>
+          <div>
+            <PostFixInput3
+              labelText="계약금"
+              postfix="만 원"
+              type="text"
+              placeholder="금액"
+              name="contractPrice"
+              value={constractEnroll.contractPrice}
+              onChange={handleInputChange}
+            />
+            <PostFixInput3
+              labelText="중도금"
+              postfix="만 원"
+              type="text"
+              placeholder="금액"
+              name="interimPrice"
+              value={constractEnroll.interimPrice}
+              onChange={handleInputChange}
+            />
+            <PostFixInput3
+              labelText="잔금"
+              postfix="만 원"
+              type="text"
+              placeholder="금액"
+              name="balance"
+              value={constractEnroll.balance}
+              className="inline-nput"
+              onChange={handleInputChange}
+            />
+          </div>
         </Form.Group>
 
         <Form.Group controlId="formBasicSpecialAgreement">
@@ -329,88 +345,97 @@ const ContractEnroll = () => {
           />
         </Form.Group>
 
-        <div>임대인</div>
-        <table style={{ width: "100%" }}>
-          <tr>
-            <Form.Control
-              type="text"
-              placeholder="이름"
-              name="lessor.name"
-              style={{ width: "330px", display: "inline-block" }}
-              value={constractEnroll.lessor.name}
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  lessor: {
-                    ...constractEnroll.lessor,
-                    name: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-            <Form.Control
-              type="text"
-              placeholder="전화번호"
-              style={{
-                width: "450px",
-                marginLeft: "20px",
-                display: "inline-block",
-              }}
-              value={constractEnroll.lessor.telephoneNum}
-              name="lessor.telephoneNum"
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  lessor: {
-                    ...constractEnroll.lessor,
-                    telephoneNum: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-          </tr>
-          <tr>
-            <Form.Control
-              type="text"
-              placeholder="주소"
-              name="lessor.address"
-              value={constractEnroll.lessor.address}
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  lessor: {
-                    ...constractEnroll.lessor,
-                    address: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-          </tr>
-          <tr>
-            <Form.Control
-              type="text"
-              placeholder="주민번호"
-              name="lessor.RRN"
-              value={constractEnroll.lessor.RRN}
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  lessor: {
-                    ...constractEnroll.lessor,
-                    RRN: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-          </tr>
-        </table>
+        <Form.Group>
+          <Form.Label>임대인</Form.Label>
+          <table style={{ width: "100%" }}>
+            <tr>
+              <Form.Control
+                type="text"
+                placeholder="이름"
+                name="lessor.name"
+                style={{
+                  width: "330px",
+                  display: "inline-block",
+                  marginBottom: "5px",
+                }}
+                value={constractEnroll.lessor.name}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    lessor: {
+                      ...constractEnroll.lessor,
+                      name: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+              <Form.Control
+                type="text"
+                placeholder="전화번호"
+                style={{
+                  width: "450px",
+                  marginLeft: "20px",
+                  display: "inline-block",
+                  marginBottom: "5px",
+                }}
+                value={constractEnroll.lessor.telephoneNum}
+                name="lessor.telephoneNum"
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    lessor: {
+                      ...constractEnroll.lessor,
+                      telephoneNum: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+            </tr>
+            <tr>
+              <Form.Control
+                type="text"
+                placeholder="주소"
+                name="lessor.address"
+                style={{ marginBottom: "5px" }}
+                value={constractEnroll.lessor.address}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    lessor: {
+                      ...constractEnroll.lessor,
+                      address: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+            </tr>
+            <tr>
+              <Form.Control
+                type="text"
+                placeholder="주민번호"
+                name="lessor.RRN"
+                style={{ marginBottom: "5px" }}
+                value={constractEnroll.lessor.RRN}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    lessor: {
+                      ...constractEnroll.lessor,
+                      RRN: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+            </tr>
+          </table>
+        </Form.Group>
 
         <Form.Group>
-          <div>임차인</div>
+          <Form.Label>임차인</Form.Label>
           <table style={{ width: "100%" }}>
             <tr>
               <Form.Control
@@ -418,7 +443,11 @@ const ContractEnroll = () => {
                 placeholder="이름"
                 name="lessee.name"
                 value={constractEnroll.lessee.name}
-                style={{ width: "330px", display: "inline-block" }}
+                style={{
+                  width: "330px",
+                  display: "inline-block",
+                  marginBottom: "5px",
+                }}
                 onChange={(e) => {
                   setConstractEnroll({
                     ...constractEnroll,
@@ -438,6 +467,7 @@ const ContractEnroll = () => {
                   width: "450px",
                   marginLeft: "20px",
                   display: "inline-block",
+                  marginBottom: "5px",
                 }}
                 value={constractEnroll.lessee.telephoneNum}
                 onChange={(e) => {
@@ -458,6 +488,7 @@ const ContractEnroll = () => {
                 placeholder="주소"
                 name="lessee.address"
                 value={constractEnroll.lessee.address}
+                style={{ marginBottom: "5px" }}
                 onChange={(e) => {
                   setConstractEnroll({
                     ...constractEnroll,
@@ -491,116 +522,123 @@ const ContractEnroll = () => {
           </table>
         </Form.Group>
 
-        <div>중개인</div>
-        <table style={{ width: "100%" }}>
-          <tr>
-            <Form.Control
-              type="text"
-              placeholder="이름"
-              name="realtor.name"
-              style={{ width: "330px", display: "inline-block" }}
-              value={constractEnroll.realtor.name}
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  realtor: {
-                    ...constractEnroll.realtor,
-                    name: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-            <Form.Control
-              type="text"
-              placeholder="전화번호"
-              name="realtor.telephoneNum"
-              style={{
-                width: "450px",
-                marginLeft: "20px",
-                display: "inline-block",
-              }}
-              value={constractEnroll.realtor.telephoneNum}
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  realtor: {
-                    ...constractEnroll.realtor,
-                    telephoneNum: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-          </tr>
-          <tr>
-            <Form.Control
-              type="text"
-              placeholder="사무실 이름"
-              name="realtor.officeName"
-              value={constractEnroll.realtor.officeName}
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  realtor: {
-                    ...constractEnroll.realtor,
-                    officeName: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-          </tr>
-          <tr>
-            <Form.Control
-              type="text"
-              placeholder="등록번호"
-              name="realtor.registrationNum"
-              value={constractEnroll.realtor.registrationNum}
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  realtor: {
-                    ...constractEnroll.realtor,
-                    registrationNum: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-          </tr>
-          <tr>
-            <Form.Control
-              type="text"
-              placeholder="주소"
-              name="realtor.address"
-              value={constractEnroll.realtor.address}
-              onChange={(e) => {
-                setConstractEnroll({
-                  ...constractEnroll,
-                  realtor: {
-                    ...constractEnroll.realtor,
-                    address: e.target.value,
-                  },
-                });
-              }}
-              required
-            />
-          </tr>
-        </table>
-
+        <Form.Group>
+          <Form.Label>중개인</Form.Label>
+          <table style={{ width: "100%" }}>
+            <tr>
+              <Form.Control
+                type="text"
+                placeholder="이름"
+                name="realtor.name"
+                style={{
+                  width: "330px",
+                  display: "inline-block",
+                  marginBottom: "5px",
+                }}
+                value={constractEnroll.realtor.name}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    realtor: {
+                      ...constractEnroll.realtor,
+                      name: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+              <Form.Control
+                type="text"
+                placeholder="전화번호"
+                name="realtor.telephoneNum"
+                style={{
+                  width: "450px",
+                  marginLeft: "20px",
+                  display: "inline-block",
+                }}
+                value={constractEnroll.realtor.telephoneNum}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    realtor: {
+                      ...constractEnroll.realtor,
+                      telephoneNum: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+            </tr>
+            <tr>
+              <Form.Control
+                type="text"
+                placeholder="사무실 이름"
+                name="realtor.officeName"
+                style={{ marginBottom: "5px" }}
+                value={constractEnroll.realtor.officeName}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    realtor: {
+                      ...constractEnroll.realtor,
+                      officeName: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+            </tr>
+            <tr>
+              <Form.Control
+                type="text"
+                placeholder="등록번호"
+                name="realtor.registrationNum"
+                style={{ marginBottom: "5px" }}
+                value={constractEnroll.realtor.registrationNum}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    realtor: {
+                      ...constractEnroll.realtor,
+                      registrationNum: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+            </tr>
+            <tr>
+              <Form.Control
+                type="text"
+                placeholder="주소"
+                name="realtor.address"
+                style={{ marginBottom: "5px" }}
+                value={constractEnroll.realtor.address}
+                onChange={(e) => {
+                  setConstractEnroll({
+                    ...constractEnroll,
+                    realtor: {
+                      ...constractEnroll.realtor,
+                      address: e.target.value,
+                    },
+                  });
+                }}
+                required
+              />
+            </tr>
+          </table>
+        </Form.Group>
         <Form.Group controlId="formBasicAttachments">
           <Form.Label> 첨부파일 </Form.Label>
-          <Form.File
-            onChange={(e) => {
-              setAttachments({
-                attachments: e.target.files[0],
-              });
-            }}
-            name="attachments"
-          />
+          <div>
+            <Dashboard
+              uppy={uppy}
+              // plugins={['Webcam']}
+              // {...props}
+              hideUploadButton={true}
+            />
+          </div>
         </Form.Group>
-
         <Button variant="primary" type="submit" className="button3">
           저장하기
         </Button>

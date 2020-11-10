@@ -40,7 +40,7 @@ const MaintenanceFeeListPageAdmin = ({
   };
 
   return (
-    <Container style={{ marginTop: "150px" }}>
+    <Container style={{ marginTop: "150px", }}>
       <div className="maintenanceimage">
         <div className="pageheader" style={{ marginTop: "50px" }}>
           관리비 내역 목록
@@ -48,17 +48,17 @@ const MaintenanceFeeListPageAdmin = ({
       </div>
       <Table
         bordered={true}
-        style={{ marginBottom: "100px", textAlign: "center" }}
+        style={{ marginBottom: "100px", textAlign: "center",}}
       >
-        <thead>
+        <thead >
           <tr>
             <th style={{ width: "5%" }}>NO.</th>
             <th>이메일</th>
             <th>청구 기관</th>
             <th>전자 납부 번호</th>
             <th>납기일</th>
-            <th>납부 내 금액</th>
-            <th style={{ width: "140px" }}>상세 보기</th>
+            <th style={{width: "10%"}}> 금액</th>
+            <th style={{ width: "13%" }}>상세 보기</th>
             <th>수정</th>
             <th>삭제</th>
           </tr>
