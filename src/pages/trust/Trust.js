@@ -14,8 +14,7 @@ const Trust = ({ location }) => {
     telephoneNum: "",
     realtorName: "",
     realtorTelephoneNum: "",
-    realtorCellPhoneNum: "",
-    realtorAddress: "",
+    realtorCellphoneNum: "",
     type: "",
     securityDeposit: "",
     rent: "",
@@ -30,10 +29,10 @@ const Trust = ({ location }) => {
 
   const [permission, setPermission] = useState();
 
-  const onDelete = ((e)=>{
-    e.preventDefault()
+  const onDelete = (e) => {
+    e.preventDefault();
 
-    fetch("http://192.168.0.143:3001/api/trust/delete",{
+    fetch("http://192.168.0.143:3001/api/trust/delete", {
       mode: "cors",
       method: "POST",
       credentials: "include",
@@ -50,7 +49,7 @@ const Trust = ({ location }) => {
       }
       history.push("/trustlist");
     });
-  });
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -78,26 +77,26 @@ const Trust = ({ location }) => {
         }
       });
 
-      fetch("http://192.168.0.143:3001/api/user/infomation", {
-        mode: "cors",
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+    fetch("http://192.168.0.143:3001/api/user/infomation", {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
       })
-        .then((res) => {
-          if (res.status === 200) {
-            return res.json();
-          }
-        })
-        .then((res) => {
-          setPermission(res.user.permission);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      .then((res) => {
+        setPermission(res.user.permission);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }, []);
 
   return (
@@ -126,13 +125,14 @@ const Trust = ({ location }) => {
               {trust.realtorTelephoneNum}
             </td>
             <td className="tableborder" colspan="3">
-              {trust.realtorCellPhoneNum}
+              {trust.realtorCellphoneNum}
             </td>
-            </tr>
-            <tr>
-            <td className="tableborder">중개인 주소</td>
+          </tr>
+          <tr>
+            <td className="tableborder">전 · 월세</td>
             <td className="tableborder" colspan="6">
-              {trust.realtorAddress}</td>
+              {trust.type}
+            </td>
           </tr>
           <tr className="tableborder">
             <td className="tableborder">신탁기간</td>
@@ -151,16 +151,17 @@ const Trust = ({ location }) => {
         <table className="tablelayout">
           <tr className="tableborder">
             <td>
-            {trust.attachments.map((attachment) => {
-              return (
+              {trust.attachments.map((attachment) => {
+                return (
                   <a
                     href={`http://192.168.0.143:8080/ipfs/${attachment.filePath}`}
                     target="_blank"
                   >
-                    {attachment.fileName}<br />
+                    {attachment.fileName}
+                    <br />
                   </a>
-              );
-            })}
+                );
+              })}
             </td>
           </tr>
         </table>
@@ -180,7 +181,7 @@ const Trust = ({ location }) => {
             variant="primary"
             type="submit"
             className="button2"
-            style={{marginLeft:"16px"}}
+            style={{ marginLeft: "16px" }}
             onClick={() => onDelete()}
           >
             삭제하기
@@ -201,7 +202,8 @@ const Trust = ({ location }) => {
             </Button>
           ) : null}
 
-          {trust.status.match(/사용자 계약 승인/) && (permission === "accounting" || permission === "supervisor") ? (
+          {trust.status.match(/사용자 계약 승인/) &&
+          (permission === "accounting" || permission === "supervisor") ? (
             <Button
               variant="primary"
               type="submit"
