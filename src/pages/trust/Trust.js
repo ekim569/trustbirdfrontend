@@ -6,9 +6,7 @@ import AuthToken from "../../storages/Auth";
 //Trust Output
 const Trust = ({ location }) => {
   const history = useHistory();
-
   const token = AuthToken.get();
-
   const [trust, setTrust] = useState({
     token: "",
     preToken: "",
@@ -29,6 +27,8 @@ const Trust = ({ location }) => {
     status: "",
     contract: "",
   });
+
+  const [permission, setPermission] = useState();
 
   const onDelete = ((e)=>{
     e.preventDefault()
@@ -77,6 +77,27 @@ const Trust = ({ location }) => {
           setTrust(res);
         }
       });
+
+      fetch("http://192.168.0.143:3001/api/user/infomation", {
+        mode: "cors",
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          }
+        })
+        .then((res) => {
+          setPermission(res.user.permission);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
   }, []);
 
   return (
@@ -136,7 +157,7 @@ const Trust = ({ location }) => {
                     href={`http://192.168.0.143:8080/ipfs/${attachment.filePath}`}
                     target="_blank"
                   >
-                    {attachment.fileName}
+                    {attachment.fileName}<br />
                   </a>
               );
             })}
@@ -159,6 +180,7 @@ const Trust = ({ location }) => {
             variant="primary"
             type="submit"
             className="button2"
+            style={{marginLeft:"16px"}}
             onClick={() => onDelete()}
           >
             삭제하기
@@ -176,6 +198,21 @@ const Trust = ({ location }) => {
               }}
             >
               수정하기
+            </Button>
+          ) : null}
+
+          {trust.status.match(/사용자 계약 승인/) && (permission === "accounting" || permission === "supervisor") ? (
+            <Button
+              variant="primary"
+              type="submit"
+              className="button2"
+              style={{ marginLeft: "16px" }}
+              onClick={(e) => {
+                e.preventDefault();
+                history.push(`/contractenroll?token=${trust.token}`);
+              }}
+            >
+              계약서 작성
             </Button>
           ) : null}
         </div>

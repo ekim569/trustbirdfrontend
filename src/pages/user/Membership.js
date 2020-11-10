@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import AuthToken from '../../storages/Auth'
 
+import AuthToken from '../../storages/Auth'
 
 const Membership = () => {
     const token = AuthToken.get();
     const history = useHistory();
     const [balance, setBalance] = useState()
     const [membership, setMembership] = useState("")
-    const [account, setAccount] = useState()
+    const [ownMembership, setOwnMembership] = useState()
 
     useEffect(()=>{
-        fetch("http://192.168.0.143:3001/api/user/attribute?targetAttr=Membership", {
-            mode: "cors",
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-                "Authorization" : `Bearer ${token}`
-            }
-        })
+      fetch("http://192.168.0.143:3001/api/user/attribute?targetAttr=Membership", {
+          mode: "cors",
+          method: "GET",
+          credentials: "include",
+          headers: {
+              "Content-Type": "application/json;charset=utf-8",
+              "Authorization" : `Bearer ${token}`
+          }
+      })
       .then((res) => {
         if(res.status === 200){
           return res.json(res)
@@ -29,27 +29,26 @@ const Membership = () => {
         }
       })
       .then((res) => {
-        if (res==="0"){
-          return 
+        if (res !== "0"){
+          setOwnMembership(parseInt(res))
         }
-        setMembership(res)
       })
       .catch((err) => {
         console.error(err);
         alert("You account not Found!");
       });
-    },[membership])
+    },[ownMembership])
 
     useEffect(()=>{
-        fetch("http://192.168.0.143:3001/api/user/attribute?targetAttr=Balance", {
-            mode: "cors",
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-                "Authorization" : `Bearer ${token}`
-            }
-        })
+      fetch("http://192.168.0.143:3001/api/user/attribute?targetAttr=Balance", {
+          mode: "cors",
+          method: "GET",
+          credentials: "include",
+          headers: {
+              "Content-Type": "application/json;charset=utf-8",
+              "Authorization" : `Bearer ${token}`
+          }
+      })
       .then((res) => {
         if(res.status === 200){
           return res.json(res)
@@ -71,19 +70,20 @@ const Membership = () => {
       
       const {value} = e.target;
       
-      if ("0123456789".includes(value[value.length-1]) || value===''){
+      if ("0123456789".includes(value[value.length-1]) || value === ''){
         setMembership(value)
       }
     }
     
   function onSubmit(e) {
     e.preventDefault();
-    if(balance >= account * 100000){
+
+    if(balance >= membership * 100000){
         let request = {
-            email : "kkkk123@naver.com",
+            email : "",
             invoke : "add",
             targetAttr : "Membership",
-            value :  (parseInt(membership) + account).toString()
+            value :  (parseInt(membership) + ownMembership).toString()
         }
 
         fetch("http://192.168.0.143:3001/api/user/attribute", {
@@ -96,33 +96,33 @@ const Membership = () => {
           },
           body: JSON.stringify(request),
         })
-          .then((res) => {
-            if(res.status === 200){
-               let request = {
-                    email : "kkkk123@naver.com",
-                    invoke : "add",
-                    targetAttr : "Balance",
-                    value :  (balance - account * 100000).toString()
-                }
-                fetch("http://192.168.0.143:3001/api/user/attribute", {
-                    mode: "cors",
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                      "Content-Type": "application/json;charset=utf-8",
-                      "Authorization" : `Bearer ${token}`
-                    },
-                    body: JSON.stringify(request),
-                  })
-                  .then((res) => {
-                      if(res.status === 200){
-                        alert("완료되었습니다.")
-                        history.push('/');
-                      } else {
-                        alert("Try again")
-                      }
-                  })
-                }
+        .then((res) => {
+          if(res.status === 200){
+              let request = {
+                  email : "",
+                  invoke : "add",
+                  targetAttr : "Balance",
+                  value :  (balance - membership * 100000).toString()
+              }
+              fetch("http://192.168.0.143:3001/api/user/attribute", {
+                  mode: "cors",
+                  method: "POST",
+                  credentials: "include",
+                  headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                    "Authorization" : `Bearer ${token}`
+                  },
+                  body: JSON.stringify(request),
+                })
+                .then((res) => {
+                    if(res.status === 200){
+                      alert("완료되었습니다.")
+                      history.push('/');
+                    } else {
+                      alert("Try again")
+                    }
+                })
+              }
           })
           .catch((err) => {
             console.error(err);

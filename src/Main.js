@@ -14,6 +14,8 @@ import SignModified from "./pages/user/SignModified";
 import Membership from "./pages/user/Membership";
 import Withdrawal from "./pages/user/Withdrawal";
 import CreateUser from "./pages/user/CreateUser";
+import MembershipAdmin from "./pages/user/MembershipAdmin"
+import BalanceAdmin from "./pages/user/BalanceAdmin"
 
 import TrustWay from "./pages/trust/TrustWay";
 import TrustSub from "./pages/trust/TrustSub";
@@ -25,7 +27,7 @@ import TrustModifeid from "./pages/trust/TrustModified";
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
 import ContractList from "./pages/contract/ContractList";
-import Contractmodified from "./pages/contract/ContractModified";
+import ContractModified from "./pages/contract/ContractModified";
 
 import MaintenanceFee from "./pages/maintenanaceFee/MaintenanceFee";
 import MaintenanceFeeInput from "./pages/maintenanaceFee/MaintenanceFeeInput";
@@ -43,8 +45,6 @@ const Main = (props) => {
         <div style={{ marginTop: 80 }}>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/main" component={Home} />
             <Route exact path="/serviceintro" component={ServiceIntro} />
             <Route exact path="/fundationintro" component={FoundationIntro} />
 
@@ -65,36 +65,19 @@ const Main = (props) => {
 
             <Route exact path="/contractenroll/admin" component={ContractEnroll} />
             <Route exact path="/contract" component={Contract} />
-            <Route exact path="/contractlist" component={ContractList} />
-            <Route
-              exact
-              path="/contractmodified"
-              component={Contractmodified}
-            />
+            <Route exact path="/contractlist/admin" component={ContractList} />
+            <Route exact path="/contractmodified/admin" component={ContractModified}/>
 
             <Route exact path="/maintenancefee" component={MaintenanceFee} />
-            <Route
-              exact
-              path="/maintenancefeelist"
-              component={MaintenanceFeeList}
-            />
-            <Route
-              exact
-              path="/maintenancefeeinput/admin"
-              component={MaintenanceFeeInput}
-            />
-            <Route
-              exact
-              path="/maintenancefeemodified/admin"
-              component={MaintenanceFeeModified}
-            />
-            <Route
-              exact
-              path="/maintenancefeelist/admin"
-              component={MaintenanceFeeListAdmin}
-            />
+            <Route exact path="/maintenancefeelist" component={MaintenanceFeeList} />
+            <Route exact path="/maintenancefeeinput/admin" component={MaintenanceFeeInput} />
+            <Route exact path="/maintenancefeemodified/admin" component={MaintenanceFeeModified} />
+            <Route exact path="/maintenancefeelist/admin" component={MaintenanceFeeListAdmin} />
 
+            <Route exact path="/membership/admin" component={MembershipAdmin} />
+            <Route exact path="/balance/admin" component={BalanceAdmin} />ㄴ
             <Route exact path="/footer" component={Footer} />
+
           </Switch>
         </div>
       </Router>

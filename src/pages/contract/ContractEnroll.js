@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import PostFixInput3 from "../../component/PostFixInput3";
-import PostFixInput2 from "../../component/PostFixInput2";
 import AuthToken from "../../storages/Auth";
+import  PostFixInput2 from "../../component/PostFixInput2"
+import  PostFixInput3 from "../../component/PostFixInput3"
 
 import Uppy from '@uppy/core'
 import { Dashboard  } from '@uppy/react'
 import '@uppy/core/dist/style.css'
 import '@uppy/dashboard/dist/style.css'
 
-
-
 //Contract Enrollment
-const ContractEnroll = () => {
+const ContractEnroll = ({ location }) => {
   const token = AuthToken.get();
+  const parmas = new URLSearchParams(location.search)
   const history = useHistory();
   const [constractEnroll, setConstractEnroll] = useState({
+    trustToken: parmas.get('token'),
     token: "",
     preToken: "",
     location: "",
@@ -84,14 +84,11 @@ const ContractEnroll = () => {
 
     const formData = new FormData();
     
-    const files = new Array()
+    formData.append("contract", JSON.stringify(constractEnroll));
 
     for(let file of Object.values(uppy.state.files)){
-      files.push(file.data)
+      formData.append("attachments", file.data);
     }
-
-    formData.append("contract", JSON.stringify(constractEnroll));
-    formData.append("attachments", files);
 
     fetch("http://192.168.0.143:3001/api/contract/enroll", {
       method: "POST",
@@ -103,7 +100,7 @@ const ContractEnroll = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/");
+          history.push("/contractlist/admin");
         } else {
           const error = new Error(res.error);
 

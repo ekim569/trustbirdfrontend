@@ -28,7 +28,9 @@ const TrustListAdmin = () => {
         }
       })
       .then((res) => {
-        setTrustList(res);
+        if(res !== undefined) {
+          setTrustList(res);
+        }
       });
   }, [token]);
 
@@ -50,7 +52,7 @@ const TrustListAdmin = () => {
     <div>
       <TrustListPage trustList={trustList} loc={loc} pageLimit={pageLimit} />
       <Pagination
-        total={totalLength}
+        totalLength={totalLength}
         active={loc}
         last={totalPageNum}
         paginationLimite={paginationLimite}

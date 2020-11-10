@@ -22,7 +22,7 @@ export default function NavbarPointManager(props) {
       }}
     >
       <Container style={{ margin: "auto", maxWidth: "1500px" }}>
-        <BootStrapNavbar.Brand href="/main">
+        <BootStrapNavbar.Brand href="/">
           <div>
             <div style={{ display: "inline-block" }}>
               <Logo />
@@ -62,23 +62,11 @@ export default function NavbarPointManager(props) {
                     style={{ display: "inline-block", fontWeight: "bold" }}
                     className="navlink nav"
                   >
-                    <NavDropdown.Item href="/createuser/admin">
-                    사용자 생성
+                    <NavDropdown.Item href="/membership/admin">
+                    멤버쉽 포인트 관리
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/userlist/admin">
-                    사용자 목록
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/trustlist/admin">
-                    신탁 내역 확인
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/contractlist/admin">
-                    계약 내역 확인
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/maintenancefeelist/admin">
-                    관리비 납부내역
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/maintenancefeeinput/admin">
-                    관리비 입력
+                    <NavDropdown.Item href="/balance/admin">
+                    포인트 관리
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/" onClick={props.onClickSignOut}>
                     로그아웃

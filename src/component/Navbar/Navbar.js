@@ -55,7 +55,6 @@ export default function Navbar(props) {
 
   return (
     <div>
-      {console.log(token, user.permission, !token)}
       {token  ? 
         (() => {
           switch (user.permission) {

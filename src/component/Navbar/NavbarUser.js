@@ -23,7 +23,7 @@ export default function NavbarUser(props) {
       }}
     >
       <Container style={{ margin: "auto", maxWidth: "1500px" }}>
-        <BootStrapNavbar.Brand href="/main">
+        <BootStrapNavbar.Brand href="/">
           <div>
             <div style={{ display: "inline-block" }}>
               <Logo />

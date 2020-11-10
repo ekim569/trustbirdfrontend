@@ -1,7 +1,10 @@
 import React from "react";
+import { useHistory } from 'react-router-dom'
 import { Container, Table, Button } from "react-bootstrap";
 
 const ContractListPage = ({ contractList, loc, pageLimit }) => {
+  const history = useHistory()
+
   return (
     <Container style={{ marginTop: "150px" }}>
       <div className="maintenanceimage">
@@ -34,7 +37,10 @@ const ContractListPage = ({ contractList, loc, pageLimit }) => {
                 <td>{contract.periodStart}</td>
                 <td>{contract.periodEnd}</td>
                 <td>
-                  <Button variant="" className="scopeimage"></Button>
+                  <Button variant="" className="scopeimage" onClick={(e) => {
+                      e.preventDefault();
+                      history.push(`/contract?token=${contract.token}`);
+                    }}></Button>
                 </td>
               </tr>
             ))}

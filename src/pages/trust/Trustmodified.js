@@ -5,7 +5,7 @@ import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
 
 //Trust Subscription
-const Trustmodified = ({ location }) => {
+const TrustModified = ({ location }) => {
   const token = AuthToken.get();
 
   const history = useHistory();
@@ -334,4 +334,4 @@ const Trustmodified = ({ location }) => {
   );
 };
 
-export default Trustmodified;
+export default TrustModified;

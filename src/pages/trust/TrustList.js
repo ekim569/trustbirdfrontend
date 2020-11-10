@@ -32,7 +32,6 @@ const TrustList = () => {
         if( res !== undefined){
           setTrustList(res);
         }
-        
       });
   }, [token]);
 

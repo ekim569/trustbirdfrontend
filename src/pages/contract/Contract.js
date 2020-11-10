@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+
 import AuthToken from "../../storages/Auth";
 
 //Contract Output
-const Contract = () => {
-  const token = AuthToken.get();
+const Contract = ({ location }) => {
+  const _token = AuthToken.get();
   const history = useHistory();
   const [contract, setContract] = useState({
     trustToken: "",
@@ -46,16 +47,19 @@ const Contract = () => {
       registrationNum: "",
       telephoneNum: "",
     },
+    attachments: new Array()
   });
 
   useEffect(() => {
-    fetch("http://192.168.0.143:3001/contract/find", {
+    const params = new URLSearchParams(location.search)
+
+    fetch(`http://192.168.0.143:3001/api/contract/find?token=${params.get('token')}`, {
       mode: "cors",
       method: "GET",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${_token}`,
       },
     })
       .then((res) => {
@@ -65,10 +69,10 @@ const Contract = () => {
       })
       .then((res) => {
         if(res !== undefined){
-          setContract(res);
+          setContract(res)
         }
       });
-  }, [token]);
+  }, [_token]);
 
   const onDelete = ((e)=>{
     e.preventDefault()
@@ -79,13 +83,11 @@ const Contract = () => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${_token}`,
       },
       body:JSON.stringify({token : contract.token})
     })
       .then((res)=> {
-        console.log(res.status)
-
         if(res.status === 200) {
           alert("Contract Delete Complete")
         } else {
@@ -95,6 +97,7 @@ const Contract = () => {
       })
   })
 
+  console.log(contract)
   return (
     <div>
       <div className="pageheader">계약서</div>
@@ -107,7 +110,7 @@ const Contract = () => {
                 <td className="tableborder" >
                   소재지
                 </td>
-                <td className="tableborder" colspan="4"></td>
+                <td className="tableborder" colspan="4">{contract.location}</td>
               </tr>
               <tr className="tableborder">
                 <td className="tableborder" style={{ width: "175px" }}>
@@ -297,7 +300,7 @@ const Contract = () => {
               <td className="tableborder" >
                 공인중개사 등록번호
               </td>
-              <td className="tableborder" colspan="4"></td>
+              <td className="tableborder" colspan="4">{contract.realtor.registrationNum}</td>
             </tr>
             <tr className="tableborder">
               <td className="tableborder">
@@ -313,7 +316,15 @@ const Contract = () => {
           <table className="tablelayout">
             <tr className="tableborder">
               <td className="tableborder" colspan="4">
-                {contract.attachments}
+                {contract.attachments.map((attachment) => {
+                  return (
+                      <a
+                        href={`http://192.168.0.143:8080/ipfs/${attachment.filePath}`}
+                        target="_blank"
+                      >{attachment.fileName}<br />
+                      </a>
+                  );
+                })}
               </td>
             </tr>
           </table>
@@ -329,7 +340,7 @@ const Contract = () => {
               style={{ marginRight: "16px" }}
               onClick={(e) => {
                 e.preventDefault();
-                history.push(`/contractmodified?token=${contract.token}`)
+                history.push(`/contractmodified/admin?token=${contract.token}`)
               }}
               >
               수정

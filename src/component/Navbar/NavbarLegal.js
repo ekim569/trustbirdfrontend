@@ -12,47 +12,6 @@ import PageLink from "./pageLink";
 import AuthToken from "../../storages/Auth";
 
 export default function NavbarLegal(props) {
-  const [token, setToken] = useState();
-  const [user, setUser] = useState({
-    username: "",
-    email: "",
-    permission: "",
-  });
-
-  useEffect(() => {
-    const _token = AuthToken.get();
-
-    if (_token !== "") {
-      setToken(_token);
-
-      fetch("http://192.168.0.143:3001/api/user/infomation", {
-        mode: "cors",
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${_token}`,
-        },
-      })
-        .then((res) => {
-          if (res.status === 200) {
-            return res.json();
-          }
-        })
-        .then((res) => {
-          setUser(res.user);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    }
-  }, [token]);
-
-  const onClickSignOut = () => {
-    setToken("");
-    AuthToken.set("");
-  };
-
   return (
     <BootStrapNavbar
       fixed="top"
@@ -105,23 +64,8 @@ export default function NavbarLegal(props) {
                     style={{ display: "inline-block", fontWeight: "bold" }}
                     className="navlink nav"
                   >
-                    <NavDropdown.Item href="/createuser/admin">
-                    사용자 생성
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/userlist/admin">
-                    사용자 목록
-                    </NavDropdown.Item>
                     <NavDropdown.Item href="/trustlist/admin">
                     신탁 내역 확인
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/contractlist/admin">
-                    계약 내역 확인
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/maintenancefeelist/admin">
-                    관리비 납부내역
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/maintenancefeeinput/admin">
-                    관리비 입력
                     </NavDropdown.Item>
                     <NavDropdown.Item href="/" onClick={props.onClickSignOut}>
                     로그아웃

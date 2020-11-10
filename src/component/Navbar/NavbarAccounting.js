@@ -23,7 +23,7 @@ export default function NavbarAccountng(props) {
       }}
     >
       <Container style={{ margin: "auto", maxWidth: "1500px" }}>
-        <BootStrapNavbar.Brand href="/main">
+        <BootStrapNavbar.Brand href="/">
           <div>
             <div style={{ display: "inline-block" }}>
               <Logo />
@@ -67,20 +67,17 @@ export default function NavbarAccountng(props) {
                   style={{ display: "inline-block", fontWeight: "bold" }}
                   className="navlink nav"
                 >
-                  <NavDropdown.Item href="/membership">
-                  멤버십 신청
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/trustlist">
+                  <NavDropdown.Item href="/trustlist/admin">
                   신탁 내역 확인
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="/maintenancefeelist">
+                  <NavDropdown.Item href="/contractlist/admin">
+                  계약 내역 확인
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/maintenancefeelist/admin">
                   관리비 납부내역
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="/signModified">
-                  회원 정보 수정
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/withdrawal">
-                  회원 탈퇴
+                  <NavDropdown.Item href="/maintenancefeeinput/admin">
+                  관리비 입력
                   </NavDropdown.Item>
                   <NavDropdown.Item href="/" onClick={props.onClickSignOut}>
                   로그아웃
