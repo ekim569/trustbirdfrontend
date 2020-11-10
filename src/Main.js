@@ -21,13 +21,8 @@ import TrustWay from "./pages/trust/TrustWay";
 import TrustSub from "./pages/trust/TrustSub";
 import Trust from "./pages/trust/Trust";
 import TrustList from "./pages/trust/TrustList";
-<<<<<<< HEAD
 import TrustListAdmin from "./pages/trust/TrustListAdmin";
 import TrustModifeid from "./pages/trust/TrustModified";
-=======
-import TrustList_admin from "./pages/trust/TrustListAdmin";
-import TrustModified from "./pages/trust/TrustModified";
->>>>>>> 6714ae9b591bc2e3a0860ac340556fd1487d77fd
 
 import ContractEnroll from "./pages/contract/ContractEnroll";
 import Contract from "./pages/contract/Contract";
