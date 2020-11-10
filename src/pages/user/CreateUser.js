@@ -150,7 +150,7 @@ const CreateUser = () => {
             required
           >
             <option>선택</option>
-            <option value="superVisor">관리자</option>
+            <option value="supervisor">관리자</option>
             <option value="legalTL">법무 팀장</option>
             <option value="maintenanceTL">시설 팀장</option>
             <option value="accountingTL">회계 팀장</option>

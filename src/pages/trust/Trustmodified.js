@@ -4,6 +4,11 @@ import { useHistory } from "react-router-dom";
 import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
 
+import Uppy from "@uppy/core";
+import { Dashboard } from "@uppy/react";
+import "@uppy/core/dist/style.css";
+import "@uppy/dashboard/dist/style.css";
+
 //Trust Subscription
 const TrustModified = ({ location }) => {
   const token = AuthToken.get();
@@ -17,7 +22,6 @@ const TrustModified = ({ location }) => {
     realtorName: "",
     realtorTelephoneNum: "",
     realtorCellphoneNum: "",
-    realtorAddress: "",
     type: "",
     securityDeposit: "",
     rent: "",
@@ -27,8 +31,6 @@ const TrustModified = ({ location }) => {
     etc: "",
     status: "",
     contract: "",
-    attachments: {},
-    etc: "",
   });
 
   useEffect(() => {
@@ -61,7 +63,6 @@ const TrustModified = ({ location }) => {
             realtorName: res.realtorName,
             realtorTelephoneNum: res.realtorTelephoneNum,
             realtorCellphoneNum: res.realtorCellphoneNum,
-            realtorAddress: res.realtorAddress,
             type: res.type,
             securityDeposit: res.securityDeposit,
             rent: res.rent,
@@ -71,11 +72,20 @@ const TrustModified = ({ location }) => {
             etc: res.etc,
             status: res.status,
             contract: res.contract,
-            attachments: {},
           });
         });
     }
   }, []);
+
+  const uppy = new Uppy({
+    debug: true,
+    autoProceed: false,
+    restrictions: {
+      maxFileSize: 100000000,
+      maxNumberOfFiles: 3,
+      allowedFileTypes: [".jpg", ".png", ".pdf"],
+    },
+  });
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -96,12 +106,12 @@ const TrustModified = ({ location }) => {
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(trustsub)) {
-      if (key === "attachments") {
-        continue;
-      }
       formData.append(key, value);
     }
-    formData.append("attachments", trustsub.attachments);
+
+    for (let file of Object.values(uppy.state.files)) {
+      formData.append("attachments", file.data);
+    }
 
     fetch("http://192.168.0.143:3001/api/trust/update", {
       method: "POST",
@@ -195,20 +205,6 @@ const TrustModified = ({ location }) => {
             placeholder="전화번호"
             name="realtorCellphoneNum"
             value={trustsub.realtorCellphoneNum}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicNegligenceProfit">
-          <Form.Label> 중개인 주소</Form.Label>
-          <PostFixInput
-            labelText="중개인번호"
-            postfix=""
-            type="text"
-            placeholder="전화번호"
-            name="realtorAddress"
-            value={trustsub.realtorAddress}
             onChange={handleInputChange}
             required
           />
@@ -318,13 +314,14 @@ const TrustModified = ({ location }) => {
 
         <Form.Group controlId="formBasicAttachments">
           <Form.Label> 첨부파일 </Form.Label>
-          <Form.File
-            // onChange={handleInputChange}
-            onChange={(e) => {
-              setTrustsub({ ...trustsub, attachments: e.target.files[0] });
-            }}
-            name="attachments"
-          />
+          <div>
+            <Dashboard
+              uppy={uppy}
+              // plugins={['Webcam']}
+              // {...props}
+              hideUploadButton={true}
+            />
+          </div>
         </Form.Group>
         <Button variant="primary" type="submit" className="button3">
           신청하기

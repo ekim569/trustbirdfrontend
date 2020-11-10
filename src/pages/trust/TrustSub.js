@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PostFixInput from "../../component/PostFixInput";
 import AuthToken from "../../storages/Auth";
 
-import Uppy from '@uppy/core'
-import { Dashboard  } from '@uppy/react'
-import '@uppy/core/dist/style.css'
-import '@uppy/dashboard/dist/style.css'
+import Uppy from "@uppy/core";
+import { Dashboard } from "@uppy/react";
+import "@uppy/core/dist/style.css";
+import "@uppy/dashboard/dist/style.css";
 
 //Trust Subscription
-const TrustSub = ({ location }) => {
+const TrustSub = () => {
   const token = AuthToken.get();
 
   const history = useHistory();
@@ -32,7 +32,6 @@ const TrustSub = ({ location }) => {
     etc: "",
     status: "신탁 요청",
     contract: "",
-    attachments: {},
   });
 
   const uppy = new Uppy({
@@ -41,9 +40,9 @@ const TrustSub = ({ location }) => {
     restrictions: {
       maxFileSize: 100000000,
       maxNumberOfFiles: 3,
-      allowedFileTypes: ['.jpg', '.png', '.pdf']
+      allowedFileTypes: [".jpg", ".png", ".pdf"],
     },
-  })
+  });
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -62,16 +61,14 @@ const TrustSub = ({ location }) => {
     e.preventDefault();
 
     const formData = new FormData();
-    
-    const files = new Array()
 
     for (const [key, value] of Object.entries(trustsub)) {
-      if (key === "attachments") {
-        continue;
-      }
       formData.append(key, value);
     }
-    formData.append("attachments", trustsub.attachments);
+
+    for (let file of Object.values(uppy.state.files)) {
+      formData.append("attachments", file.data);
+    }
 
     fetch("http://192.168.0.143:3001/api/trust/subscription", {
       method: "POST",
@@ -161,19 +158,6 @@ const TrustSub = ({ location }) => {
             placeholder="전화번호"
             name="realtorCellphoneNum"
             value={trustsub.realtorCellphoneNum}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicNegligenceProfit">
-          <Form.Label> 중개인 주소</Form.Label>
-          <PostFixInput
-            labelText="중개인번호"
-            postfix=""
-            type="text"
-            placeholder="주소"
-            name="realtorAddress"
-            value={trustsub.realtorAddress}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -276,13 +260,13 @@ const TrustSub = ({ location }) => {
         <Form.Group controlId="formBasicAttachments">
           <Form.Label> 첨부파일 </Form.Label>
           <div>
-          <Dashboard
+            <Dashboard
               uppy={uppy}
               // plugins={['Webcam']}
               // {...props}
               hideUploadButton={true}
             />
-            </div>
+          </div>
         </Form.Group>
         <Button variant="primary" type="submit" className="button3">
           신청하기
