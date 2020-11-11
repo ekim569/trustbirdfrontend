@@ -259,7 +259,7 @@ const Contract = ({ location }) => {
           </table>
 
           <div style={{ float: "right" }}>            
-            <Button className="button4" style={{ float:"left", marginRight:"16px" }} onClick={() => { history.push('/contractlist/admin') }}>
+            <Button className="button4" style={{ float:"left", marginRight:"16px" }} onClick={() => { history.push('/') }}>
               돌아가기
             </Button>
             <Button variant="primary" type="submit" className="button2" style={{ marginRight: "16px" }}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Container, Button, Form } from "react-bootstrap"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 
 import AuthToken from "../../storages/Auth"
 
@@ -131,6 +131,14 @@ const Trust = ({ location }) => {
           <tr className="tableborder">
             <td className="tableborder"  style={{fontWeight:"bold"}}> 신탁기간 </td>
             <td className="tableborder" colspan="6"> {trust.periodStart} ~ {trust.periodEnd} </td>
+          </tr>
+          <tr className="tableborder">
+            <td className="tableborder"  style={{fontWeight:"bold"}}> 계약서 </td>
+            <td className="tableborder" colspan="6">
+              <div style={{maxWidth:"400px", textOverflow:"ellipsis", overflow:"hidden", whiteSpace:"nowrap", margin:"auto"}}>
+                <Link to={`/contract?token=${trust.contract}`}>{trust.contract}</Link> 
+              </div>
+            </td>
           </tr>
         </table>
 

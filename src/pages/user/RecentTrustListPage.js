@@ -1,5 +1,6 @@
 import React from "react"
-import { Container, Table, Button } from "react-bootstrap"
+import { Container, Table } from "react-bootstrap"
+import { Link } from 'react-router-dom'
 
 const RecentTrustListPage = ({ presentTrustList, loc, pageLimit }) => {
   return (
@@ -21,8 +22,16 @@ const RecentTrustListPage = ({ presentTrustList, loc, pageLimit }) => {
             .map((presentTrust) => (
               <tr key={presentTrust.no}>
                 <td>{presentTrust.no}</td>
-                <td><div style={{maxWidth:"400px", textOverflow:"ellipsis", overflow:"hidden", whiteSpace:"nowrap", margin:"auto"}} >{presentTrust.trustToken}</div></td>
-                <td><div style={{maxWidth:"400px", textOverflow:"ellipsis", overflow:"hidden", whiteSpace:"nowrap", margin:"auto"}} >{presentTrust.contractToken}</div></td>
+                <td>
+                  <div style={{maxWidth:"400px", textOverflow:"ellipsis", overflow:"hidden", whiteSpace:"nowrap", margin:"auto"}}>
+                    <Link to={`/trust?token=${presentTrust.trustToken}`}>{presentTrust.trustToken}</Link>
+                  </div>
+                </td>
+                <td>
+                  <div style={{maxWidth:"400px", textOverflow:"ellipsis", overflow:"hidden", whiteSpace:"nowrap", margin:"auto"}}>
+                    <Link to={`/contract?token=${presentTrust.contractToken}`}>{presentTrust.contractToken}</Link>
+                  </div>
+                </td>
               </tr>)
             )
           }

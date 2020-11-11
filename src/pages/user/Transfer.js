@@ -15,28 +15,22 @@ const Transfer = ({location}) => {
   const [payment, setPayment] = useState("0")
   const [balance, setBalance] = useState("")
 
-
   const handleBalanceChange = (e) => {
     e.preventDefault()
 
     const { value } = e.target
     const amount = value.replace(/\,/g,"");
 
+   
     if ("0123456789".includes(amount[amount.length - 1]) || amount === "") {
-      // value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      // setBalance(value)
       setBalance(amount.replace(/\B(?=(\d{3})+(?!\d))/g, ","))
     }
-  }
-
-  const seperateThousand = (value)=>{
-    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if(payment === balance) {
+    if(payment === balance.replace( /,/gi, '')) {
       fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute?targetAttr=Balance`, {
         mode: "cors",
         method: "GET",
@@ -54,14 +48,14 @@ const Transfer = ({location}) => {
         }
       })
       .then((ownBalance) => {
-        if(ownBalance > balance * 10000){
+        if(ownBalance > balance.replace( /,/gi, '') * 10000){
           console.log(ownBalance)
 
           let request = {
             email: "",
             invoke: "add",
             targetAttr: "Balance",
-            value: (ownBalance - balance * 10000).toString()
+            value: (ownBalance - balance.replace( /,/gi, '') * 10000).toString()
           }
     
           fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute`, {

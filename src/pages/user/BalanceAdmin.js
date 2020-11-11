@@ -26,17 +26,11 @@ const BalanceAdmin = () => {
         const {value} = e.target
         const amount = value.replace(/\,/g,"");
 
-    if ("0123456789".includes(amount[amount.length - 1]) || amount === "") {
-      // value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      // setBalance(value)
-      setBalance(amount.replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+        if ("0123456789".includes(amount[amount.length - 1]) || amount === "") {
+          setBalance(amount.replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+        }
     }
-  }
 
-  const seperateThousand = (value)=>{
-    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-  }
-  
     function onSubmit(e) {
         e.preventDefault()
 
@@ -61,7 +55,7 @@ const BalanceAdmin = () => {
                 email : email,
                 invoke : "add",
                 targetAttr : "Balance",
-                value :  (parseInt(balance) + parseInt(ownBalance)).toString()
+                value :  (parseInt(balance.replace( /,/gi, '')) + parseInt(ownBalance)).toString()
             }
         
             fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute`, {
