@@ -16,12 +16,16 @@ const Membership = () => {
     e.preventDefault()
     
     const {value} = e.target
-    
-    if ("0123456789".includes(value[value.length-1]) || value === ''){
-      setMembership(value)
+    const amount = value.replace(/\,/g,"");
+
+    if ("0123456789".includes(amount[amount.length - 1]) || amount === "") {
+      setMembership(amount.replace(/\B(?=(\d{3})+(?!\d))/g, ","))
     }
   }
-    
+
+  const seperateThousand = (value)=>{
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
   const onSubmit = (e) => {
     e.preventDefault()
 
@@ -98,7 +102,7 @@ const Membership = () => {
       }
     })
     .then((res) => {
-      if (res !== "0"){
+      if (res !== undefined){
         setOwnMembership(parseInt(res))
       }
     })

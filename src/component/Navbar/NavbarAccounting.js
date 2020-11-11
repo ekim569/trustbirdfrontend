@@ -6,7 +6,7 @@ import Logo from "../../icons/LogoIcon"
 
 import "./Navbar.css"
 
-export default function NavbarAccountng(props) {
+export default function NavbarAccounting(props) {
   return (
     <BootStrapNavbar fixed="top" expand="lg" style={{ borderBottomWidth: 1, borderColor: "#c2c2c2", borderBottomStyle: "solid", background: "#ffffff" }}>
       <Container style={{ margin: "auto", maxWidth: "1500px" }}>
@@ -31,7 +31,7 @@ export default function NavbarAccountng(props) {
             </Nav.Link>
 
             <Nav.Link className="navlink">
-              <PageLink to="/serviceintro">정보소개</PageLink>
+              <PageLink to="/serviceintro">서비스 소개</PageLink>
             </Nav.Link>
             
             <div>

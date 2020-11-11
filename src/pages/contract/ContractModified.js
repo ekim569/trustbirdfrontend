@@ -248,17 +248,17 @@ const ContractModified = ({location}) => {
         <Form.Group controlId="formBasicSecurityDeposit">
           <Form.Label> 보증금 / 차임 </Form.Label>
           <div>
-            <PostFixInput2 labelText="보증금" postfix="만 원" type="text" name="securityDeposit" style={{ width:"390px",marginRight:"10px"}} value={constractModified.securityDeposit} onChange={handleInputChange} placeholder="금액" />
-            <PostFixInput2 labelText="차임" postfix="만 원" type="text" placeholder="금액" name="rent" style={{ width:"390px", marginLeft:"10px"}} value={constractModified.rent} onChange={handleInputChange} />
+            <PostFixInput2 labelText="보증금" postfix="만원" type="text" name="securityDeposit" style={{ width:"390px",marginRight:"10px"}} value={constractModified.securityDeposit} onChange={handleInputChange} placeholder="금액" />
+            <PostFixInput2 labelText="차임" postfix="만원" type="text" placeholder="금액" name="rent" style={{ width:"390px", marginLeft:"10px"}} value={constractModified.rent} onChange={handleInputChange} />
           </div>
         </Form.Group>
 
         <Form.Group controlId="formBasicContractPrice">
           <Form.Label> 계약금 / 중도금 / 잔금 </Form.Label>
           <div>
-            <PostFixInput3 labelText="계약금" postfix="만 원" type="text" placeholder="금액" name="contractPrice" value={constractModified.contractPrice} onChange={handleInputChange} />
-            <PostFixInput3 labelText="중도금" postfix="만 원" type="text" placeholder="금액" name="interimPrice" value={constractModified.interimPrice} onChange={handleInputChange} />
-            <PostFixInput3 labelText="잔금" postfix="만 원" type="text" placeholder="금액" name="balance" value={constractModified.balance} className="inline-nput" onChange={handleInputChange} />
+            <PostFixInput3 labelText="계약금" postfix="만원" type="text" placeholder="금액" name="contractPrice" value={constractModified.contractPrice} onChange={handleInputChange} />
+            <PostFixInput3 labelText="중도금" postfix="만원" type="text" placeholder="금액" name="interimPrice" value={constractModified.interimPrice} onChange={handleInputChange} />
+            <PostFixInput3 labelText="잔금" postfix="만원" type="text" placeholder="금액" name="balance" value={constractModified.balance} className="inline-nput" onChange={handleInputChange} />
           </div>
         </Form.Group>
 

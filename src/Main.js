@@ -36,7 +36,9 @@ import MaintenanceFeeModified from "./pages/maintenanaceFee/MaintenanceFeeModifi
 import MaintenanceFeeList from "./pages/maintenanaceFee/MaintenanceFeeList";
 import MaintenanceFeeListAdmin from "./pages/maintenanaceFee/MaintenanceFeeListAdmin";
 
+import RecentTrustList from "./pages/user/RecentTrustList"
 import Footer from "./component/Footer";
+
 
 const Main = (props) => {
   return (
@@ -74,6 +76,7 @@ const Main = (props) => {
             <Route exact path="/maintenancefeemodified/admin" component={MaintenanceFeeModified} />
             <Route exact path="/maintenancefeelist/admin"  component={MaintenanceFeeListAdmin} />
 
+            <Route exact path="/recenttrustlist" component={RecentTrustList} />
             <Route exact path="/transfer" component={Transfer} />
             <Route exact path="/membership/admin" component={MembershipAdmin} />
             <Route exact path="/balance/admin" component={BalanceAdmin} />

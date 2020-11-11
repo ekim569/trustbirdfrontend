@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import { Container, Form, Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
+import PostFixInput from "../../component/PostFixInput"
+
 import AuthToken from "../../storages/Auth"
 
 const Transfer = ({location}) => {
@@ -18,10 +20,17 @@ const Transfer = ({location}) => {
     e.preventDefault()
 
     const { value } = e.target
+    const amount = value.replace(/\,/g,"");
 
-    if ("0123456789".includes(value[value.length - 1]) || value === "") {
-      setBalance(value)
+    if ("0123456789".includes(amount[amount.length - 1]) || amount === "") {
+      // value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      // setBalance(value)
+      setBalance(amount.replace(/\B(?=(\d{3})+(?!\d))/g, ","))
     }
+  }
+
+  const seperateThousand = (value)=>{
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
 
   const onSubmit = (e) => {
@@ -45,16 +54,17 @@ const Transfer = ({location}) => {
         }
       })
       .then((ownBalance) => {
-        console.log(ownBalance)
-        if(parseInt(ownBalance) > parseInt(balance) * 10000){
+        if(ownBalance > balance * 10000){
+          console.log(ownBalance)
+
           let request = {
             email: "",
             invoke: "add",
             targetAttr: "Balance",
-            value: (parseInt(ownBalance) - parseInt(balance) * 10000).toString()
+            value: (ownBalance - balance * 10000).toString()
           }
     
-          fetch("${process.env.REACT_APP_SERVER}/api/user/attribute", {
+          fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute`, {
             mode: "cors",
             method: "POST",
             credentials: "include",
@@ -80,10 +90,11 @@ const Transfer = ({location}) => {
               })
               .then((res) => {
                 if(res.status === 200) {
-                  alert("입금되었습니다.");
+                  alert("입금되었습니다.")
                 } else {
-                  alert("입금을 실패했습니다.");
+                  alert("입금을 실패했습니다.")
                 }
+                history.push('/trustlist')
               })
             }
           })
@@ -154,16 +165,16 @@ const Transfer = ({location}) => {
   },[])
 
   return (
-    <Container style={{ marginTop: "200px", width: "800px" }}>
+    <Container style={{ marginTop: "200px", width: "500px" }}>
       <div className="pageheader"> { params.get('status').match(/계약금/) ? "계약금 입금" : "잔금 입금" } </div>
       <Form.Group style={{ textAlign:"end" }}>
-        <Form.Label style={{ color:"#3b72f2", fontWeight:"bold"}}>입금 해야 할 금액 : {payment} 만원</Form.Label>
+        <Form.Label style={{ color:"#3b72f2", fontWeight:"bold"}}>입금 할 금액 : {payment} 만원</Form.Label>
       </Form.Group>
 
       <Form onSubmit={onSubmit}>
         <Form.Group >
           <Form.Label>금액</Form.Label>
-          <Form.Control type="text" value={balance} name="balance" onChange={handleBalanceChange} />
+          <PostFixInput labeltext="입금 할 금액" type="text" value={balance} name="balance" postfix="만원" placeholder="금액" onChange={handleBalanceChange} />
         </Form.Group>
 
         <Button variant="primary" type="submit" className="button3"> 입금하기 </Button>

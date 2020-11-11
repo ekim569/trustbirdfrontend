@@ -27,7 +27,7 @@ export default function NavbarBasic(props) {
             </Nav.Link>
 
             <Nav.Link className="navlink">
-              <PageLink to="/serviceintro">정보소개</PageLink>
+              <PageLink to="/serviceintro">서비스 소개</PageLink>
             </Nav.Link>     
 
             <div style={{ display: "inline-block" }}>

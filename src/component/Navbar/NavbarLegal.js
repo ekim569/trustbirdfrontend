@@ -10,7 +10,7 @@ export default function NavbarLegal(props) {
   return (
     <BootStrapNavbar fixed="top" expand="lg" style={{ borderBottomWidth: 1, borderColor: "#c2c2c2", borderBottomStyle: "solid", background: "#ffffff" }}>
       <Container style={{ margin: "auto", maxWidth: "1500px" }}>
-        <BootStrapNavbar.Brand href="/main">
+        <BootStrapNavbar.Brand href="/">
           <div>
             <div style={{ display: "inline-block" }}>
               <Logo />
@@ -27,7 +27,7 @@ export default function NavbarLegal(props) {
             </Nav.Link>
 
             <Nav.Link className="navlink">
-              <PageLink to="/serviceintro">정보소개</PageLink>
+              <PageLink to="/serviceintro">서비스 소개</PageLink>
             </Nav.Link>
 
             <div>

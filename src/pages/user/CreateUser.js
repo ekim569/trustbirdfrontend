@@ -109,7 +109,7 @@ const CreateUser = () => {
             <option value="accountingTL">회계 팀장</option>
             <option value="warrantyServiceTL">사후관리 팀장</option>
             <option value="pointManager">포인트 관리자</option>
-            <option value="User">유저</option>
+            <option value="user">유저</option>
           </Form.Control>
         </Form.Group>
 

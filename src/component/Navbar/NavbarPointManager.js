@@ -25,7 +25,7 @@ export default function NavbarPointManager(props) {
             </Nav.Link>
 
             <Nav.Link className="navlink">
-              <PageLink to="/serviceintro">정보소개</PageLink>
+              <PageLink to="/serviceintro">서비스 소개</PageLink>
             </Nav.Link>
             
             <div>

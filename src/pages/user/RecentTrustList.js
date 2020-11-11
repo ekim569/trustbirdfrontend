@@ -1,21 +1,21 @@
 import React, { useEffect, useState, useMemo } from "react"
 
 import Pagination from "../../component/Pagination"
-import UserListPage from "./UserListPage"
+import RecentTrustListPage from "./RecentTrustListPage"
 
 import AuthToken from "../../storages/Auth"
 
-const Userlist = () => {
+const RecentTrustList = () => {
   const authToken = AuthToken.get()
 
-  const [userList, setUserList] = useState([])
+  const [presentTrustList, setPresentTrsutList] = useState([])
   const [loc, setLoc] = useState(1)
 
   const pageLimit = 5
   const paginationLimite = 5
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER}/api/user/list`, {
+    fetch(`${process.env.REACT_APP_SERVER}/api/user/ethereumlist`, {
       mode: "cors",
       method: "GET",
       credentials: "include",
@@ -30,18 +30,18 @@ const Userlist = () => {
       }
     })
     .then((res) => {
-      setUserList(res)
+      setPresentTrsutList(res)
     })
   }, [authToken])
 
   const onClick = (loc) => {
     setLoc(loc)
-  };
+  }
 
   // list length
   const totalLength = useMemo(() => {
-    return userList.length
-  }, [userList])
+    return presentTrustList.length
+  }, [presentTrustList])
 
   // page length
   const totalPageNum = useMemo(() => {
@@ -50,10 +50,10 @@ const Userlist = () => {
 
   return (
     <div> 
-      <UserListPage userList={userList} loc={loc} pageLimit={pageLimit} />
+      <RecentTrustListPage presentTrustList={presentTrustList} loc={loc} pageLimit={pageLimit} />
       <Pagination totalLength={totalLength} active={loc} last={totalPageNum} paginationLimite={paginationLimite} onClick={onClick} />
     </div>
   )
 }
 
-export default Userlist
+export default RecentTrustList

@@ -27,16 +27,23 @@ export default function NavbarUser(props) {
             </Nav.Link>
 
             <Nav.Link className="navlink">
+              <PageLink to="/trustway">신탁 방법</PageLink>
+            </Nav.Link>
+            
+            <Nav.Link className="navlink">
               <PageLink to="/trustsub">신탁 계약</PageLink>
             </Nav.Link>
 
             <Nav.Link className="navlink">
-              <PageLink to="/serviceintro">정보소개</PageLink>
+              <PageLink to="/serviceintro">서비스 소개</PageLink>
             </Nav.Link>
             
             <div>
               <img className="usericon" src="https://www.flaticon.com/svg/static/icons/svg/2948/2948035.svg" />
               <NavDropdown title={props.username} id="basic-nav-dropdown" style={{ display: "inline-block", fontWeight: "bold" }} className="navlink nav">
+                <NavDropdown.Item href="/recenttrustlist">
+                신탁 현황
+                </NavDropdown.Item>
                 <NavDropdown.Item href="/membership">
                 멤버십 신청
                 </NavDropdown.Item>

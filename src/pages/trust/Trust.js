@@ -100,42 +100,48 @@ const Trust = ({ location }) => {
   }
 
   return (
-    <Container style={{ maxWidth: "720px", padding: 0 }}>
+    <Container style={{ maxWidth: "800px", padding: 0 }}>
       <div className="pageheader">신탁신청서</div>
       <Form>
         <table className="tablelayout">
           <tr className="tableborder">
-            <td className="tableborder" style={{ width: "200px" }}> 신탁자 </td>
+            <td className="tableborder" style={{ width: "200px",fontWeight:"bold" }}> 신탁자 </td>
             <td className="tableborder" colspan="2"> {trust.username} </td>
             <td className="tableborder" colspan="4"> {trust.telephoneNum} </td>
           </tr>
           <tr className="tableborder">
-            <td className="tableborder"> 중개인 이름 </td>
-            <td colspan="6"> {trust.realtorName} </td>
+            <td className="tableborder" style={{fontWeight:"bold"}}> 중개인 이름 </td>
+            <td colspan="6"> {trust.realtorName} </td>  
           </tr>
           <tr className="tableborder">
-            <td className="tableborder"> 중개인 전화번호 </td>
+            <td className="tableborder"  style={{fontWeight:"bold"}}> 중개인 전화번호 </td>
             <td className="tableborder" colspan="3"> {trust.realtorTelephoneNum} </td>
             <td className="tableborder" colspan="3"> {trust.realtorCellphoneNum} </td>
           </tr>
           <tr>
-            <td className="tableborder"> 전 · 월세 </td>
+            <td className="tableborder" rowSpan="2"  style={{fontWeight:"bold"}}> 전 · 월세 </td>
             <td className="tableborder" colspan="6"> {trust.type} </td>
           </tr>
+          <tr>
+            <td className="tableborder"  style={{fontWeight:"bold"}}> 보증금 </td>
+            <td className="tableborder" colspan="2" > {trust.securityDeposit} 만원 </td>
+            <td className="tableborder"  style={{fontWeight:"bold"}}> 월세 </td>
+            <td className="tableborder" colspan="2"> {trust.rent} 만원</td>
+          </tr>
           <tr className="tableborder">
-            <td className="tableborder"> 신탁기간 </td>
+            <td className="tableborder"  style={{fontWeight:"bold"}}> 신탁기간 </td>
             <td className="tableborder" colspan="6"> {trust.periodStart} ~ {trust.periodEnd} </td>
           </tr>
         </table>
 
-        <Form.Label>기타사항</Form.Label>
+        <Form.Label  style={{fontWeight:"bold"}}>기타사항</Form.Label>
         <table className="tablelayout">
           <tr className="tableborder">
             <td> {trust.etc} </td>
           </tr>
         </table>
 
-        <Form.Label>첨부파일</Form.Label>
+        <Form.Label  style={{fontWeight:"bold"}}>첨부파일</Form.Label>
         <table className="tablelayout">
           <tr className="tableborder">
             <td>
@@ -149,15 +155,17 @@ const Trust = ({ location }) => {
         </table>
 
         <div style={{ float: "right", marginTop: "60px" }}>
-          <Button variant="primary" type="submit" className="button2" onClick={() => { history.push("/trustlist") }}>
-            취소하기
+          <Button variant="primary" type="submit" className="button2" onClick={() => { permission === "user" ? history.push("/trustlist") : history.push("/trustlist/admin") }}>
+            뒤로가기
           </Button>
 
-          <Button variant="primary" type="submit" className="button2" style={{ marginLeft: "16px" }} onClick={() => onDelete()} >
+          {permission === "user" ? (
+            <Button variant="primary" type="submit" className="button2" style={{ marginLeft: "16px" }} onClick={onDelete} >
             삭제하기
-          </Button>
+            </Button>) : null}
+          
 
-          {trust.status.match(/수정/) || trust.status.match(/요청/) ? (
+          {(trust.status.match(/수정/) || trust.status.match(/요청/)) && permission === "user" ? (
             <Button variant="primary" type="submit" className="button2" style={{ marginLeft: "16px" }}
               onClick={(e) => {
                 e.preventDefault()
@@ -167,12 +175,11 @@ const Trust = ({ location }) => {
             </Button>
           ) : null}
 
-          {trust.status.match(/사용자 계약 승인/) &&
-          (permission === "accounting" || permission === "supervisor") ? (
+          {trust.status.match(/사용자 계약 승인/) && (permission === "accountingTL" || permission === "supervisor") ? (
             <Button variant="primary" type="submit" className="button2" style={{ marginLeft: "16px" }}
               onClick={(e) => {
                 e.preventDefault()
-                history.push(`/contractenroll?token=${trust.token}`)
+                history.push(`/contractenroll/admin?token=${trust.token}`)
               }}>
               계약서 작성
             </Button>

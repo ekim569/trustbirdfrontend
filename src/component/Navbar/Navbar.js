@@ -67,7 +67,7 @@ export default function Navbar(props) {
               return <NavbarLegal username={user.username} onClickSignOut={onClickSignOut} />
             case "maintenanceTL" :
               return <NavbarMaintenance username={user.username} onClickSignOut={onClickSignOut} />
-            case "accountingTL:" :
+            case "accountingTL" :
               return <NavbarAccounting username={user.username} onClickSignOut={onClickSignOut} />
             case "pointManager" :
                 return <NavbarPointManager username={user.username} onClickSignOut={onClickSignOut} />

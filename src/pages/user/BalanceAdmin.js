@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Container, Form, Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
+import PostFixInput from "../../component/PostFixInput"
 import AuthToken from "../../storages/Auth"
 
 const BalanceAdmin = () => {
@@ -23,12 +24,19 @@ const BalanceAdmin = () => {
         e.preventDefault()
         
         const {value} = e.target
-        
-        if ("0123456789".includes(value[value.length-1]) || value === ''){
-            setBalance(value)
-        }
+        const amount = value.replace(/\,/g,"");
+
+    if ("0123456789".includes(amount[amount.length - 1]) || amount === "") {
+      // value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      // setBalance(value)
+      setBalance(amount.replace(/\B(?=(\d{3})+(?!\d))/g, ","))
     }
-      
+  }
+
+  const seperateThousand = (value)=>{
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+  
     function onSubmit(e) {
         e.preventDefault()
 
@@ -80,7 +88,7 @@ const BalanceAdmin = () => {
     }
 
   return (
-    <Container style={{marginTop:"200px", width:"800px"}} >
+    <Container style={{marginTop:"200px", width:"500px"}} >
         <div className="pageheader"> 포인트 관리 </div>
 
         <Form onSubmit={onSubmit}>
@@ -91,7 +99,7 @@ const BalanceAdmin = () => {
 
             <Form.Group>
                 <Form.Label> 포인트 </Form.Label>
-                <Form.Control type="text" value={balance} name="balance" onChange={handleBalanceChange}  />
+                <PostFixInput type="text" value={balance} name="balance" postfix="원" onChange={handleBalanceChange}  />
             </Form.Group>
 
             <Button variant="primary" type="submit" className="button3"> 추가 </Button>

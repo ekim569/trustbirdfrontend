@@ -60,8 +60,6 @@ const TrustSub = () => {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    const ownMembership = "0"
-
     fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute?targetAttr=Membership`, {
       mode: "cors",
       method: "GET",
@@ -79,7 +77,6 @@ const TrustSub = () => {
       }
     })
     .then((ownMembership) => {
-      
       if(ownMembership > 0) {
         const formData = new FormData()
 
@@ -101,16 +98,11 @@ const TrustSub = () => {
         })
         .then((res) => {
           if (res.status === 200) {
-            return res.json()  
-          }
-        })
-        .then((membership) => {
-          if(membership !== undefined){
             let request = {
               email : "",
               invoke : "add",
-              targetAttr : "Balance",
-              value :  (parseInt(membership) - 1).toString()
+              targetAttr : "Membership",
+              value : (ownMembership - 1).toString()
             }
 
             fetch(`${process.env.REACT_APP_SERVER}/api/user/attribute`, {
@@ -130,7 +122,7 @@ const TrustSub = () => {
                 } else {
                   alert("Try again")
                 }
-            })
+            })  
           }
         })
       } else {

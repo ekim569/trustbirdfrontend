@@ -3,7 +3,7 @@ import React from "react"
 import ReactFullpage from "@fullpage/react-fullpage"
 import ServiceIntro from "./ServiceIntro_fullpage"
 import FoundationIntro from "./FoundationIntro_fullpage"
-import TrustWay from "../trust/TrustWay"
+import TrustWay from "./TrustWay_fullpage"
 
 //Home
 const Home = () => {

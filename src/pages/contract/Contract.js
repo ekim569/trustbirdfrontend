@@ -6,7 +6,7 @@ import AuthToken from "../../storages/Auth"
 
 //Contract Output
 const Contract = ({ location }) => {
-  const autuToken = AuthToken.get()
+  const authToken = AuthToken.get()
   const history = useHistory()
 
   const [contract, setContract] = useState({
@@ -60,17 +60,31 @@ const Contract = ({ location }) => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${autuToken}`
+        Authorization: `Bearer ${authToken}`
       },
-      body:JSON.stringify({token : contract.token})
+      body:JSON.stringify({token : contract.token, trustToken : contract.trustToken})
     })
     .then((res)=> {
       if(res.status === 200) {
-        alert("Contract Delete Complete")
-      } else {
-        alert("Contract Delete Fail")
-      }      
-      history.push('/contractlist')
+        fetch(`${process.env.REACT_APP_SERVER}/api/trust/status`, {
+          mode: "cors",
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`
+          },
+          body : JSON.stringify({token : contract.trustToken, status : "사용자 계약 승인"})
+        })
+        .then((res) => {
+          if(res.status === 200) {
+            alert("Contract Delete Complete")
+          } else {
+            alert("Contract Delete Fail")
+          }
+          history.push("/contractlist/admin")
+        })
+     }
     })
   })
 
@@ -83,7 +97,7 @@ const Contract = ({ location }) => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${autuToken}`
+        Authorization: `Bearer ${authToken}`
       }
     })
     .then((res) => {
@@ -96,7 +110,7 @@ const Contract = ({ location }) => {
         setContract(res)
       }
     })
-  }, [autuToken])
+  }, [authToken])
 
   return (
     <div>
@@ -245,7 +259,7 @@ const Contract = ({ location }) => {
           </table>
 
           <div style={{ float: "right" }}>            
-            <Button className="button4" style={{ float:"left", marginRight:"16px" }} onClick={() => { history.push('/contractlist') }}>
+            <Button className="button4" style={{ float:"left", marginRight:"16px" }} onClick={() => { history.push('/contractlist/admin') }}>
               돌아가기
             </Button>
             <Button variant="primary" type="submit" className="button2" style={{ marginRight: "16px" }}

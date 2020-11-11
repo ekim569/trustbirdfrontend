@@ -31,7 +31,7 @@ const TrustListPageAdmin = ({ trustList, loc, pageLimit }) => {
       } else {
         alert('Try again')
       }
-      history.push('trustlist/admin')
+      window.location.reload()
     })
     .catch((err) => {
       console.error(err)
@@ -60,7 +60,7 @@ const TrustListPageAdmin = ({ trustList, loc, pageLimit }) => {
       } else {
         alert('Try again')
       }
-      history.push('trustlist/admin')
+      window.location.reload()
     })
     .catch((err) => {
       console.error(err)
